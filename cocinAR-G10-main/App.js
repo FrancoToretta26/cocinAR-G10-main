@@ -20,11 +20,12 @@ export default function App() {
 
   return (
     <NavigationContainer>
-    <Stack.Navigator mode="modal">
+    <Stack.Navigator>
     <Stack.Screen
       name="Home"
       component={Inicio}
       options={{
+        presentation: "modal",
         title: '',
         headerTitleAlign: 'center',
         headerStyle: {

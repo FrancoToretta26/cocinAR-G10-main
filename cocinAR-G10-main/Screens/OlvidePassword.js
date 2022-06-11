@@ -8,7 +8,7 @@ import Button from '../Components/Button';
 import { useForm, Controller } from 'react-hook-form';
 
 
-export default function OlvidePassword() {
+export default function OlvidePassword({ navigation, route }) {
   const [isBillingDifferent, setIsBillingDifferent] = useState(false);
   const { handleSubmit, control, formState: { errors } } = useForm();
 
@@ -20,7 +20,7 @@ export default function OlvidePassword() {
   };
 
   const onSubmit = (data) => {
-    console.log(data, 'data');
+    navigation.navigate('Inicio')
   };
 
 
