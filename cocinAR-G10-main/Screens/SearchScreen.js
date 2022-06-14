@@ -104,7 +104,7 @@ class SearchScreen extends Component {
             <ListItem bottomDivider>
               <Avatar style={styles.avatar} source={{ uri: item.picture.thumbnail }} rounded />
               <ListItem.Content >
-                <ListItem.Title style={styles.content}>{`${item.name.first} ${item.name.last}`}</ListItem.Title>
+                <ListItem.Title style={styles.content}>{`${item.name.first}`}</ListItem.Title>
                 <ListItem.Subtitle>{item.email}</ListItem.Subtitle>
               </ListItem.Content>
               <ListItem.Chevron />

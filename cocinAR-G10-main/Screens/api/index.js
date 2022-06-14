@@ -2,8 +2,8 @@ import _ from "lodash";
 import users from "./users";
 
 export const contains = ({ name, email }, query) => {
-  const { first, last } = name;
-  if (first.includes(query) || last.includes(query) || email.includes(query)) {
+  const { first } = name;
+  if (first.includes(query) || email.includes(query)) {
     return true;
   }
 

@@ -3,8 +3,7 @@ export default [
       gender: "male",
       name: {
         title: "mr",
-        first: "guacamole",
-        last: "Mexicano"
+        first: "guacamole mexicano",
       },
       location: {
         street: "5236 rua tiradentes ",
@@ -32,8 +31,7 @@ export default [
       gender: "female",
       name: {
         title: "miss",
-        first: "guacamole",
-        last: "Americano"
+        first: "guacamole americano",
       },
       location: {
         street: "8792 mevlana cd",
