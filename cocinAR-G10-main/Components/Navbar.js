@@ -13,6 +13,8 @@ import Home2 from '../Screens/Home'
 import CargarReceta from '../Screens/CargarReceta';
 import SearchScreen from '../Screens/SearchScreen'
 import RecetasGuardadas from '../Screens/RecetasGuardadas';
+import Recetas from '../Screens/Recetas';
+
 
 const Stack = createStackNavigator();
 
@@ -69,7 +71,7 @@ export default function Home() {
         headerBackTitleVisible: false,
       }}
       />
-            <Tab.Screen name={detailsName} component={CargarReceta} 
+            <Tab.Screen name={detailsName} component={Recetas} 
       options={{
         title: 'Agregar',
         headerTitleAlign: 'center',
@@ -77,7 +79,7 @@ export default function Home() {
           backgroundColor: '#222121',
           elevation: 0,
         },
-        headerTintColor:'#F7456A',
+        headerTintColor:'#222121',
         headerBackTitleVisible: true,
         headerBackImage: () => (
           <View style={{marginLeft:15}}>
