@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@iconify/iconify": "^2.2.1",
     "@react-native-community/datetimepicker": "^6.1.3",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-community/netinfo": "8.2.0",
@@ -41,7 +42,8 @@
     "react-navigation-stack": "^2.10.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "@iconify/react": "^3.2.2"
   },
   "private": true
 }
