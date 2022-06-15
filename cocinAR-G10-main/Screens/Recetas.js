@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { View, Text, StyleSheet, FlatList, Image} from 'react-native'
+import { View, Text, StyleSheet, FlatList, Image, SafeAreaView} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-elements'
 import { shadow } from 'react-native-paper';
+import { ListItem, SearchBar, Avatar } from "react-native-elements";
 
 
 class Recetas extends Component{
@@ -19,12 +20,27 @@ class Recetas extends Component{
                 image: 'https://www.recetas.net/Imagen_web/Aguacate-o-Guacamole-Mexicano.aspx?idx=3&nId=4609&hash=d2066219a436924ebb184a25cfa1f2cd',
                 descripcion: 'Este guacamole es original de México, lugar de origen del guacamole, que sirve como acompañante para cualquiera de tus comidas.',
                 porciones: 3,
+                pasoss: {
+                    id: "En una taza mediana, triture la palta hasta alcanzar la consistencia deseada.",
+                    id: "Agregar la cebolla, el jalapeño, el cilantro y el jugo de limón, y sazona con sal y pimienta. Revuelva para combinar."
+                },
                 paso1: "En una taza mediana, triture la palta hasta alcanzar la consistencia deseada.", 
                 imagePaso1: "https://imgmedia.buenazo.pe/475x475/buenazo/original/2020/09/21/5f690a710c9613735c7fa8a1.jpg",
                 paso2: "Agregar la cebolla, el jalapeño, el cilantro y el jugo de limón, y sazona con sal y pimienta. Revuelva para combinar.",
                 tags: "Mexicana"
 
             },
+        ],
+        pasos: [{
+            
+                nro: '1',
+                texto: 'En una taza mediana, triture la palta hasta alcanzar la consistencia deseada.',
+                image: 'https://imgmedia.buenazo.pe/475x475/buenazo/original/2020/09/21/5f690a710c9613735c7fa8a1.jpg'
+            },
+            {
+                nro: '2',
+                texto: 'Agregar la cebolla, el jalapeño, el cilantro y el jugo de limón, y sazona con sal y pimienta. Revuelva para combinar.'
+            }
         ]
     }
 
@@ -42,9 +58,11 @@ class Recetas extends Component{
     
     
 
+    
+
     renderItems = ({ item }) => {
         return(
-            <View style={styles.flatlistStyle}>
+            <SafeAreaView style={styles.flatlistStyle}>
                 <Text style={styles.textName}>{item.name}</Text>
                 <Text style={styles.textUser}>Por {item.user}</Text>
                 <Text style={styles.textRating}>Rating: {item.rating}</Text>
@@ -55,25 +73,28 @@ class Recetas extends Component{
             <Text style={styles.textDescription}>{item.descripcion}</Text>
             </View>
             <Text style={styles.tituloDescription}>Preparacion</Text>
+            <FlatList
+          data={this.state.pasos}
+          style={styles.containerPasos}
+          renderItem={({ item }) => (
+            <ListItem.Title style={styles.textPasos}>{`Paso ${item.nro} - ${item.texto}`}</ListItem.Title>
 
-            <View style={styles.containerPasos}>
-            <Text style={styles.conteoPasos}>1</Text>
-            <Image source={{uri: item.imagePaso1}} style={styles.imgStyle}></Image>
-            <Text style={styles.textPasos}>{item.paso1}</Text>
-            </View>
-            <View style={styles.containerPasos2}>
-            <Text style={styles.conteoPasos}>2</Text>
-            <Text style={styles.textPasos}>{item.paso2}</Text>
-            </View>
-            </View>
-        )
-    }
+        )}
+        />
+        </SafeAreaView>
+        
+          );
+        }
+      
+    
 
     render(){
         const {data} = this.state
+        const {pasos} = this.state.pasos
         return(
         <View style={styles.container}>
             <FlatList data={data} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>
+            <FlatList data={pasos} renderItem={this.renderItems} keyExtractor={(item)=> item.nro}></FlatList>
         </View>
     )
     }
@@ -164,10 +185,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         color: 'black',
-        fontSize: 15,
+        fontSize: 18,
         fontWeight: 'normal',
         marginTop: 10,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        backgroundColor: '#F7456A',
     },
     conteoPasos:{
         fontSize: 42,
