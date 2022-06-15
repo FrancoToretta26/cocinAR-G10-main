@@ -20,7 +20,7 @@ export default function Registro({ navigation, route }) {
   };
 
   const onSubmit = (data) => {
-    navigation.navigate('FinalizarRegistro')
+    navigation.navigate('ValidarCodigo')
   };
 
 
