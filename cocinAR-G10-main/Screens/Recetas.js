@@ -41,7 +41,28 @@ class Recetas extends Component{
                 nro: '2',
                 texto: 'Agregar la cebolla, el jalapeño, el cilantro y el jugo de limón, y sazona con sal y pimienta. Revuelva para combinar.'
             }
-        ]
+        ],
+        tipos: [{
+            
+            id: '1',
+            descripcion: 'Mexicana',
+        },
+        {
+            
+            id: '2',
+            descripcion: 'Vegana',
+        },
+        {
+            
+            id: '3',
+            descripcion: 'Vegetariana',
+        },
+        {
+            
+            id: '4',
+            descripcion: 'Guarnicion',
+        },
+    ]
     }
 
     onDelte = (id) =>{
@@ -62,26 +83,33 @@ class Recetas extends Component{
 
     renderItems = ({ item }) => {
         return(
-            <SafeAreaView style={styles.flatlistStyle}>
+            <><SafeAreaView style={styles.flatlistStyle}>
                 <Text style={styles.textName}>{item.name}</Text>
                 <Text style={styles.textUser}>Por {item.user}</Text>
                 <Text style={styles.textRating}>Rating: {item.rating}</Text>
-                <Image source={{uri: item.image}} style={styles.imgStyle}></Image>
+                <Image source={{ uri: item.image }} style={styles.imgStyle}></Image>
                 <Text style={styles.textFecha}>Publicada el: {item.fechaPublicacion}</Text>
-            <Text style={styles.tituloDescription}>Descripcion</Text>
-            <View style={styles.containerDescription}>
-            <Text style={styles.textDescription}>{item.descripcion}</Text>
-            </View>
-            <Text style={styles.tituloDescription}>Preparacion</Text>
-            <FlatList
-          data={this.state.pasos}
-          style={styles.containerPasos}
-          renderItem={({ item }) => (
-            <ListItem.Title style={styles.textPasos}>{`Paso ${item.nro} - ${item.texto}`}</ListItem.Title>
+                <Text style={styles.tituloDescription}>Descripcion</Text>
+                <View style={styles.containerDescription}>
+                    <Text style={styles.textDescription}>{item.descripcion}</Text>
+                </View>
+                <Text style={styles.tituloDescription}>Preparacion</Text>
+                <FlatList
+                    data={this.state.pasos}
+                    renderItem={({ item }) => (
+                        <ListItem.Title style={styles.textPasos}>{`Paso ${item.nro} - ${item.texto}`}</ListItem.Title>
 
-        )}
-        />
-        </SafeAreaView>
+                    )} />
+            </SafeAreaView><SafeAreaView style={styles.containerTipos}>
+                    <Text style={styles.tituloDescription}>Tipos</Text>
+
+                    <FlatList
+                        data={this.state.tipos}
+                        renderItem={({ item }) => (
+                            <ListItem.Title style={styles.tagsTipos}>{`${item.descripcion}`}</ListItem.Title>
+
+                        )} />
+                </SafeAreaView></>
         
           );
         }
@@ -91,10 +119,12 @@ class Recetas extends Component{
     render(){
         const {data} = this.state
         const {pasos} = this.state.pasos
+        const {tipos} = this.state.tipos
         return(
         <View style={styles.container}>
             <FlatList data={data} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>
             <FlatList data={pasos} renderItem={this.renderItems} keyExtractor={(item)=> item.nro}></FlatList>
+            <FlatList data={tipos} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>
         </View>
     )
     }
@@ -108,8 +138,8 @@ const styles = StyleSheet.create({
 
     },
     flatlistStyle:{
-        justifyContent: 'space-between',
         alignItems: 'center',
+        justifyContent: 'space-between',
         backgroundColor: '#222121',
         marginBottom: 16,
         padding: 8,
@@ -172,16 +202,12 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         fontWeight: 'bold'
     },
-    containerPasos:{
-        width: 350,
-        flex: 1,
+    textPasos:{
         alignItems: 'center',
         backgroundColor: '#F7456A',
-        marginBottom: 20,
+        marginBottom: 10,
         padding: 15,
-        borderRadius: 20
-    },
-    textPasos:{
+        borderRadius: 20,
         justifyContent: 'space-between',
         alignItems: 'center',
         color: 'black',
@@ -191,22 +217,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         backgroundColor: '#F7456A',
     },
-    conteoPasos:{
-        fontSize: 42,
-        color: 'black',
-        marginRight: 270,
-        marginBottom: 0,
-        shadow: 20,
-        fontWeight: 'bold'
-    },
-    containerPasos2:{
-        width: 350,
+    containerTipos:{
         flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#FA869E',
-        marginBottom: 20,
-        padding: 15,
-        borderRadius: 20
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    tagsTipos:{
+        alignSelf: "flex-start",
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        backgroundColor: 'white',
+        padding: 3,
+        borderRadius: 20,
+        color: 'black',
+        fontSize: 18,
+        fontWeight: 'bold',
     },
 })
 

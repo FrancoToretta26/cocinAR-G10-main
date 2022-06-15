@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   categoryStyle: {
     marginLeft: 230,
-    fontWeight: '200',
+    fontWeight: '400',
     color: "#F7456A"
   },
   infoStyle: {
