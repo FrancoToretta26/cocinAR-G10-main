@@ -27,10 +27,16 @@ export default function Registro({ navigation, route }) {
         mail: data.mail,
         alias: data.alias,
       }
-      alert(data.mail)
       let nuevoRegistro = await registro(datos)
+      if(nuevoRegistro){
+        alert('Usuario registrado con exito')
+        navigation.navigate('FinalizarRegistro')
+
+      }
+      else{
+        alert('Reintente nuevamente')
+      }
     }
-    //navigation.navigate('FinalizarRegistro')
   };
 
   return (

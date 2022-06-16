@@ -37,19 +37,19 @@ export default function Registro({ navigation, route }) {
         <ImagePicker></ImagePicker>
         <Controller
         defaultValue=""
-        name="name"
+        name="nombre"
         rules={{required:{
             value: true,
             message: 'Nombre'
         },
     }}
         control={control}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, nombre } }) => (
             <Input
-                error={errors.name}
-                errorText={errors.name?.message}
-                onChangeText={(value) => onChange(value)}
-                value={value}
+                error={errors.nombre}
+                errorText={errors.nombre?.message}
+                onChangeText={(nombre) => onChange(nombre)}
+                value={nombre}
                 placeholder="Nombre"
             />
         )}
@@ -63,12 +63,12 @@ export default function Registro({ navigation, route }) {
         },
     }}
         control={control}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, apellido } }) => (
             <Input
                 error={errors.apellido}
                 errorText={errors.apellido?.message}
-                onChangeText={(value) => onChange(value)}
-                value={value}
+                onChangeText={(apellido) => onChange(apellido)}
+                value={apellido}
                 placeholder="Apellido"
             />
         )}
@@ -83,12 +83,12 @@ export default function Registro({ navigation, route }) {
         },
     }}
         control={control}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, password } }) => (
             <Input
                 error={errors.password}
                 errorText={errors.password?.message}
-                onChangeText={(value) => onChange(value)}
-                value={value}
+                onChangeText={(password) => onChange(password)}
+                value={password}
                 placeholder="Contraseña"
             />
         )}

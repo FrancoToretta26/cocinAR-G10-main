@@ -7,6 +7,7 @@ import Button from '../Components/Button';
 
 import { useForm, Controller } from 'react-hook-form';
 
+import { login } from '../controller/user.controller';
 
 export default function Login({ navigation, route }) {
   const [isBillingDifferent, setIsBillingDifferent] = useState(false);
@@ -19,8 +20,24 @@ export default function Login({ navigation, route }) {
     setIsBillingDifferent((prev) => !prev);
   };
 
-  const onSubmit = (data) => {
-    navigation.navigate('Inicio')
+
+  const onSubmit = async function(data){
+    if (data.mail!=="" && data.password!=="")
+    {
+      let datos = {
+        mail: data.mail,
+        password: data.password,
+      }
+      let nuevoLogin = await login(datos)
+      if(nuevoLogin){
+        alert('Usuario logueado con exito')
+        navigation.navigate('Inicio')
+
+      }
+      else{
+        alert('Reintente nuevamente')
+      }
+    }
   };
 
     
@@ -31,7 +48,7 @@ export default function Login({ navigation, route }) {
     <View style={styles.container}>
         <Controller
         defaultValue=""
-        name="email"
+        name="mail"
         rules={{required:{
             value: true,
             message: 'El Correo Electrónico es obligatorio'
@@ -42,12 +59,12 @@ export default function Login({ navigation, route }) {
         }
     }}
         control={control}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, mail } }) => (
             <Input
-                error={errors.email}
-                errorText={errors.email?.message}
-                onChangeText={(value) => onChange(value)}
-                value={value}
+                error={errors.mail}
+                errorText={errors.mail?.message}
+                onChangeText={(mail) => onChange(mail)}
+                value={mail}
                 placeholder="Correo Electrónico"
             />
         )}
@@ -60,12 +77,12 @@ export default function Login({ navigation, route }) {
             message: 'La contraseña es obligatoria'
         }}}
         control={control}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, password } }) => (
             <Input
                 error={errors.password}
                 errorText={errors.password?.message}
-                onChangeText={(value) => onChange(value)}
-                value={value}
+                onChangeText={(password) => onChange(password)}
+                value={password}
                 placeholder="Contraseña"
             />
         )}
