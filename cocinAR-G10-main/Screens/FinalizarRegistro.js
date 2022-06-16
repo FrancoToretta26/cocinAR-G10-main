@@ -9,6 +9,7 @@ import { useForm, Controller } from 'react-hook-form';
 
 import ImagePicker from '../Components/ImagePicker';
 
+import { finalizarRegistro } from '../controller/user.controller';
 
 export default function Registro({ navigation, route }) {
   const [isBillingDifferent, setIsBillingDifferent] = useState(false);
@@ -26,10 +27,32 @@ export default function Registro({ navigation, route }) {
     setIsBillingDifferent((prev) => !prev);
   };
 
-  const onSubmit = (data) => {
-    navigation.navigate('Inicio')
-  };
 
+
+  const onSubmit = async function(data){
+    if(data.password==data.password2){
+        if (data.nombre!=="" && data.apellido!=="" && data.password!=="")
+        {
+        let datos = {
+            nombre: data.nombre,
+            apellido: data.apellido,
+            password: data.password
+        }
+        let finRegistro = await finalizarRegistro(datos)
+        if(finRegistro){
+            alert('Usuario registrado con exito')
+            navigation.navigate('Inicio')
+
+        }
+        else{
+            alert('Reintente nuevamente')
+        }
+        }
+    }
+   else{
+    alert('Las contraseñas no coinciden')
+   } 
+  };
 
 
   return (

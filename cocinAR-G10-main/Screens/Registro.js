@@ -9,6 +9,10 @@ import { useForm, Controller } from 'react-hook-form';
 
 import {registro} from "../controller/user.controller";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+
 export default function Registro({ navigation, route }) {
   const [isBillingDifferent, setIsBillingDifferent] = useState(false);
   const { handleSubmit, control, formState: { errors } } = useForm();
@@ -27,6 +31,7 @@ export default function Registro({ navigation, route }) {
         mail: data.mail,
         alias: data.alias,
       }
+      await AsyncStorage.setItem('alias', data.alias)
       let nuevoRegistro = await registro(datos)
       if(nuevoRegistro){
         alert('Usuario registrado con exito')

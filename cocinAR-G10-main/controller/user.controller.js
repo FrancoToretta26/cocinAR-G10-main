@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const registro= async function(registro)
@@ -20,7 +21,6 @@ export const registro= async function(registro)
         
         
         let rdo = response.status;
-        alert(rdo)
         let data = await response.json();
         switch(rdo)
         {
@@ -61,6 +61,48 @@ export const login= async function(login)
         
         
         let rdo = response.status;
+        switch(rdo)
+        {
+            case 200:   
+            { 
+                return ({rdo:0,mensaje:"Ok"});//correcto
+            }
+            case 201:   
+            { 
+                return ({rdo:0,mensaje:"Ok"});//correcto
+            }
+    }
+}
+    catch(error)
+    {
+        console.log("error",error);
+    };
+}
+
+export const finalizarRegistro = async function(data)
+{
+    //url webservices
+    //armo json con datos
+    const alias = await AsyncStorage.getItem('alias')
+    try
+    {
+        let response = await fetch('http://192.168.0.17:8080/register/endRegister',{ // Poner la IPV4 de cada uno.
+            method: 'POST', // or 'PUT'
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify({
+                nombre: data.nombre,
+                apellido: data.apellido,
+                password: data.password,
+                alias: alias
+              })
+        });
+        
+        
+        let rdo = response.status;
+        alert(rdo)
         switch(rdo)
         {
             case 200:   
