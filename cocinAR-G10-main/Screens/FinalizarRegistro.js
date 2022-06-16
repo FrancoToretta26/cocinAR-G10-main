@@ -7,7 +7,7 @@ import Button from '../Components/Button';
 
 import { useForm, Controller } from 'react-hook-form';
 
-import Prueba from '../Components/ImagePicker';
+import ImagePicker from '../Components/ImagePicker';
 
 
 export default function Registro({ navigation, route }) {
@@ -34,7 +34,7 @@ export default function Registro({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-        <Prueba></Prueba>
+        <ImagePicker></ImagePicker>
         <Controller
         defaultValue=""
         name="name"
