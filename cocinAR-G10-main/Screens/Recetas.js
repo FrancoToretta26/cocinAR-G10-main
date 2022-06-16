@@ -10,7 +10,7 @@ import { ListItem, SearchBar, Avatar } from "react-native-elements";
 class Recetas extends Component{
 
     state={
-        data: [
+        receta: [
             {
                 id: 1,
                 name: 'Guacamole Mexicano',
@@ -20,15 +20,6 @@ class Recetas extends Component{
                 image: 'https://www.recetas.net/Imagen_web/Aguacate-o-Guacamole-Mexicano.aspx?idx=3&nId=4609&hash=d2066219a436924ebb184a25cfa1f2cd',
                 descripcion: 'Este guacamole es original de México, lugar de origen del guacamole, que sirve como acompañante para cualquiera de tus comidas.',
                 porciones: 3,
-                pasoss: {
-                    id: "En una taza mediana, triture la palta hasta alcanzar la consistencia deseada.",
-                    id: "Agregar la cebolla, el jalapeño, el cilantro y el jugo de limón, y sazona con sal y pimienta. Revuelva para combinar."
-                },
-                paso1: "En una taza mediana, triture la palta hasta alcanzar la consistencia deseada.", 
-                imagePaso1: "https://imgmedia.buenazo.pe/475x475/buenazo/original/2020/09/21/5f690a710c9613735c7fa8a1.jpg",
-                paso2: "Agregar la cebolla, el jalapeño, el cilantro y el jugo de limón, y sazona con sal y pimienta. Revuelva para combinar.",
-                tags: "Mexicana"
-
             },
         ],
         pasos: [{
@@ -65,17 +56,6 @@ class Recetas extends Component{
     ]
     }
 
-    onDelte = (id) =>{
-        const { data } = this.state
-        let filterArray = data.filter((val, i)=>{
-            if(val.id !== id){
-                return val
-            }
-        })
-        console.log('filter array', filterArray)
-        this.setState({data: filterArray})
-    }
-
     
     
 
@@ -100,6 +80,17 @@ class Recetas extends Component{
                         <ListItem.Title style={styles.textPasos}>{`Paso ${item.nro} - ${item.texto}`}</ListItem.Title>
 
                     )} />
+                <View style={styles.containerRating}>
+                    <Text style={styles.textoRating}>Recomendarias esta receta? </Text>
+                    <Icon
+            style={styles.iconRating}
+            name='done'
+            color='green' />
+                                <Icon
+            style={styles.iconRating}
+            name='close'
+            color='red' />
+                </View>
             </SafeAreaView><SafeAreaView style={styles.containerTipos}>
                     <Text style={styles.tituloDescription}>Tipos</Text>
 
@@ -117,12 +108,12 @@ class Recetas extends Component{
     
 
     render(){
-        const {data} = this.state
+        const {receta} = this.state
         const {pasos} = this.state.pasos
         const {tipos} = this.state.tipos
         return(
         <View style={styles.container}>
-            <FlatList data={data} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>
+            <FlatList data={receta} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>
             <FlatList data={pasos} renderItem={this.renderItems} keyExtractor={(item)=> item.nro}></FlatList>
             <FlatList data={tipos} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>
         </View>
@@ -218,20 +209,30 @@ const styles = StyleSheet.create({
         backgroundColor: '#F7456A',
     },
     containerTipos:{
-        flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'center'
+        flexDirection: 'row',
+        flexWrap: 'wrap',
     },
     tagsTipos:{
         alignSelf: "flex-start",
-        flexDirection: 'row',
-        flexWrap: 'wrap',
         backgroundColor: 'white',
         padding: 3,
         borderRadius: 20,
         color: 'black',
         fontSize: 18,
         fontWeight: 'bold',
+    },
+    containerRating:{
+        flexDirection: 'row',
+
+    },
+    textoRating:{
+        fontSize: 16,
+        color: 'white',
+        fontWeight: 'bold',
+
+    },
+    iconRating:{
+
     },
 })
 
