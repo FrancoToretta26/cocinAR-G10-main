@@ -83,13 +83,13 @@ class Recetas extends Component{
                 <View style={styles.containerRating}>
                     <Text style={styles.textoRating}>Recomendarias esta receta? </Text>
                     <Icon
-            style={styles.iconRating}
-            name='done'
-            color='green' />
-                                <Icon
-            style={styles.iconRating}
-            name='close'
-            color='red' />
+                    style={styles.iconRating}
+                    name='done'
+                    color='green' />
+                    <Icon
+                    style={styles.iconRating}
+                    name='close'
+                    color='red' />
                 </View>
             </SafeAreaView><SafeAreaView style={styles.containerTipos}>
                     <Text style={styles.tituloDescription}>Tipos</Text>

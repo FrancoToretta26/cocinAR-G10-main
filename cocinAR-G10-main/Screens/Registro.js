@@ -7,6 +7,7 @@ import Button from '../Components/Button';
 
 import { useForm, Controller } from 'react-hook-form';
 
+import {registro} from "../controller/user.controller";
 
 export default function Registro({ navigation, route }) {
   const [isBillingDifferent, setIsBillingDifferent] = useState(false);
@@ -19,35 +20,43 @@ export default function Registro({ navigation, route }) {
     setIsBillingDifferent((prev) => !prev);
   };
 
-  const onSubmit = (data) => {
-    navigation.navigate('FinalizarRegistro')
+  const onSubmit = async function(data){
+    if (data.mail!=="" && data.alias!=="")
+    {
+      let datos = {
+        mail: data.mail,
+        alias: data.alias,
+      }
+      alert(data.mail)
+      let nuevoRegistro = await registro(datos)
+    }
+    //navigation.navigate('FinalizarRegistro')
   };
-
 
   return (
     <View style={styles.container}>
         <Controller
         defaultValue=""
-        name="name"
+        name="alias"
         rules={{required:{
             value: true,
             message: 'Alias es requerido'
         },
     }}
         control={control}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, alias } }) => (
             <Input
-                error={errors.name}
-                errorText={errors.name?.message}
-                onChangeText={(value) => onChange(value)}
-                value={value}
+                error={errors.alias}
+                errorText={errors.alias?.message}
+                onChangeText={(alias) => onChange(alias)}
+                value={alias}
                 placeholder="Alias"
             />
         )}
         />
         <Controller
-        defaultValue=""
-        name="email"
+        defaultValue=''
+        name="mail"
         rules={{required:{
             value: true,
             message: 'El correo electronico es requerido'
@@ -57,12 +66,12 @@ export default function Registro({ navigation, route }) {
             message: 'El correo electronico es invalido'
         }}}
         control={control}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, mail } }) => (
             <Input
-                error={errors.email}
-                errorText={errors.email?.message}
-                onChangeText={(value) => onChange(value)}
-                value={value}
+                error={errors.mail}
+                errorText={errors.mail?.message}
+                onChangeText={(mail) => onChange(mail)}
+                value={mail}
                 placeholder="Correo Electrónico"
             />
         )}
