@@ -8,13 +8,11 @@ import Login from './Screens/Login'
 import OlvidePassword from './Screens/OlvidePassword';
 import SearchScreen1 from './Screens/SearchScreen';
 import FinalizarRegistro from './Screens/FinalizarRegistro';
-import Prueba from './Components/ImagePicker'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Navbar from './Components/Navbar';
 import RecetasGuardadas from './Screens/RecetasGuardadas';
 import BuscarRecetasFiltros from './Screens/BuscarRecetaFiltros';
-
 
 const Stack = createStackNavigator();
 
@@ -191,6 +189,7 @@ export default function App() {
                   ),
                 }}
               />
+
 
               
 
