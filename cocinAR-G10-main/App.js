@@ -13,6 +13,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Navbar from './Components/Navbar';
 import RecetasGuardadas from './Screens/RecetasGuardadas';
+import BuscarRecetasFiltros from './Screens/BuscarRecetaFiltros';
 
 
 const Stack = createStackNavigator();
@@ -155,6 +156,27 @@ export default function App() {
       component={RecetasGuardadas}
       options={{
         title: 'RecetasGuardadas',
+        headerTintColor: '#F7456A',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#222121',
+          elevation: 0,
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft:15}}>
+            <Ionicons name="arrow-back-outline" size={25} color="#F7456A" />
+          </View>
+                  ),
+                }}
+              />
+
+
+<Stack.Screen
+      name="BuscarRecetasFiltros"
+      component={BuscarRecetasFiltros}
+      options={{
+        title: 'BuscarRecetasFiltros',
         headerTintColor: '#F7456A',
         headerTitleAlign: 'center',
         headerStyle: {

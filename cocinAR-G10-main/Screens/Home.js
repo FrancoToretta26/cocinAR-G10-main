@@ -34,7 +34,7 @@ export default function Home({navigation, route}) {
     ];
 
     const onSubmit = (data) => {
-      navigation.navigate('SearchScreen')
+      navigation.navigate('BuscarRecetasFiltros')
     };
     
   return (
