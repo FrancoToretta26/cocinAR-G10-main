@@ -8,10 +8,11 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  Touchable,
 } from "react-native";
 import _ from "lodash";
 import { ListItem, SearchBar, Avatar } from "react-native-elements";
-import { getUsers, contains } from "./api/index";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 class SearchScreen extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class SearchScreen extends Component {
       data: [],
       error: null,
     };
+
   }
 
   componentDidMount() {
@@ -31,7 +33,7 @@ class SearchScreen extends Component {
   makeRemoteRequest = _.debounce(() => {
     this.setState({ loading: true });
 
-    getUsers(2, this.state.query)
+    this.getUsers(2, this.state.query)
       .then((users) => {
         this.setState({
           loading: false,
@@ -47,7 +49,7 @@ class SearchScreen extends Component {
   handleSearch = (text) => {
     const formattedQuery = text.toLowerCase();
     const data = _.filter(this.state.fullData, (user) => {
-      return contains(user, formattedQuery);
+      return this.contains(user, formattedQuery);
     });
     this.setState({ data, query: text }, () => this.makeRemoteRequest());
   };
@@ -93,24 +95,61 @@ class SearchScreen extends Component {
     );
   };
 
+  getUsers = (limit = 2, query = "") => {
+    return new Promise((resolve, reject) => {
+      if (query.length === 0) {
+        resolve(_.take(users, limit));
+      } else {
+        const formattedQuery = query.toLowerCase();
+        const results = _.filter(users, user => {
+          return contains(user, formattedQuery);
+        });
+        resolve(_.take(results, limit));
+      }
+    });
+  };
+
+  contains = ({ nombre }, query) => {
+    const { first } = nombre;
+    if (first.includes(query)) {
+      return true;
+    }
+  
+    return false;
+  };
+
   render() {
+    const { postId, users } = this.props.route.params;
     return (
 
       <SafeAreaView>
         <StatusBar style="light-content" />
         <FlatList
-          data={this.state.data}
+          data={users}
           renderItem={({ item }) => (
             <ListItem bottomDivider>
-              <Avatar style={styles.avatar} source={{ uri: item.picture.thumbnail }} rounded />
+              <Avatar style={styles.avatar} source={{ uri: item.receta.foto }} rounded />
               <ListItem.Content >
-                <ListItem.Title style={styles.content}>{`${item.name.first}`}</ListItem.Title>
-                <ListItem.Subtitle>{item.email}</ListItem.Subtitle>
+                <ListItem.Title style={styles.content}>{`${item.receta.nombre}`}</ListItem.Title>
+                <ListItem.Subtitle>{item.receta.descripcion}</ListItem.Subtitle>
               </ListItem.Content>
-              <ListItem.Chevron />
+              <TouchableOpacity onPress={() => {
+              this.props.navigation.navigate('Recetas', {
+                postId: 3007,
+                recetass:item.receta
+              },
+              {
+                idd: 3008,
+                pasos: item.pasos
+              });
+            }}>
+              <ListItem.Chevron size={35} color="pink" />
+              
+              </TouchableOpacity>
+              
             </ListItem>
           )}
-          keyExtractor={(item) => item.email}
+          keyExtractor={(item) => item.receta.idReceta}
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
           ListFooterComponent={this.renderFooter}

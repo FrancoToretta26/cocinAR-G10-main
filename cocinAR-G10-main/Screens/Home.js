@@ -34,15 +34,17 @@ export default function Home({navigation, route}) {
     ];
 
     const onSubmit = async function(data){
-        let recetas = await getRecipes()
+        let recetas = await getRecipes();
         if(recetas){
-          alert('hola')
-          navigation.navigate('SearchScreen',{recetas:recetas} )
+          navigation.navigate('SearchScreen', {
+            postId: 3006,
+            users: recetas})
         }
         else{
-          alert('Reintente nuevamente')
+          alert('Intente nuevamente')
         }
       }
+
    
     
   return (

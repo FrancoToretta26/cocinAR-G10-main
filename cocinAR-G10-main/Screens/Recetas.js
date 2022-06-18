@@ -9,118 +9,193 @@ import { ListItem, SearchBar, Avatar } from "react-native-elements";
 
 class Recetas extends Component{
 
-    state={
-        receta: [
-            {
-                id: 1,
-                name: 'Guacamole Mexicano',
-                user: 'Camila93',
-                rating: 316,
-                fechaPublicacion: '10/04/2021',
-                image: 'https://www.recetas.net/Imagen_web/Aguacate-o-Guacamole-Mexicano.aspx?idx=3&nId=4609&hash=d2066219a436924ebb184a25cfa1f2cd',
-                descripcion: 'Este guacamole es original de México, lugar de origen del guacamole, que sirve como acompañante para cualquiera de tus comidas.',
-                porciones: 3,
-            },
-        ],
-        pasos: [{
-            
-                nro: '1',
-                texto: 'En una taza mediana, triture la palta hasta alcanzar la consistencia deseada.',
-                image: 'https://imgmedia.buenazo.pe/475x475/buenazo/original/2020/09/21/5f690a710c9613735c7fa8a1.jpg'
-            },
-            {
-                nro: '2',
-                texto: 'Agregar la cebolla, el jalapeño, el cilantro y el jugo de limón, y sazona con sal y pimienta. Revuelva para combinar.'
-            }
-        ],
-        tipos: [{
-            
-            id: '1',
-            descripcion: 'Mexicana',
-        },
-        {
-            
-            id: '2',
-            descripcion: 'Vegana',
-        },
-        {
-            
-            id: '3',
-            descripcion: 'Vegetariana',
-        },
-        {
-            
-            id: '4',
-            descripcion: 'Guarnicion',
-        },
-    ]
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            loading: false,
+            data: [],
+            error: null,
+          };
     }
 
+
+    // state={
+    //     pasos: [{
+            
+    //             nro: '1',
+    //             texto: 'En una taza mediana, triture la palta hasta alcanzar la consistencia deseada.',
+    //             image: 'https://imgmedia.buenazo.pe/475x475/buenazo/original/2020/09/21/5f690a710c9613735c7fa8a1.jpg'
+    //         },
+    //         {
+    //             nro: '2',
+    //             texto: 'Agregar la cebolla, el jalapeño, el cilantro y el jugo de limón, y sazona con sal y pimienta. Revuelva para combinar.'
+    //         }
+    //     ],
+    //     tipos: [{
+            
+    //         id: '1',
+    //         descripcion: 'Mexicana',
+    //     },
+    //     {
+            
+    //         id: '2',
+    //         descripcion: 'Vegana',
+    //     },
+    //     {
+            
+    //         id: '3',
+    //         descripcion: 'Vegetariana',
+    //     },
+    //     {
+            
+    //         id: '4',
+    //         descripcion: 'Guarnicion',
+    //     },
+    // ]
+    // }
+
+    renderSeparator = () => {
+        return (
+          <View
+            style={{
+              height: 1,
+              width: "86%",
+              backgroundColor: "#CED0CE",
+              marginLeft: "14%",
+            }}
+          />
+        );
+      };
+    
+      renderHeader = () => {
+        return (
+          <SearchBar
+            placeholder="Buscar"
+            lightTheme
+            round
+            onChangeText={this.handleSearch}
+            value={this.state.query}
+          />
+        );
+      };
+    
+      renderFooter = () => {
+        if (!this.state.loading) return null;
+    
+        return (
+          <View
+            style={{
+              paddingVertical: 20,
+              borderTopWidth: 1,
+              borderColor: "#CED0CE",
+            }}
+          >
+            <ActivityIndicator animating size="large" />
+          </View>
+        );
+      };
+
     
     
 
     
-
-    renderItems = ({ item }) => {
-        return(
-            <><SafeAreaView style={styles.flatlistStyle}>
-                <Text style={styles.textName}>{item.name}</Text>
-                <Text style={styles.textUser}>Por {item.user}</Text>
-                <Text style={styles.textRating}>Rating: {item.rating}</Text>
-                <Image source={{ uri: item.image }} style={styles.imgStyle}></Image>
-                <Text style={styles.textFecha}>Publicada el: {item.fechaPublicacion}</Text>
-                <Text style={styles.tituloDescription}>Descripcion</Text>
-                <View style={styles.containerDescription}>
-                    <Text style={styles.textDescription}>{item.descripcion}</Text>
-                </View>
-                <Text style={styles.tituloDescription}>Preparacion</Text>
-                <FlatList
-                    data={this.state.pasos}
-                    renderItem={({ item }) => (
-                        <ListItem.Title style={styles.textPasos}>{`Paso ${item.nro} - ${item.texto}`}</ListItem.Title>
-
-                    )} />
-                <View style={styles.containerRating}>
-                    <Text style={styles.textoRating}>Recomendarias esta receta? </Text>
-                    <Icon
-                    style={styles.iconRating}
-                    name='done'
-                    color='green' />
-                    <Icon
-                    style={styles.iconRating}
-                    name='close'
-                    color='red' />
-                </View>
-            </SafeAreaView><SafeAreaView style={styles.containerTipos}>
-                    <Text style={styles.tituloDescription}>Tipos</Text>
-
-                    <FlatList
-                        data={this.state.tipos}
-                        renderItem={({ item }) => (
-                            <ListItem.Title style={styles.tagsTipos}>{`${item.descripcion}`}</ListItem.Title>
-
-                        )} />
-                </SafeAreaView></>
-        
-          );
-        }
-      
     
 
     render(){
-        const {receta} = this.state
-        const {pasos} = this.state.pasos
-        const {tipos} = this.state.tipos
-        return(
-        <View style={styles.container}>
-            <FlatList data={receta} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>
-            <FlatList data={pasos} renderItem={this.renderItems} keyExtractor={(item)=> item.nro}></FlatList>
-            <FlatList data={tipos} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>
-        </View>
-    )
-    }
+        const { postId, recetass} = this.props.route.params;
+        const { idd, pasos} = this.props.route.params;
 
-}
+        console.log(recetass)
+        console.log(pasos)
+        return(
+            <View style={styles.container}>
+            <SafeAreaView  style={styles.flatlistStyle}>
+
+                <Text style={styles.textName}>{recetass.nombre}</Text>
+                <Text style={styles.textUser}>Por {recetass.idUsuario}</Text>
+                <Text style={styles.textRating}>Rating: {recetass.rating}</Text>
+                <Image source={{ uri: recetass.foto }} style={styles.imgStyle}></Image>
+                <Text style={styles.textFecha}>Publicada el: {recetass.fechaPublicacion}</Text>
+                <Text style={styles.tituloDescription}>Descripcion</Text>
+                <View style={styles.containerDescription}>
+                <Text style={styles.textDescription}>{recetass.descripcion}</Text></View>
+            </SafeAreaView>
+            </View>
+        )}
+
+
+        /* <FlatList
+          data={recetass}
+          renderItem={({ recetass }) => (
+            <ListItem bottomDivider>
+            <Avatar style={styles.avatar} source={{ uri: recetass.foto }} rounded />
+            <ListItem.Content >
+              <ListItem.Title style={styles.content}>{recetass.nombre}</ListItem.Title>
+              <ListItem.Subtitle>{recetass.descripcion}</ListItem.Subtitle>
+            </ListItem.Content>
+            <ListItem.Chevron size={35} color="pink" />
+            
+            
+          </ListItem>
+            
+            
+            
+            // <View>
+
+            //     <Text style={styles.textName}>{item.nombre}</Text>
+            //     <Text style={styles.textUser}>Por {item.idUsuario}</Text>
+            //     <Text style={styles.textRating}>Rating: {item.rating}</Text>
+            //     <Image source={{ uri: item.image }} style={styles.imgStyle}></Image>
+            //     <Text style={styles.textFecha}>Publicada el: {item.fechaPublicacion}</Text>
+            //     <Text style={styles.tituloDescription}>Descripcion</Text>
+            //     <View style={styles.containerDescription}>
+            //         <Text style={styles.textDescription}>{item.descripcion}</Text>
+            //     </View>
+            //     </View>
+          )}
+          keyExtractor={(item) => item.idReceta}
+          ItemSeparatorComponent={this.renderSeparator}
+          ListHeaderComponent={this.renderHeader}
+          ListFooterComponent={this.renderFooter}
+          ></FlatList> */}
+        
+
+    
+                
+                
+                
+        //         <Text style={styles.tituloDescription}>Preparacion</Text>
+        //         <FlatList
+        //             data={this.state.pasos}
+        //             renderItem={({ item }) => (
+        //                 <ListItem.Title style={styles.textPasos}>{`Paso ${item.nro} - ${item.texto}`}</ListItem.Title>
+
+        //             )} />
+        //         <View style={styles.containerRating}>
+        //             <Text style={styles.textoRating}>Recomendarias esta receta? </Text>
+        //             <Icon
+        //             style={styles.iconRating}
+        //             name='done'
+        //             color='green' />
+        //             <Icon
+        //             style={styles.iconRating}
+        //             name='close'
+        //             color='red' />
+        //         </View>
+        //     </SafeAreaView><SafeAreaView style={styles.containerTipos}>
+        //             <Text style={styles.tituloDescription}>Tipos</Text>
+
+        //             <FlatList
+        //                 data={this.state.tipos}
+        //                 renderItem={({ item }) => (
+        //                     <ListItem.Title style={styles.tagsTipos}>{`${item.descripcion}`}</ListItem.Title>
+
+        //                 )} />
+        
+        //   );
+    
+        
 
 const styles = StyleSheet.create({
     container:{
@@ -234,6 +309,12 @@ const styles = StyleSheet.create({
     iconRating:{
 
     },
+    content:{
+        fontSize: 30
+    },
+    avatar:{
+        width: 100,
+    }
 })
 
 export default Recetas;

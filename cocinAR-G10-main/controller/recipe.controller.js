@@ -18,7 +18,7 @@ export const getRecipes= async function(getRecipes)
         
         let rdo = response.status;
         let data = await response.json();
-        await AsyncStorage.setItem("recetas", JSON.stringify(data))
+        console.log(data)
 
         switch(rdo)
         {

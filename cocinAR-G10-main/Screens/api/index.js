@@ -1,9 +1,8 @@
 import _ from "lodash";
-import users from "./users";
 
-export const contains = ({ name, email }, query) => {
-  const { first } = name;
-  if (first.includes(query) || email.includes(query)) {
+export const contains = ({ nombre }, query) => {
+  const { first } = nombre;
+  if (first.includes(query)) {
     return true;
   }
 
