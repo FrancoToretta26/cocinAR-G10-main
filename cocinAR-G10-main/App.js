@@ -14,6 +14,7 @@ import RecetasGuardadas from './Screens/RecetasGuardadas';
 import BuscarRecetasFiltros from './Screens/BuscarRecetaFiltros';
 import SearchScreen from './Screens/SearchScreen';
 import Recetas from './Screens/Recetas';
+import "./ignoreWarnings";
 
 const Stack = createStackNavigator();
 

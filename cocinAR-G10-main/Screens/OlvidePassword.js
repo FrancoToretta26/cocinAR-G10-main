@@ -5,7 +5,11 @@ import { t, color } from 'react-native-tailwindcss';
 import Input from '../Components/Input'
 import Button from '../Components/Button';
 
+import {useNavigation} from 'react-navigation'
+
 import { useForm, Controller } from 'react-hook-form';
+
+import { getRecipes } from '../controller/recipe.controller';
 
 
 export default function OlvidePassword({ navigation, route }) {
@@ -19,8 +23,15 @@ export default function OlvidePassword({ navigation, route }) {
     setIsBillingDifferent((prev) => !prev);
   };
 
-  const onSubmit = (data) => {
-    navigation.navigate('Inicio')
+  const onSubmit = async function (data){
+    let recetas = await getRecipes();
+    if(recetas){
+      navigation.navigate('Inicio');
+    }
+    else{
+      navigation.navigate('Inicio')
+
+    }
   };
 
 

@@ -131,16 +131,12 @@ class SearchScreen extends Component {
               <Avatar style={styles.avatar} source={{ uri: item.receta.foto }} rounded />
               <ListItem.Content >
                 <ListItem.Title style={styles.content}>{`${item.receta.nombre}`}</ListItem.Title>
-                <ListItem.Subtitle>{item.receta.descripcion}</ListItem.Subtitle>
+                <ListItem.Subtitle>{item.creatorNickname}</ListItem.Subtitle>
               </ListItem.Content>
               <TouchableOpacity onPress={() => {
               this.props.navigation.navigate('Recetas', {
-                postId: 3007,
-                recetass:item.receta
-              },
-              {
-                idd: 3008,
-                pasos: item.pasos
+                screen: 'SearchScreen',
+                params: {recetass: item.receta }, pasos: item.pasos, usuario: item.creatorNickname
               });
             }}>
               <ListItem.Chevron size={35} color="pink" />

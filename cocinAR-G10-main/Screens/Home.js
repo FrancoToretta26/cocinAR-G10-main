@@ -15,7 +15,6 @@ export default function Home({navigation, route}) {
     const settingsName = "Guardadas";
     const { handleSubmit} = useForm();
 
-
     const recipes = [
       {
         name: 'Guacamole Mexicano',

@@ -18,8 +18,6 @@ export const getRecipes= async function(getRecipes)
         
         let rdo = response.status;
         let data = await response.json();
-        console.log(data)
-
         switch(rdo)
         {
             case 200:   

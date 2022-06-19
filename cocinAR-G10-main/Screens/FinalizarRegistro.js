@@ -11,6 +11,9 @@ import ImagePicker from '../Components/ImagePicker';
 
 import { finalizarRegistro } from '../controller/user.controller';
 
+import { getRecipes } from '../controller/recipe.controller';
+
+
 export default function Registro({ navigation, route }) {
   const [isBillingDifferent, setIsBillingDifferent] = useState(false);
   const { handleSubmit, control, formState: { errors } } = useForm();
@@ -41,7 +44,14 @@ export default function Registro({ navigation, route }) {
         let finRegistro = await finalizarRegistro(datos)
         if(finRegistro){
             alert('Usuario registrado con exito')
-            navigation.navigate('Inicio')
+            let recetas = await getRecipes();
+            if(recetas){
+                const nuevaData = JSON.stringify(recetas)
+                console.log(nuevaData, 'controller boca')
+              navigation.navigate('Inicio', {
+                postId: 3006,
+                users: nuevaData})
+            }
 
         }
         else{

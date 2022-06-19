@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { View, Text, StyleSheet, FlatList, Image, SafeAreaView} from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-elements'
 import { shadow } from 'react-native-paper';
 import { ListItem, SearchBar, Avatar } from "react-native-elements";
+import CounterInput from "react-native-counter-input";
 
 
 class Recetas extends Component{
@@ -19,101 +20,24 @@ class Recetas extends Component{
           };
     }
 
-
-    // state={
-    //     pasos: [{
-            
-    //             nro: '1',
-    //             texto: 'En una taza mediana, triture la palta hasta alcanzar la consistencia deseada.',
-    //             image: 'https://imgmedia.buenazo.pe/475x475/buenazo/original/2020/09/21/5f690a710c9613735c7fa8a1.jpg'
-    //         },
-    //         {
-    //             nro: '2',
-    //             texto: 'Agregar la cebolla, el jalapeño, el cilantro y el jugo de limón, y sazona con sal y pimienta. Revuelva para combinar.'
-    //         }
-    //     ],
-    //     tipos: [{
-            
-    //         id: '1',
-    //         descripcion: 'Mexicana',
-    //     },
-    //     {
-            
-    //         id: '2',
-    //         descripcion: 'Vegana',
-    //     },
-    //     {
-            
-    //         id: '3',
-    //         descripcion: 'Vegetariana',
-    //     },
-    //     {
-            
-    //         id: '4',
-    //         descripcion: 'Guarnicion',
-    //     },
-    // ]
-    // }
-
-    renderSeparator = () => {
-        return (
-          <View
-            style={{
-              height: 1,
-              width: "86%",
-              backgroundColor: "#CED0CE",
-              marginLeft: "14%",
-            }}
-          />
-        );
-      };
-    
-      renderHeader = () => {
-        return (
-          <SearchBar
-            placeholder="Buscar"
-            lightTheme
-            round
-            onChangeText={this.handleSearch}
-            value={this.state.query}
-          />
-        );
-      };
-    
-      renderFooter = () => {
-        if (!this.state.loading) return null;
-    
-        return (
-          <View
-            style={{
-              paddingVertical: 20,
-              borderTopWidth: 1,
-              borderColor: "#CED0CE",
-            }}
-          >
-            <ActivityIndicator animating size="large" />
-          </View>
-        );
-      };
-
-    
-    
-
-    
-    
-
     render(){
-        const { postId, recetass} = this.props.route.params;
+        const { postId, params} = this.props.route.params;
         const { idd, pasos} = this.props.route.params;
+        const { idd2, usuario} = this.props.route.params;
 
-        console.log(recetass)
+
+        const recetass = params.recetass;
+        const pasoss = params.pasos
+        console.log(params.recetass)
         console.log(pasos)
+        console.log(usuario)
         return(
             <View style={styles.container}>
+              <ScrollView>
             <SafeAreaView  style={styles.flatlistStyle}>
 
                 <Text style={styles.textName}>{recetass.nombre}</Text>
-                <Text style={styles.textUser}>Por {recetass.idUsuario}</Text>
+                <Text style={styles.textUser}>Por {usuario}</Text>
                 <Text style={styles.textRating}>Rating: {recetass.rating}</Text>
                 <Image source={{ uri: recetass.foto }} style={styles.imgStyle}></Image>
                 <Text style={styles.textFecha}>Publicada el: {recetass.fechaPublicacion}</Text>
@@ -121,87 +45,63 @@ class Recetas extends Component{
                 <View style={styles.containerDescription}>
                 <Text style={styles.textDescription}>{recetass.descripcion}</Text></View>
             </SafeAreaView>
+            <SafeAreaView>
+            <Text style={styles.tituloDescription}>Ingredientes</Text>
+            <View style={styles.containerPorciones}>
+              <Text style={styles.textoPorciones}>{recetass.porciones} porciones</Text>
+              <View style={styles.containerIngredientCounterPorciones}>
+                <CounterInput
+                  width={150}
+                  style={styles.counter}
+                  backgroundColor='#F7456A'
+                  initial={recetass.porciones}
+                  increaseButtonBackgroundColor='black'
+                  decreaseButtonBackgroundColor='black'
+                  horizontal
+                  onChange={(counter) => {
+                  console.log("onChange Counter:", counter);
+                  }}
+                />
+                </View></View>
+    
+            <View style={styles.containerIngredientes}>
+            <Text style={styles.ingredienteText}>Palta</Text>
+            <View style={styles.containerIngredientCounter}>
+                <CounterInput
+                  width={150}
+                  style={styles.counter}
+                  backgroundColor='#F7456A'
+                  initial={recetass.idUsuario}
+                  increaseButtonBackgroundColor='black'
+                  decreaseButtonBackgroundColor='black'
+                  horizontal
+                  onChange={(counter) => {
+                  console.log("onChange Counter:", counter);
+                  }}
+                />
+                </View>
+                </View>
+            </SafeAreaView>
+            <SafeAreaView>
+            <Text style={styles.tituloDescription}>Preparacion</Text>
+              <FlatList
+              data={pasos}
+              renderItem={({ item }) => (
+              <View>
+              <Text style={styles.textPasos}>{`Paso - ${item.descripcion}`}</Text></View>
+              )}></FlatList>
+            </SafeAreaView>
+            </ScrollView>
             </View>
-        )}
+        )
+    }
 
-
-        /* <FlatList
-          data={recetass}
-          renderItem={({ recetass }) => (
-            <ListItem bottomDivider>
-            <Avatar style={styles.avatar} source={{ uri: recetass.foto }} rounded />
-            <ListItem.Content >
-              <ListItem.Title style={styles.content}>{recetass.nombre}</ListItem.Title>
-              <ListItem.Subtitle>{recetass.descripcion}</ListItem.Subtitle>
-            </ListItem.Content>
-            <ListItem.Chevron size={35} color="pink" />
-            
-            
-          </ListItem>
-            
-            
-            
-            // <View>
-
-            //     <Text style={styles.textName}>{item.nombre}</Text>
-            //     <Text style={styles.textUser}>Por {item.idUsuario}</Text>
-            //     <Text style={styles.textRating}>Rating: {item.rating}</Text>
-            //     <Image source={{ uri: item.image }} style={styles.imgStyle}></Image>
-            //     <Text style={styles.textFecha}>Publicada el: {item.fechaPublicacion}</Text>
-            //     <Text style={styles.tituloDescription}>Descripcion</Text>
-            //     <View style={styles.containerDescription}>
-            //         <Text style={styles.textDescription}>{item.descripcion}</Text>
-            //     </View>
-            //     </View>
-          )}
-          keyExtractor={(item) => item.idReceta}
-          ItemSeparatorComponent={this.renderSeparator}
-          ListHeaderComponent={this.renderHeader}
-          ListFooterComponent={this.renderFooter}
-          ></FlatList> */}
-        
-
-    
-                
-                
-                
-        //         <Text style={styles.tituloDescription}>Preparacion</Text>
-        //         <FlatList
-        //             data={this.state.pasos}
-        //             renderItem={({ item }) => (
-        //                 <ListItem.Title style={styles.textPasos}>{`Paso ${item.nro} - ${item.texto}`}</ListItem.Title>
-
-        //             )} />
-        //         <View style={styles.containerRating}>
-        //             <Text style={styles.textoRating}>Recomendarias esta receta? </Text>
-        //             <Icon
-        //             style={styles.iconRating}
-        //             name='done'
-        //             color='green' />
-        //             <Icon
-        //             style={styles.iconRating}
-        //             name='close'
-        //             color='red' />
-        //         </View>
-        //     </SafeAreaView><SafeAreaView style={styles.containerTipos}>
-        //             <Text style={styles.tituloDescription}>Tipos</Text>
-
-        //             <FlatList
-        //                 data={this.state.tipos}
-        //                 renderItem={({ item }) => (
-        //                     <ListItem.Title style={styles.tagsTipos}>{`${item.descripcion}`}</ListItem.Title>
-
-        //                 )} />
-        
-        //   );
-    
-        
+  }
 
 const styles = StyleSheet.create({
     container:{
         flex: 1,
         backgroundColor: '#222121'
-
     },
     flatlistStyle:{
         alignItems: 'center',
@@ -212,8 +112,8 @@ const styles = StyleSheet.create({
         borderRadius: 8
     },
     imgStyle:{
-        width: 200,
-        height: 120,
+        width: 270,
+        height: 180,
         borderRadius: 20
     },
     btnStyle:{
@@ -266,7 +166,8 @@ const styles = StyleSheet.create({
         marginRight: 250,
         marginTop: 20,
         marginBottom: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        padding: 3
     },
     textPasos:{
         alignItems: 'center',
@@ -314,7 +215,37 @@ const styles = StyleSheet.create({
     },
     avatar:{
         width: 100,
-    }
+    },
+    containerIngredientes:{
+      flexDirection:'row',
+    },
+    counter:{
+      height: 50,
+      borderWidth: 4,
+      borderColor: "#20232a",
+    },
+    ingredienteText:{
+      fontSize:20,
+      color: 'white',
+      padding: 15,
+      fontWeight: 'bold',
+    },
+    containerIngredientCounter:{
+      marginLeft: 150,
+    },
+    containerPorciones:{
+      flexDirection: 'row',
+    },
+    textoPorciones:{
+      padding: 15,
+      fontSize:20,
+      color: '#F7456A',
+      fontWeight:'bold'
+    },
+    containerIngredientCounterPorciones:{
+      marginLeft: 90,
+    },
+
 })
 
 export default Recetas;
