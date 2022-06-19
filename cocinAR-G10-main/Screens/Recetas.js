@@ -24,13 +24,16 @@ class Recetas extends Component{
         const { postId, params} = this.props.route.params;
         const { idd, pasos} = this.props.route.params;
         const { idd2, usuario} = this.props.route.params;
-
+        const { idd3, ingredientes} = this.props.route.params;
+        const { idd4, tags} = this.props.route.params;
 
         const recetass = params.recetass;
         const pasoss = params.pasos
         console.log(params.recetass)
         console.log(pasos)
         console.log(usuario)
+        console.log(ingredientes)
+        console.log(tags)
         return(
             <View style={styles.container}>
               <ScrollView>
@@ -40,7 +43,6 @@ class Recetas extends Component{
                 <Text style={styles.textUser}>Por {usuario}</Text>
                 <Text style={styles.textRating}>Rating: {recetass.rating}</Text>
                 <Image source={{ uri: recetass.foto }} style={styles.imgStyle}></Image>
-                <Text style={styles.textFecha}>Publicada el: {recetass.fechaPublicacion}</Text>
                 <Text style={styles.tituloDescription}>Descripcion</Text>
                 <View style={styles.containerDescription}>
                 <Text style={styles.textDescription}>{recetass.descripcion}</Text></View>
@@ -63,24 +65,31 @@ class Recetas extends Component{
                   }}
                 />
                 </View></View>
+              
+                <FlatList
+                        data={ingredientes}
+                        renderItem={({ item }) => (
+                          <View style={styles.containerIngredientes}>
+                          <Text style={styles.ingredienteText}>{item.nombre}</Text>
+                          <View style={styles.containerIngredientCounter}>
+                              <CounterInput
+                                width={150}
+                                style={styles.counter}
+                                backgroundColor='#F7456A'
+                                initial={item.cantidad}
+                                increaseButtonBackgroundColor='black'
+                                decreaseButtonBackgroundColor='black'
+                                horizontal
+                                onChange={(counter) => {
+                                console.log("onChange Counter:", counter);
+                                }}
+                              />
+                              </View>
+                              </View>
+                         
+
+                        )} />
     
-            <View style={styles.containerIngredientes}>
-            <Text style={styles.ingredienteText}>Palta</Text>
-            <View style={styles.containerIngredientCounter}>
-                <CounterInput
-                  width={150}
-                  style={styles.counter}
-                  backgroundColor='#F7456A'
-                  initial={recetass.idUsuario}
-                  increaseButtonBackgroundColor='black'
-                  decreaseButtonBackgroundColor='black'
-                  horizontal
-                  onChange={(counter) => {
-                  console.log("onChange Counter:", counter);
-                  }}
-                />
-                </View>
-                </View>
             </SafeAreaView>
             <SafeAreaView>
             <Text style={styles.tituloDescription}>Preparacion</Text>
@@ -90,6 +99,23 @@ class Recetas extends Component{
               <View>
               <Text style={styles.textPasos}>{`Paso - ${item.descripcion}`}</Text></View>
               )}></FlatList>
+               <View style={styles.containerRating}>
+                    <Text style={styles.textoRating}>Recomendarias esta receta? </Text>
+                    <Icon
+                    style={styles.iconRating}
+                    name='done'
+                    color='green' />
+                    <Icon
+                    style={styles.iconRating}
+                    name='close'
+                    color='red' />
+                </View>
+                
+                
+                <SafeAreaView style={styles.containerTipos}>
+                    <Text style={styles.tituloDescription}>Tipos</Text>
+                      <Text style={styles.tagsTipos}>{tags}</Text>
+                </SafeAreaView> 
             </SafeAreaView>
             </ScrollView>
             </View>
@@ -185,16 +211,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#F7456A',
     },
     containerTipos:{
-        flexDirection: 'row',
-        flexWrap: 'wrap',
     },
     tagsTipos:{
+        marginTop: 15,
+        marginLeft: 15,
+        marginBottom: 20,
         alignSelf: "flex-start",
         backgroundColor: 'white',
         padding: 3,
         borderRadius: 20,
         color: 'black',
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
     },
     containerRating:{

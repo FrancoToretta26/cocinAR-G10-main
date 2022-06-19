@@ -136,7 +136,7 @@ class SearchScreen extends Component {
               <TouchableOpacity onPress={() => {
               this.props.navigation.navigate('Recetas', {
                 screen: 'SearchScreen',
-                params: {recetass: item.receta }, pasos: item.pasos, usuario: item.creatorNickname
+                params: {recetass: item.receta }, pasos: item.pasos, usuario: item.creatorNickname, ingredientes: item.ingredienteConCantidad, tags: item.tagString
               });
             }}>
               <ListItem.Chevron size={35} color="pink" />
