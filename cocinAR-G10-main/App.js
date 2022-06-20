@@ -6,15 +6,17 @@ import Inicio from './Screens/Inicio';
 import Registro from './Screens/Registro';
 import Login from './Screens/Login'
 import OlvidePassword from './Screens/OlvidePassword';
-import SearchScreen1 from './Screens/SearchScreen';
 import FinalizarRegistro from './Screens/FinalizarRegistro';
-import Prueba from './Components/ImagePicker'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Navbar from './Components/Navbar';
 import RecetasGuardadas from './Screens/RecetasGuardadas';
 import RegistroReceta from './Screens/RegistroReceta'
 
+import BuscarRecetasFiltros from './Screens/BuscarRecetaFiltros';
+import SearchScreen from './Screens/SearchScreen2';
+import Recetas from './Screens/Recetas';
+import "./ignoreWarnings";
 
 const Stack = createStackNavigator();
 
@@ -39,7 +41,7 @@ export default function App() {
     
 <Stack.Screen
       name="SearchScreen"
-      component={SearchScreen1}
+      component={SearchScreen}
       options={{
         title: 'SearchScreen',
         headerTintColor: '#F7456A',
@@ -82,6 +84,34 @@ export default function App() {
       component={RegistroReceta}
       options={{
         title: 'RegistroReceta',
+      }}
+        />
+
+<Stack.Screen
+      name="BuscarRecetasFiltros"
+      component={BuscarRecetasFiltros}
+      options={{
+        title: 'BuscarRecetasFiltros',
+        headerTintColor: '#F7456A',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#222121',
+          elevation: 0,
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft:15}}>
+            <Ionicons name="arrow-back-outline" size={25} color="#F7456A" />
+          </View>
+                  ),
+                }}
+              />
+
+<Stack.Screen
+      name="Recetas"
+      component={Recetas}
+      options={{
+        title: 'Recetas',
         headerTintColor: '#F7456A',
         headerTitleAlign: 'center',
         headerStyle: {

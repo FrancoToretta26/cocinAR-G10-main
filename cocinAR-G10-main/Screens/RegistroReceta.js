@@ -11,8 +11,8 @@ export default class Home extends Component {
         super(props)
         this.state = {
             array: [{
-                studentName: 'John doe',
-                uid: 1
+                ingrediente: 'John doe',
+                cantidad: 1
             }]
         }
     }
@@ -23,20 +23,20 @@ export default class Home extends Component {
                 <View style={{ flex: 1 }}>
                     {
                         array.map((item, index) => {
-                          
+
                             return (
                                 <View style={{ margin: 5, padding: 10, }}>
-                                    <TextInput placeholder='Student name'
-                                        value={item.studentName}
+                                    <TextInput placeholder='Ingredientes'
+                                        value={item.ingrediente}
                                         style={{ borderRadius: 4, borderWidth: 1, borderColor: '#212121', padding: 8 }}
                                         onChangeText={text => {
-                                            this.setState({ array: array.map((c, innerIndex) => innerIndex === index ? { ...c, studentName: text } : c) })
+                                            this.setState({ array: array.map((c, innerIndex) => innerIndex === index ? { ...c, ingrediente: text } : c) })
                                         }} />
-                                    <TextInput placeholder='Student UID'
-                                        value={item.uid}
+                                    <TextInput placeholder='Cantidad'
+                                        value={item.cantidad}
                                         style={{ borderRadius: 4, borderWidth: 1, borderColor: '#212121', padding: 8, marginTop: 5 }}
                                         onChangeText={text => {
-                                            this.setState({ array: array.map((c, innerIndex) => innerIndex === index ? { ...c, uid: text } : c) })
+                                            this.setState({ array: array.map((c, innerIndex) => innerIndex === index ? { ...c, cantidad: text } : c) })
                                         }} />
                                     <Text style={{
                                         alignSelf: 'flex-start', borderRadius: 4,
@@ -54,8 +54,8 @@ export default class Home extends Component {
                     <Text style={{ padding: 16, textAlign: 'center', backgroundColor: 'black', color: 'white' }} onPress={() => {
                         this.setState({
                             array: [...array, {
-                                studentName: '',
-                                uid: ''
+                              ingrediente: '',
+                                cantidad: ''
                             }]
                         })
                     }}>

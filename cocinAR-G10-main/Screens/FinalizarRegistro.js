@@ -9,6 +9,10 @@ import { useForm, Controller } from 'react-hook-form';
 
 import ImagePicker from '../Components/ImagePicker';
 
+import { finalizarRegistro } from '../controller/user.controller';
+
+import { getRecipes } from '../controller/recipe.controller';
+
 
 export default function Registro({ navigation, route }) {
   const [isBillingDifferent, setIsBillingDifferent] = useState(false);
@@ -26,10 +30,39 @@ export default function Registro({ navigation, route }) {
     setIsBillingDifferent((prev) => !prev);
   };
 
-  const onSubmit = (data) => {
-    navigation.navigate('Inicio')
-  };
 
+
+  const onSubmit = async function(data){
+    if(data.password==data.password2){
+        if (data.nombre!=="" && data.apellido!=="" && data.password!=="")
+        {
+        let datos = {
+            nombre: data.nombre,
+            apellido: data.apellido,
+            password: data.password
+        }
+        let finRegistro = await finalizarRegistro(datos)
+        if(finRegistro){
+            alert('Usuario registrado con exito')
+            let recetas = await getRecipes();
+            if(recetas){
+                const nuevaData = JSON.stringify(recetas)
+                console.log(nuevaData, 'controller boca')
+              navigation.navigate('Inicio', {
+                postId: 3006,
+                users: nuevaData})
+            }
+
+        }
+        else{
+            alert('Reintente nuevamente')
+        }
+        }
+    }
+   else{
+    alert('Las contraseñas no coinciden')
+   } 
+  };
 
 
   return (
@@ -37,19 +70,19 @@ export default function Registro({ navigation, route }) {
         <ImagePicker></ImagePicker>
         <Controller
         defaultValue=""
-        name="name"
+        name="nombre"
         rules={{required:{
             value: true,
             message: 'Nombre'
         },
     }}
         control={control}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, nombre } }) => (
             <Input
-                error={errors.name}
-                errorText={errors.name?.message}
-                onChangeText={(value) => onChange(value)}
-                value={value}
+                error={errors.nombre}
+                errorText={errors.nombre?.message}
+                onChangeText={(nombre) => onChange(nombre)}
+                value={nombre}
                 placeholder="Nombre"
             />
         )}
@@ -63,12 +96,12 @@ export default function Registro({ navigation, route }) {
         },
     }}
         control={control}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, apellido } }) => (
             <Input
                 error={errors.apellido}
                 errorText={errors.apellido?.message}
-                onChangeText={(value) => onChange(value)}
-                value={value}
+                onChangeText={(apellido) => onChange(apellido)}
+                value={apellido}
                 placeholder="Apellido"
             />
         )}
@@ -83,12 +116,12 @@ export default function Registro({ navigation, route }) {
         },
     }}
         control={control}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, password } }) => (
             <Input
                 error={errors.password}
                 errorText={errors.password?.message}
-                onChangeText={(value) => onChange(value)}
-                value={value}
+                onChangeText={(password) => onChange(password)}
+                value={password}
                 placeholder="Contraseña"
             />
         )}

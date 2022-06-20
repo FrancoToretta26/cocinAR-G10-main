@@ -1,132 +1,133 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { View, Text, StyleSheet, FlatList, Image, SafeAreaView} from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-elements'
 import { shadow } from 'react-native-paper';
 import { ListItem, SearchBar, Avatar } from "react-native-elements";
+import CounterInput from "react-native-counter-input";
 
 
 class Recetas extends Component{
 
-    state={
-        receta: [
-            {
-                id: 1,
-                name: 'Guacamole Mexicano',
-                user: 'Camila93',
-                rating: 316,
-                fechaPublicacion: '10/04/2021',
-                image: 'https://www.recetas.net/Imagen_web/Aguacate-o-Guacamole-Mexicano.aspx?idx=3&nId=4609&hash=d2066219a436924ebb184a25cfa1f2cd',
-                descripcion: 'Este guacamole es original de México, lugar de origen del guacamole, que sirve como acompañante para cualquiera de tus comidas.',
-                porciones: 3,
-            },
-        ],
-        pasos: [{
-            
-                nro: '1',
-                texto: 'En una taza mediana, triture la palta hasta alcanzar la consistencia deseada.',
-                image: 'https://imgmedia.buenazo.pe/475x475/buenazo/original/2020/09/21/5f690a710c9613735c7fa8a1.jpg'
-            },
-            {
-                nro: '2',
-                texto: 'Agregar la cebolla, el jalapeño, el cilantro y el jugo de limón, y sazona con sal y pimienta. Revuelva para combinar.'
-            }
-        ],
-        tipos: [{
-            
-            id: '1',
-            descripcion: 'Mexicana',
-        },
-        {
-            
-            id: '2',
-            descripcion: 'Vegana',
-        },
-        {
-            
-            id: '3',
-            descripcion: 'Vegetariana',
-        },
-        {
-            
-            id: '4',
-            descripcion: 'Guarnicion',
-        },
-    ]
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            loading: false,
+            data: [],
+            error: null,
+          };
     }
-
-    
-    
-
-    
-
-    renderItems = ({ item }) => {
-        return(
-            <><SafeAreaView style={styles.flatlistStyle}>
-                <Text style={styles.textName}>{item.name}</Text>
-                <Text style={styles.textUser}>Por {item.user}</Text>
-                <Text style={styles.textRating}>Rating: {item.rating}</Text>
-                <Image source={{ uri: item.image }} style={styles.imgStyle}></Image>
-                <Text style={styles.textFecha}>Publicada el: {item.fechaPublicacion}</Text>
-                <Text style={styles.tituloDescription}>Descripcion</Text>
-                <View style={styles.containerDescription}>
-                    <Text style={styles.textDescription}>{item.descripcion}</Text>
-                </View>
-                <Text style={styles.tituloDescription}>Preparacion</Text>
-                <FlatList
-                    data={this.state.pasos}
-                    renderItem={({ item }) => (
-                        <ListItem.Title style={styles.textPasos}>{`Paso ${item.nro} - ${item.texto}`}</ListItem.Title>
-
-                    )} />
-                <View style={styles.containerRating}>
-                    <Text style={styles.textoRating}>Recomendarias esta receta? </Text>
-                    <Icon
-            style={styles.iconRating}
-            name='done'
-            color='green' />
-                                <Icon
-            style={styles.iconRating}
-            name='close'
-            color='red' />
-                </View>
-            </SafeAreaView><SafeAreaView style={styles.containerTipos}>
-                    <Text style={styles.tituloDescription}>Tipos</Text>
-
-                    <FlatList
-                        data={this.state.tipos}
-                        renderItem={({ item }) => (
-                            <ListItem.Title style={styles.tagsTipos}>{`${item.descripcion}`}</ListItem.Title>
-
-                        )} />
-                </SafeAreaView></>
-        
-          );
-        }
-      
-    
 
     render(){
-        const {receta} = this.state
-        const {pasos} = this.state.pasos
-        const {tipos} = this.state.tipos
+        const { postId, params} = this.props.route.params;
+        const { idd, pasos} = this.props.route.params;
+        const { idd2, usuario} = this.props.route.params;
+        const { idd3, ingredientes} = this.props.route.params;
+        const { idd4, tags} = this.props.route.params;
+
+        const recetass = params.recetass;
+        const pasoss = params.pasos
+        console.log(params.recetass)
+        console.log(pasos)
+        console.log(usuario)
+        console.log(ingredientes)
+        console.log(tags)
         return(
-        <View style={styles.container}>
-            <FlatList data={receta} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>
-            <FlatList data={pasos} renderItem={this.renderItems} keyExtractor={(item)=> item.nro}></FlatList>
-            <FlatList data={tipos} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>
-        </View>
-    )
+            <View style={styles.container}>
+              <ScrollView>
+            <SafeAreaView  style={styles.flatlistStyle}>
+
+                <Text style={styles.textName}>{recetass.nombre}</Text>
+                <Text style={styles.textUser}>Por {usuario}</Text>
+                <Text style={styles.textRating}>Rating: {recetass.rating}</Text>
+                <Image source={{ uri: recetass.foto }} style={styles.imgStyle}></Image>
+                <Text style={styles.tituloDescription}>Descripcion</Text>
+                <View style={styles.containerDescription}>
+                <Text style={styles.textDescription}>{recetass.descripcion}</Text></View>
+            </SafeAreaView>
+            <SafeAreaView>
+            <Text style={styles.tituloDescription}>Ingredientes</Text>
+            <View style={styles.containerPorciones}>
+              <Text style={styles.textoPorciones}>{recetass.porciones} porciones</Text>
+              <View style={styles.containerIngredientCounterPorciones}>
+                <CounterInput
+                  width={150}
+                  style={styles.counter}
+                  backgroundColor='#F7456A'
+                  initial={recetass.porciones}
+                  increaseButtonBackgroundColor='black'
+                  decreaseButtonBackgroundColor='black'
+                  horizontal
+                  onChange={(counter) => {
+                  console.log("onChange Counter:", counter);
+                  }}
+                />
+                </View></View>
+              
+                <FlatList
+                        data={ingredientes}
+                        renderItem={({ item }) => (
+                          <View style={styles.containerIngredientes}>
+                          <Text style={styles.ingredienteText}>{item.nombre}</Text>
+                          <View style={styles.containerIngredientCounter}>
+                              <CounterInput
+                                width={150}
+                                style={styles.counter}
+                                backgroundColor='#F7456A'
+                                initial={item.cantidad}
+                                increaseButtonBackgroundColor='black'
+                                decreaseButtonBackgroundColor='black'
+                                horizontal
+                                onChange={(counter) => {
+                                console.log("onChange Counter:", counter);
+                                }}
+                              />
+                              </View>
+                              </View>
+                         
+
+                        )} />
+    
+            </SafeAreaView>
+            <SafeAreaView>
+            <Text style={styles.tituloDescription}>Preparacion</Text>
+              <FlatList
+              data={pasos}
+              renderItem={({ item }) => (
+              <View>
+              <Text style={styles.textPasos}>{`Paso - ${item.descripcion}`}</Text></View>
+              )}></FlatList>
+               <View style={styles.containerRating}>
+                    <Text style={styles.textoRating}>Recomendarias esta receta? </Text>
+                    <Icon
+                    style={styles.iconRating}
+                    name='done'
+                    color='green' />
+                    <Icon
+                    style={styles.iconRating}
+                    name='close'
+                    color='red' />
+                </View>
+                
+                
+                <SafeAreaView style={styles.containerTipos}>
+                    <Text style={styles.tituloDescription}>Tipos</Text>
+                      <Text style={styles.tagsTipos}>{tags}</Text>
+                </SafeAreaView> 
+            </SafeAreaView>
+            </ScrollView>
+            </View>
+        )
     }
 
-}
+  }
 
 const styles = StyleSheet.create({
     container:{
         flex: 1,
         backgroundColor: '#222121'
-
     },
     flatlistStyle:{
         alignItems: 'center',
@@ -137,8 +138,8 @@ const styles = StyleSheet.create({
         borderRadius: 8
     },
     imgStyle:{
-        width: 200,
-        height: 120,
+        width: 270,
+        height: 180,
         borderRadius: 20
     },
     btnStyle:{
@@ -191,7 +192,8 @@ const styles = StyleSheet.create({
         marginRight: 250,
         marginTop: 20,
         marginBottom: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        padding: 3
     },
     textPasos:{
         alignItems: 'center',
@@ -209,16 +211,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#F7456A',
     },
     containerTipos:{
-        flexDirection: 'row',
-        flexWrap: 'wrap',
     },
     tagsTipos:{
+        marginTop: 15,
+        marginLeft: 15,
+        marginBottom: 20,
         alignSelf: "flex-start",
         backgroundColor: 'white',
         padding: 3,
         borderRadius: 20,
         color: 'black',
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
     },
     containerRating:{
@@ -234,6 +237,42 @@ const styles = StyleSheet.create({
     iconRating:{
 
     },
+    content:{
+        fontSize: 30
+    },
+    avatar:{
+        width: 100,
+    },
+    containerIngredientes:{
+      flexDirection:'row',
+    },
+    counter:{
+      height: 50,
+      borderWidth: 4,
+      borderColor: "#20232a",
+    },
+    ingredienteText:{
+      fontSize:20,
+      color: 'white',
+      padding: 15,
+      fontWeight: 'bold',
+    },
+    containerIngredientCounter:{
+      marginLeft: 150,
+    },
+    containerPorciones:{
+      flexDirection: 'row',
+    },
+    textoPorciones:{
+      padding: 15,
+      fontSize:20,
+      color: '#F7456A',
+      fontWeight:'bold'
+    },
+    containerIngredientCounterPorciones:{
+      marginLeft: 90,
+    },
+
 })
 
 export default Recetas;

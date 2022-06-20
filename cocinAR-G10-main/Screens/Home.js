@@ -7,14 +7,13 @@ import { t, color } from 'react-native-tailwindcss';
 import { Searchbar } from 'react-native-paper';
 import Button from '../Components/ButtonSearch'
 import { useForm, Controller } from 'react-hook-form';
-
+import { getRecipes } from '../controller/recipe.controller';
 
 export default function Home({navigation, route}) {
     const homeName = "Descubrir";
     const detailsName = "Agregar";
     const settingsName = "Guardadas";
     const { handleSubmit} = useForm();
-
 
     const recipes = [
       {
@@ -33,9 +32,19 @@ export default function Home({navigation, route}) {
       },
     ];
 
-    const onSubmit = (data) => {
-      navigation.navigate('SearchScreen')
-    };
+    const onSubmit = async function(data){
+        let recetas = await getRecipes();
+        if(recetas){
+          navigation.navigate('SearchScreen', {
+            postId: 3006,
+            users: recetas})
+        }
+        else{
+          alert('Intente nuevamente')
+        }
+      }
+
+   
     
   return (
     <><View style={styles.container}>
