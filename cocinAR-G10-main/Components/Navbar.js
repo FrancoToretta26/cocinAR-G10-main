@@ -71,7 +71,7 @@ export default function Home() {
         headerBackTitleVisible: false,
       }}
       />
-            <Tab.Screen name={detailsName} component={Recetas} 
+            <Tab.Screen name={detailsName} component={CargarReceta} 
       options={{
         title: 'Agregar',
         headerTitleAlign: 'center',

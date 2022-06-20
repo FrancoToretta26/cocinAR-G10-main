@@ -19,7 +19,7 @@ export default function CargarReceta({ navigation, route }) {
   };
 
   const onSubmit = (data) => {
-    navigation.navigate('Inicio')
+    navigation.navigate('RegistroReceta')
   };
 
     
