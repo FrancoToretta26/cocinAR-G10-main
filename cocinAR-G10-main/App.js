@@ -12,7 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Navbar from './Components/Navbar';
 import RecetasGuardadas from './Screens/RecetasGuardadas';
 import BuscarRecetasFiltros from './Screens/BuscarRecetaFiltros';
-import SearchScreen from './Screens/SearchScreen';
+import SearchScreen from './Screens/SearchScreen2';
 import Recetas from './Screens/Recetas';
 import "./ignoreWarnings";
 
