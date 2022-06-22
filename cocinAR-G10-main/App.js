@@ -15,6 +15,7 @@ import BuscarRecetasFiltros from './Screens/BuscarRecetaFiltros';
 import SearchScreen from './Screens/SearchScreen2';
 import Recetas from './Screens/Recetas';
 import "./ignoreWarnings";
+import DescripcionReceta from './Screens/DescripcionRecetaGuardada'
 
 const Stack = createStackNavigator();
 
@@ -211,6 +212,27 @@ export default function App() {
                   ),
                 }}
               />
+
+<Stack.Screen
+      name="Descripcion"
+      component={DescripcionReceta}
+      options={{
+        title: 'Descripcion',
+        headerTintColor: '#F7456A',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#222121',
+          elevation: 0,
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft:15}}>
+            <Ionicons name="arrow-back-outline" size={25} color="#F7456A" />
+          </View>
+                  ),
+                }}
+              />
+
 
 
 

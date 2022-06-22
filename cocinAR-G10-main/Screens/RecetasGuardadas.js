@@ -49,13 +49,17 @@ class RecetasGuardadas extends Component{
     renderItems = ({ item }) => {
         return(
             <View style={styles.flatlistStyle}>
+                        <TouchableOpacity onPress={() => {              this.props.navigation.navigate('Descripcion', {
+            screen: 'SearchScreen',
+            params: {recetass: item.receta }, pasos: item.pasos, usuario: item.nickName, ingredientes: item.ingredienteConCantidad, tags: item.tagString, calificacion: item.calificacion
+          });}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Image source={{uri: item.receta.foto}} style={styles.imgStyle}></Image>
                 <View style={{marginLeft: 8}}>
                 <Text style={styles.textName}>{item.receta.nombre}</Text>
                 <Text style={styles.textUser}>{item.nickName}</Text>
                 </View>
-                </View>
+                </View></TouchableOpacity>
 
             <TouchableOpacity styles={styles.btnStyle} onPress={()=> this.onDelte(item.receta.idUsuario)}>
             <Icon

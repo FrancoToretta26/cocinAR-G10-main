@@ -33,13 +33,20 @@ export default function Registro({ navigation, route }) {
       }
       await AsyncStorage.setItem('alias', data.alias)
       let nuevoRegistro = await registro(datos)
-      if(nuevoRegistro){
+      console.log(nuevoRegistro.rdo,'nuevoRegistro')
+      if(nuevoRegistro.rdo==0){
         alert('Usuario registrado con exito')
         navigation.navigate('FinalizarRegistro')
-
+      }
+      else if(nuevoRegistro.rdo==1)
+      {
+        alert('Alias ya existente')
+      }
+      else if(nuevoRegistro.rdo==2){
+        alert('Mail ya existente')
       }
       else{
-        alert('Reintente nuevamente')
+        alert('Ha ocurrido un error')
       }
     }
   };
