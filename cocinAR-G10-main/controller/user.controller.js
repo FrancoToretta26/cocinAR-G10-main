@@ -68,6 +68,10 @@ export const login= async function(login)
               })
         });
 
+        let data = await response.json();
+        const setAlias = await AsyncStorage.setItem('alias', data.alias)
+
+
         
         
         let rdo = response.status;
