@@ -14,17 +14,27 @@ import CargarReceta from '../Screens/CargarReceta';
 import SearchScreen from '../Screens/SearchScreen'
 import RecetasGuardadas from '../Screens/RecetasGuardadas';
 import Recetas from '../Screens/Recetas';
-
+import { getRecipesForLater } from '../controller/recipe.controller';
 
 const Stack = createStackNavigator();
 
-export default function Home() {
+export default function Home({navigation}) {
         const homeName = "Descubrir";
     const detailsName = "Agregar";
     const settingsName = "Guardadas";
 
     const Tab = createBottomTabNavigator();
 
+    const onSubmit = async function(props){
+      let recetasForLater = await getRecipesForLater();
+      if(recetasForLater){
+        console.log('hola')
+        navigation.navigate('RecetasGuardadas', {
+          postId: 3100,
+          users: recetasForLater})
+      }
+
+    }
   
   return (
  
@@ -71,7 +81,7 @@ export default function Home() {
         headerBackTitleVisible: false,
       }}
       />
-            <Tab.Screen name={detailsName} component={Recetas} 
+            <Tab.Screen name={detailsName} component={CargarReceta} 
       options={{
         title: 'Agregar',
         headerTitleAlign: 'center',
@@ -87,7 +97,7 @@ export default function Home() {
           </View>),
       }}
       />
-                  <Tab.Screen name={settingsName} component={RecetasGuardadas} 
+      <Tab.Screen name={settingsName} component={RecetasGuardadas}
       options={{
         title: 'Guardadas',
         headerTitleAlign: 'center',
@@ -95,6 +105,8 @@ export default function Home() {
           backgroundColor: '#222121',
           elevation: 0,
         },
+        tabBarButton: props => (
+          <TouchableOpacity {...props} onPress={(onSubmit)} />),
         headerTintColor:'#F7456A',
         headerBackTitleVisible: true,
         headerBackImage: () => (

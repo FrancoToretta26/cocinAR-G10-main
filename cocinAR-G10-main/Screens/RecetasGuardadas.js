@@ -35,28 +35,29 @@ class RecetasGuardadas extends Component{
     }
 
     onDelte = (id) =>{
-        const { data } = this.state
-        let filterArray = data.filter((val, i)=>{
-            if(val.id !== id){
-                return val
+        const { postId, users } = this.props.route.params;
+        console.log(users,'delete')
+        let filterArray = users.filter((val, i)=>{
+            if(val.idUsuario !== id){
+                return val.idUsuario
             }
         })
         console.log('filter array', filterArray)
-        this.setState({data: filterArray})
+        this.setState({users: filterArray})
     }
 
     renderItems = ({ item }) => {
         return(
             <View style={styles.flatlistStyle}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Image source={{uri: item.image}} style={styles.imgStyle}></Image>
+                <Image source={{uri: item.receta.foto}} style={styles.imgStyle}></Image>
                 <View style={{marginLeft: 8}}>
-                <Text style={styles.textName}>{item.name}</Text>
-                <Text style={styles.textUser}>{item.user}</Text>
+                <Text style={styles.textName}>{item.receta.nombre}</Text>
+                <Text style={styles.textUser}>{item.nickName}</Text>
                 </View>
                 </View>
 
-            <TouchableOpacity styles={styles.btnStyle} onPress={()=> this.onDelte(item.id)}>
+            <TouchableOpacity styles={styles.btnStyle} onPress={()=> this.onDelte(item.receta.idUsuario)}>
             <Icon
             name='delete'
             color='#F7456A' />
@@ -67,9 +68,11 @@ class RecetasGuardadas extends Component{
 
     render(){
         const {data} = this.state
+        const { postId, users } = this.props.route.params;
+        console.log(users,'entre a RecipeSave')
         return(
         <View style={styles.container}>
-            <FlatList data={data} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>
+            <FlatList data={users} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>
         </View>
     )
     }
