@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { View, Text, StyleSheet, FlatList, Image} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-elements'
+import {deleteRecipeForLater} from '../controller/recipe.controller';
 
 
 class RecetasGuardadas extends Component{
@@ -35,7 +36,6 @@ class RecetasGuardadas extends Component{
     }
 
     onDelte = (id) =>{
-        const { postId, users } = this.props.route.params;
         console.log(users,'delete')
         let filterArray = users.filter((val, i)=>{
             if(val.idUsuario !== id){
@@ -46,10 +46,18 @@ class RecetasGuardadas extends Component{
         this.setState({users: filterArray})
     }
 
+    onPress = async (item) => {
+        alert('Hola')
+       // let guardarReceta = await saveRecipes(params.recetass.idReceta)
+       // if(guardarReceta){
+       // }
+      }
+  
+
     renderItems = ({ item }) => {
         return(
             <View style={styles.flatlistStyle}>
-                        <TouchableOpacity onPress={() => {              this.props.navigation.navigate('Descripcion', {
+                        <TouchableOpacity onPress={() => {              this.props.navigation.navigate('DescripcionReceta', {
             screen: 'SearchScreen',
             params: {recetass: item.receta }, pasos: item.pasos, usuario: item.nickName, ingredientes: item.ingredienteConCantidad, tags: item.tagString, calificacion: item.calificacion
           });}}>
@@ -61,7 +69,13 @@ class RecetasGuardadas extends Component{
                 </View>
                 </View></TouchableOpacity>
 
-            <TouchableOpacity styles={styles.btnStyle} onPress={()=> this.onDelte(item.receta.idUsuario)}>
+            <TouchableOpacity styles={styles.btnStyle} onPress={async () => {
+                        let deleteReceta = await deleteRecipeForLater(item.idRecetaPorUsuario)
+                        if(deleteReceta.rdo==0){
+                            alert('Receta Eliminada')
+                            this.props.navigation.navigate('Inicio')
+
+            }}}>
             <Icon
             name='delete'
             color='#F7456A' />

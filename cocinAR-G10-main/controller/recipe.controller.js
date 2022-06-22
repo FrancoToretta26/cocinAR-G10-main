@@ -40,8 +40,8 @@ export const getRecipesForLater= async function()
 {
     //url webservices
     //armo json con datos
-    //const alias = await AsyncStorage.getItem('alias')
-    const alias = 'fox77'
+    const alias = await AsyncStorage.getItem('alias')
+    console.log(alias, 'alias get')
     try
     {
         let response = await fetch('http://192.168.0.17:8080/recipeForLater'+'/'+alias,{ // Poner la IPV4 de cada uno.
@@ -79,8 +79,10 @@ export const saveRecipes= async function(data)
     //url webservices
     //armo json con datos
     const idReceta = data
-    console.log(idReceta,'tirame la data')
-    const alias = 'fox77'
+    console.log(idReceta, 'idReCETA')
+    const alias = await AsyncStorage.getItem('alias')
+    console.log(alias, 'alias save')
+
     try
     {
         let response = await fetch('http://192.168.0.17:8080/recipeForLater'+'/'+idReceta+'/'+alias,{ // Poner la IPV4 de cada uno.
@@ -93,6 +95,7 @@ export const saveRecipes= async function(data)
         
         
         let rdo = response.status;
+        console.log(rdo,'rdo')
         let data = await response.json();
         switch(rdo)
         {
@@ -111,3 +114,42 @@ export const saveRecipes= async function(data)
         console.log("error",error);
     };
 }
+
+export const deleteRecipeForLater= async function(data)
+{
+    //url webservices
+    //armo json con datos
+    const idReceta = data
+    console.log(idReceta, 'idReCETA')
+
+
+    try
+    {
+        let response = await fetch('http://192.168.0.17:8080/recipeForLater'+'/'+idReceta,{ // Poner la IPV4 de cada uno.
+            method: 'DELETE', // or 'PUT'
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+        });
+        
+        
+        let rdo = response.status;
+        switch(rdo)
+        {
+            case 200:   
+            { 
+                return ({rdo:0});//correcto
+            }
+            case 201:   
+            { 
+                return ({rdo:0});//correcto
+            }
+    }
+}
+    catch(error)
+    {
+        console.log("error",error);
+    };
+}
+

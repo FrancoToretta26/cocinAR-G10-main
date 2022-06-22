@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, Alert, ImageBackground, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, ImageBackground, TouchableOpacity, Platform, Image} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Inicio from './Screens/Inicio';
@@ -16,6 +16,8 @@ import SearchScreen from './Screens/SearchScreen2';
 import Recetas from './Screens/Recetas';
 import "./ignoreWarnings";
 import DescripcionReceta from './Screens/DescripcionRecetaGuardada'
+import * as ImagePicker from 'expo-image-picker';
+import Home from './Screens/Home';
 
 const Stack = createStackNavigator();
 

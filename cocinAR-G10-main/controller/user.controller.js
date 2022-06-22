@@ -107,13 +107,13 @@ export const finalizarRegistro = async function(data)
                 nombre: data.nombre,
                 apellido: data.apellido,
                 password: data.password,
-                alias: alias
+                alias: alias,
+                avatar: data.avatar
               })
         });
         
         
         let rdo = response.status;
-        alert(rdo)
         switch(rdo)
         {
             case 200:   
