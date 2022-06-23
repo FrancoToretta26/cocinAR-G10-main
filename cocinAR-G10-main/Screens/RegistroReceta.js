@@ -60,7 +60,6 @@ export default class RegistroReceta extends Component {
           allowsEditing:true
         });
         if (!result.cancelled) {
-            console.log(result.uri);
           this.setState({ image: result.uri });
         }
       };
@@ -68,16 +67,14 @@ export default class RegistroReceta extends Component {
     render() {
         const { ingredientes } = this.state
         const { pasos } = this.state
-        const {image} = this.state
-
 
         return (
             <SafeAreaView style={ styles.container }>
                 <ScrollView>
                 <View style={styles.flatlistStyle}>
 
-                <StatusBar hidden={true} />
-                        {image && <Image source={{uri:image}} style={{flex:1,width:600}} />}
+                <StatusBar  />
+                        {this.state.image && <Image source={{uri:this.state.image}} style={{width:500}} />}
                         <Button title="Subir imagen" 
                                 onPress={this.pickImage}
                                 color={"#F7456A"}
@@ -110,7 +107,6 @@ export default class RegistroReceta extends Component {
                         decreaseButtonBackgroundColor='black'
                         horizontal
                         onChange={(counter) => {
-                        console.log("onChange Counter:", counter);
                         }}
                     />
 
@@ -189,7 +185,8 @@ export default class RegistroReceta extends Component {
                                          </View>
 
                                          <StatusBar hidden={true} />
-                                            {image && <Image source={{uri:image}} style={{flex:1,width:600}} />}
+                                         
+                                            {this.state.pasos[index].imagen &&  <Image source={{uri:this.state.pasos[index].imagen}} style = {{ width: 200, height: 200 }} />}
                                             <Button title="Subir imagen" 
                                             color={"#F7456A"}
                                                 onPress={ async () => {
@@ -202,7 +199,7 @@ export default class RegistroReceta extends Component {
                                                                 this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, imagen: result.uri } : c)  });
 
                                                         }
-                                                        console.log(pasos);}}/>
+                                                        }}/>
 
                                         <StatusBar style="auto" />
 
@@ -248,7 +245,18 @@ export default class RegistroReceta extends Component {
                     </View>
 
                     <View style={styles.container}>
-                <Text style={styles.ingredienteText}>Agregar etiquetas</Text>
+
+                    <View >
+                    <StatusBar hidden={true} />
+                                         
+                        {this.state.image &&  <Image source={{uri: this.state.image}} style = {{ width: 200, height: 200 }} />}
+                        <Button title="Subir imagen" 
+                                onPress={this.pickImage}
+                                color={"#F7456A"}
+                                />
+                                
+                    </View>
+                <Text style={styles.etiquetasText}>Agregar etiquetas</Text>
 
                 <Picker style={styles.pickerStyle}
                         selectedValue={this.state.categoria}
@@ -267,10 +275,13 @@ export default class RegistroReceta extends Component {
                             <Picker.Item label="Vegana" value="Vegana" />
                 </Picker>
 
+                
             </View>
-                    
 
                 </View>
+                <View>
+                
+                    </View>
                 </ScrollView>
             </SafeAreaView>
         )
@@ -435,4 +446,14 @@ const styles = StyleSheet.create({
     pasosDescripcion:{
         padding:10
     },  
+
+    etiquetasText:{
+        color: fontColorWhite,
+        fontWeight: "bold",
+        fontSize: 18,
+    },
+    pickerStyle:{
+        height: 100,
+
+    }
   });
