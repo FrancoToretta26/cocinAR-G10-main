@@ -18,9 +18,6 @@ import "./ignoreWarnings";
 import DescripcionReceta from './Screens/DescripcionRecetaGuardada'
 import * as ImagePicker from 'expo-image-picker';
 import Home from './Screens/Home';
-import ValidarCodigo from './Screens/ValidarCodigo';
-
-
 
 const Stack = createStackNavigator();
 
