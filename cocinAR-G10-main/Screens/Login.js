@@ -83,6 +83,7 @@ export default function Login({ navigation, route }) {
                 errorText={errors.password?.message}
                 onChangeText={(password) => onChange(password)}
                 value={password}
+                secureTextEntry
                 placeholder="Contraseña"
             />
         )}
