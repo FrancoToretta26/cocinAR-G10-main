@@ -24,15 +24,10 @@ export default function OlvidePassword({ navigation, route }) {
   };
 
   const onSubmit = async function (data){
-    let recetas = await getRecipes(data);
-    if(recetas){
-      navigation.navigate('Inicio');
-    }
-    else{
-      navigation.navigate('Inicio')
+    navigation.navigate('ValidarCodigo')
 
     }
-  };
+  
 
 
   return (
