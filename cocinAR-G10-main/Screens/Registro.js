@@ -1,34 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, Switch, Text, View } from 'react-native';
+import { StyleSheet, Switch, Text, View, Pressable } from 'react-native';
 import { t, color } from 'react-native-tailwindcss';
 import Modal from "react-native-modal";
 import { Image } from 'react-native-elements/dist/image/Image';
 import Input from '../Components/Input'
-import Button from '../Components/Button';
+import Button2 from '../Components/Button';
 
 import { useForm, Controller } from 'react-hook-form';
 
-function ModalTester() {
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
-
-  return (
-    <View style={{ flex: 1 }}>
-      <Button title="Show modal" onPress={toggleModal} />
-
-      <Modal isVisible={isModalVisible}>
-        <View style={{ flex: 1 }}>
-          <Text>Hello!</Text>
-
-          <Button title="Hide modal" onPress={toggleModal} />
-        </View>
-      </Modal>
-    </View>
-  );
-}
 
 export default function Registro({ navigation, route }) {
   const [isBillingDifferent, setIsBillingDifferent] = useState(false);
@@ -47,9 +26,13 @@ export default function Registro({ navigation, route }) {
   };
 
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible2, setModalVisible2] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
+  };
+  const toggleModal2 = () => {
+    setModalVisible2(!isModalVisible2);
   };
 
   return (
@@ -96,25 +79,36 @@ export default function Registro({ navigation, route }) {
         )}
         />
         <Text style={styles.TyC}>Continuando, aceptas los terminos y condiciones del servicio y politicas de privacidad</Text>
-        <View>
-      <Button title="Show modal" onPress={toggleModal} />
-      </View>
       <View>
       <Modal style={styles.modal}isVisible={isModalVisible}>
-        <View>
+      <View style={styles.modalcontainer} >
           <Image style={styles.imagestyle} source={{
           uri: 'https://i.postimg.cc/cCBqF1TR/istockphoto-1181209880-612x612.jpg',
         }}></Image>
-        </View>
           <Text style={styles.ModalText}> El Alias ingresado ya existe.</Text>
-          <Text style={styles.ModalText2}> Alias sugeridos:</Text>
-          <Text style={styles.ModalText2}> - Alias 1</Text>
-          <Text style={styles.ModalText2}> - Alias 2</Text>
-          <Text style={styles.ModalText2}> - Alias 3</Text>
-          <Button style={styles.ModalButton} title="Hide modal" onPress={toggleModal} />
-      </Modal>
+          </View>
+          <View>
+          <Pressable style={styles.button} onPress={toggleModal}>
+      <Text style={styles.modalbuttontext}>Volver</Text>
+    </Pressable>
     </View>
-      <Button onPress={handleSubmit(onSubmit)} label="Registrarse"/>
+      </Modal>
+      <Modal style={styles.modal}isVisible={isModalVisible2}>
+      <View style={styles.modalcontainer} >
+          <Image style={styles.imagestyle} source={{
+          uri: 'https://i.postimg.cc/43cxCxkD/57-Confused-Quotes-About-The-Ups-and-Downs-of-Life.jpg',
+        }}></Image>
+          <Text style={styles.ModalTextm2}> El correo electrónico ingresado ya existe</Text>
+          </View>
+          <Pressable style={styles.button2} onPress={toggleModal2}>
+      <Text style={styles.modalbuttontext}>Recuperar Contraseña</Text>
+    </Pressable>
+    <Pressable style={styles.modalbuttonback} onPress={toggleModal2}>
+      <Text style={styles.modalbuttonbacktext}>Volver</Text>
+    </Pressable>
+    </Modal>
+    </View>
+      <Button2 onPress={handleSubmit(onSubmit)} label="Registrarse"/>
 
     </View>
   );
@@ -145,15 +139,25 @@ const styles = StyleSheet.create({
     borderRadius: 30
   },
   imagestyle: {
-    marginTop: 0,
-    width: 340,
-    height: 200,
+    width: 345,
+    height: 250,
     borderRadius: 20
   },
   ModalText: {
     fontSize: 25,
     lineHeight: 20 * 1.4,
-    marginTop: 35,
+    marginTop: 80,
+    marginBottom: 0,
+    marginHorizontal: 10,
+    textAlign: 'center',
+    color: '#FFFFFFFF',
+    backgroundColor: '#222121',
+    fontWeight: "bold",
+  },
+  ModalTextm2: {
+    fontSize: 25,
+    lineHeight: 20 * 1.4,
+    marginTop: 30,
     marginBottom: 0,
     marginHorizontal: 10,
     textAlign: 'center',
@@ -172,14 +176,57 @@ const styles = StyleSheet.create({
     backgroundColor: '#222121',
     fontWeight: "bold",
   },
-  ModalButton: {
+  modalButton: {
     width:10,
-    backgroundColor: '#F7456A',
+    color: '#F7456A',
     borderRadius: 30,
     marginHorizontal: 70,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
   },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 135,
+    paddingVertical: 12,
+    paddingHorizontal: 60,
+    borderRadius: 30,
+    elevation: 3,
+    backgroundColor: '#F7456A',
+  },
+
+  button2: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 60,
+    borderRadius: 30,
+    elevation: 3,
+    backgroundColor: '#F7456A',
+  },
+
+  modalcontainer:{
+    marginBottom: 30,
+  },
+
+  modalbuttontext:{
+    color:'#FFFFFF',
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+
+  modalbuttonback: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 66,
+    backgroundColor: '#222121',
+  },
+
+  modalbuttonbacktext:{
+    color:'#6C7072',
+    fontSize: 20,
+  }
 
 });
