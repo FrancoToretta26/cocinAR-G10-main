@@ -7,6 +7,9 @@ import Button from '../Components/Button';
 
 import { useForm, Controller } from 'react-hook-form';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 export default function CargarReceta({ navigation, route }) {
   const [isBillingDifferent, setIsBillingDifferent] = useState(false);
@@ -18,8 +21,10 @@ export default function CargarReceta({ navigation, route }) {
     setIsBillingDifferent((prev) => !prev);
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async function(data){
+    await AsyncStorage.setItem('nombreReceta', data.nombreReceta)
     navigation.navigate('RegistroReceta')
+
   };
 
     
@@ -29,7 +34,7 @@ export default function CargarReceta({ navigation, route }) {
   return (
 
     <View style={styles.container}>
-        <Text style={styles.olvidoPass} onPress={() => navigation.navigate('OlvidePassword')}> Ingresar el nombre del plato</Text>
+        <Text style={styles.olvidoPass}> Ingresar el nombre del plato</Text>
         <Controller
         defaultValue=""
         name="nombreReceta"
@@ -39,12 +44,12 @@ export default function CargarReceta({ navigation, route }) {
         },
     }}
         control={control}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, nombreReceta } }) => (
             <Input
                 error={errors.nombreReceta}
                 errorText={errors.nombreReceta?.message}
-                onChangeText={(value) => onChange(value)}
-                value={value}
+                onChangeText={(nombreReceta) => onChange(nombreReceta)}
+                value={nombreReceta}
                 placeholder="Nombre"
             />
         )}

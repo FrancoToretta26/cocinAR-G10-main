@@ -38,15 +38,16 @@ export default class RegistroReceta extends Component {
             descripcion:"",
 
             ingredientes: [{
-                ingrediente: '',
-                cantidad: ''
+                nombre: '',
+                cantidad: '',
+                medida: 'gramos'
+
             }],
 
             pasos: [{
-                idPaso:"",
-                nombre:"",
-                imagen:null,
-                descripcion:""
+                idPaso:1,
+                multimedia:null,
+                descripcion:"",
             }],
 
             choosenIndex: 0,
@@ -72,33 +73,34 @@ export default class RegistroReceta extends Component {
       };
 
       onPress = async () => {
-        var nombre = "Pollo al horno"
         const idUsuario = await AsyncStorage.getItem('idUsuario')
+        const alias = await AsyncStorage.getItem('alias')
+        const nombre = await AsyncStorage.getItem('nombreReceta')
+
+
+        
         const idUser = parseInt(idUsuario)
-        var receta = []
         var recetaInfo = {
             nombre : nombre,
             descripcion : this.state.descripcion,
-            foto : this.state.foto,
+            foto : this.state.image,
             porciones : this.state.porciones,
             cantidadPersonas : 3,
             tag : this.state.choosenIndex,
             idUsuario: idUser,
         }
-        receta.push(recetaInfo)
 
         var data = {
-            //nombre: 
-            receta: receta,
-            ingredientes : this.state.ingredientes,
+            receta: recetaInfo,
+            creatorNickname: alias,
+            ingredienteConCantidad : this.state.ingredientes,
             pasos : this.state.pasos,
         }
-        console.log(data, 'data')
 
         let enviarReceta = await submitRecipe(data)
-        // if(enviarReceta){
-        //   alert('Receta Guardada')
-        // }
+        if(enviarReceta){
+            alert('Receta Creada')
+        }
       }
 
     render() {
@@ -169,10 +171,10 @@ export default class RegistroReceta extends Component {
                                 <View  style={styles.ingredientesContainer}>
                                     <View style={styles.ingredienteContainer}>
                                         <TextInput placeholder='Ingredientes' placeholderTextColor={"#808080"}
-                                            value={item.ingrediente}
+                                            value={item.nombre}
                                             style={styles.ingrediente}
                                             onChangeText={text => {
-                                                this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, ingrediente: text } : c) })
+                                                this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, nombre: text, medida:"gramos" } : c) })
                                             }} />
                                         <TextInput placeholder='Cantidad' placeholderTextColor={"#808080"}
                                             value={item.cantidad}
@@ -206,7 +208,7 @@ export default class RegistroReceta extends Component {
                             onPress={() => {
                                 this.setState({
                                     ingredientes: [...ingredientes, {
-                                      ingrediente: '',
+                                      nombre: '',
                                         cantidad: ''
                                     }]
                                 })
@@ -230,14 +232,14 @@ export default class RegistroReceta extends Component {
                                                     value={item.nombre}
                                                     style={ styles.pasosNombre }
                                                     onChangeText={text => {
-                                                        this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, nombre: text, idPaso: index+1 } : c) })
+                                                        this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, idPaso: index+1 } : c) })
                                                     }} />
                                              </View>
                                          </View>
 
                                          <StatusBar hidden={true} />
                                          
-                                            {this.state.pasos[index].imagen &&  <Image source={{uri:this.state.pasos[index].imagen}} style = {{ width: 200, height: 120, borderRadius: 10, alignSelf:"center"}} />}
+                                            {this.state.pasos[index].multimedia &&  <Image source={{uri:this.state.pasos[index].multimedia}} style = {{ width: 200, height: 120, borderRadius: 10, alignSelf:"center"}} />}
                                             <Button title="Subir imagen" 
                                             color={"#F7456A"}
                                                 onPress={ async () => {
@@ -247,7 +249,7 @@ export default class RegistroReceta extends Component {
                                                             allowsEditing:true
                                                             });
                                                             if (!result.cancelled) {
-                                                                this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, imagen: result.uri } : c)  });
+                                                                this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, multimedia: result.uri } : c)  });
 
                                                         }
                                                         }}/>
@@ -287,7 +289,7 @@ export default class RegistroReceta extends Component {
                                 this.setState({
                                   pasos: [...pasos, {
                                       nombre: '',
-                                      imagen: null,
+                                      multimedia: null,
                                       descripcion: ''
                                     }]
                                 })
