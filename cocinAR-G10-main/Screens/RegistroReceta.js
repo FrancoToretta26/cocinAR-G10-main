@@ -37,9 +37,9 @@ export default class RegistroReceta extends Component {
             }],
 
             pasos: [{
-                nombre:"hola",
+                nombre:"",
                 imagen:null,
-                descripcion:"como va"
+                descripcion:""
             }],
 
             choosenIndex: 0,
@@ -76,15 +76,24 @@ export default class RegistroReceta extends Component {
                 <ScrollView>
                 <View style={styles.flatlistStyle}>
 
+                <StatusBar hidden={true} />
+                        {image && <Image source={{uri:image}} style={{flex:1,width:600}} />}
+                        <Button title="Subir imagen" 
+                                onPress={this.pickImage}
+                                color={"#F7456A"}
+                                />
+                                
+                    <StatusBar style="auto" />
 
                 <View style={styles.inputView}>
-                <TextInput placeholder='Descripción' placeholderTextColor={"#808080"}
-                    style={styles.input}
-                    value={this.state.descripcion}
-                    onChangeText={text => {
-                        this.setState({descripcion: text})
-                    }} 
-                    />
+                    <TextInput placeholder='Descripción' placeholderTextColor={"#808080"}
+                        style={styles.input}
+                        value={this.state.descripcion}
+                        onChangeText={text => {
+                            this.setState({descripcion: text})
+                        }} 
+                        />
+
                 </View>
 
 
@@ -163,74 +172,83 @@ export default class RegistroReceta extends Component {
                     </View>
 
                    
-
+                    <Text style={styles.ingredienteText}>Pasos</Text>
                     {
                         pasos.map((item, index) => {
 
                             return (
-                                <View style={{ margin: 5, padding: 10, }}>
+                                <View style={styles.pasosInside}>
+                                    <View >
+                                        <View style={styles.pasosNombreView}>
+                                            <TextInput placeholder='Nombre' placeholderTextColor={"#808080"}
+                                                value={item.nombre}
+                                                style={ styles.pasosNombre }
+                                                onChangeText={text => {
+                                                    this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, nombre: text } : c) })
+                                                }} />
+                                         </View>
 
-                                    <TextInput placeholder='Ingredientes'
-                                        value={item.nombre}
-                                        style={{ borderRadius: 4, borderWidth: 1, borderColor: '#212121', padding: 8 }}
-                                        onChangeText={text => {
-                                            this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, nombre: text } : c) })
-                                        }} />
+                                         <StatusBar hidden={true} />
+                                            {image && <Image source={{uri:image}} style={{flex:1,width:600}} />}
+                                            <Button title="Subir imagen" 
+                                            color={"#F7456A"}
+                                                onPress={ async () => {
+                                                           let result = await ImagePicker.launchImageLibraryAsync({
+                                                            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                                                            quality: 1,
+                                                            allowsEditing:true
+                                                            });
+                                                            if (!result.cancelled) {
+                                                                this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, imagen: result.uri } : c)  });
 
-                                    <TextInput placeholder='Cantidad'
-                                        value={item.descripcion}
-                                        style={{ borderRadius: 4, borderWidth: 1, borderColor: '#212121', padding: 8, marginTop: 5 }}
-                                        onChangeText={text => {
-                                            this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, descripcion: text } : c) })
-                                        }} />
+                                                        }
+                                                        console.log(pasos);}}/>
 
+                                        <StatusBar style="auto" />
 
-                                    <StatusBar hidden={true} />
-                                        {image && <Image source={{uri:image}} style={{flex:1,width:600}} />}
-                                        <Button title="Pick Image" 
-                                            onPress={ async () => {
-                                                       let result = await ImagePicker.launchImageLibraryAsync({
-                                                        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                                                        quality: 1,
-                                                        allowsEditing:true
-                                                        });
-                                                        if (!result.cancelled) {
-                                                            this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, imagen: result.uri } : c)  });
-                                                            
-                                                    }
-                                                    console.log(pasos);}}/>
+                                        <View style={styles.pasosDescripcionView}>
+                                            <TextInput placeholder='Descripción' placeholderTextColor={"#808080"}
+                                                value={item.descripcion}
+                                                style={styles.pasosDescripcion}
+                                                onChangeText={text => {
+                                                    this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, descripcion: text } : c) })
+                                                }} />
+                                        </View>
 
-                                    <StatusBar style="auto" />
+                                    </View>
 
-                                    <Text style={{
-                                        alignSelf: 'flex-start', borderRadius: 4,
-                                        padding: 3, marginTop: 5, backgroundColor: 'red', color: 'white'
-                                    }} onPress={() => {
-                                        const filterList = pasos.filter((item, inner) => inner != index)
-                                        this.setState({ pasos: filterList })
-                                    }}>
-                                        Remove
-                                    </Text>
+                                    <TouchableOpacity style={styles.Removebutton}>
+                                            <AntDesign name="minuscircle" size={24} color="#F7456A" 
+                                            onPress={() => {
+                                                const filterList = pasos.filter((item, inner) => inner != index)
+                                                this.setState({ pasos: filterList })
+                                            }}
+                                            />
+                                        </TouchableOpacity>
 
                                 </View>
                             )
                         })
                     }
 
-                    <Text style={{ padding: 16, textAlign: 'center', backgroundColor: 'black', color: 'white' }} onPress={() => {
-                        this.setState({
-                          pasos: [...pasos, {
-                              nombre: '',
-                              imagen: null,
-                              descripcion: ''
-                            }]
-                        })
-                    }}>
-                        Add
-                    </Text>
+                    <View style={styles.Addcontainer}>
+                        <TouchableOpacity style={styles.Addbutton}>
+                            <AntDesign name="pluscircle" size={24} color="#F7456A" />
+                            <Text style={styles.Addtext}
+                            onPress={() => {
+                                this.setState({
+                                  pasos: [...pasos, {
+                                      nombre: '',
+                                      imagen: null,
+                                      descripcion: ''
+                                    }]
+                                })
+                            }} >Paso</Text>
+                        </TouchableOpacity>
+                    </View>
 
                     <View style={styles.container}>
-                <Text style={styles.textStyle}>Picker Example</Text>
+                <Text style={styles.ingredienteText}>Agregar etiquetas</Text>
 
                 <Picker style={styles.pickerStyle}
                         selectedValue={this.state.categoria}
@@ -249,12 +267,8 @@ export default class RegistroReceta extends Component {
                             <Picker.Item label="Vegana" value="Vegana" />
                 </Picker>
 
-                <Text style={styles.textStyle}> {"Index ="+this.state.choosenIndex}</Text>
             </View>
-                    <StatusBar hidden={true} />
-                        {image && <Image source={{uri:image}} style={{flex:1,width:600}} />}
-                        <Button title="Pick Image" onPress={this.pickImage}/>
-                    <StatusBar style="auto" />
+                    
 
                 </View>
                 </ScrollView>
@@ -286,13 +300,13 @@ const styles = StyleSheet.create({
         height: 130,
         width: 350,
         borderStyle: "solid",
-        borderRadius: 15, 
+        borderRadius: 10, 
         borderWidth: 1, 
         borderColor: fontColorGrey,
     },
 
     input:{
-        padding:20,
+        padding:10,
         color:fontColorWhite,
     },
 
@@ -328,7 +342,7 @@ const styles = StyleSheet.create({
 
     ingredienteText:{
         alignSelf:"flex-start",
-        paddingRight:80,
+        left:32,
         color: fontColorWhite,
         fontWeight: "bold",
         fontSize: 18,
@@ -387,4 +401,38 @@ const styles = StyleSheet.create({
           color: red,
           marginLeft: 10,
         },
+
+    pasosInside:{
+        flexDirection: 'row',
+        justifyContent:"space-evenly",
+        paddingTop:30,
+        paddingBottom:20
+
+
+    },
+    
+    pasosNombreView:{
+        height: 40,
+        width: 300,
+        borderStyle: "solid",
+        borderRadius: 10, 
+        borderWidth: 1, 
+        borderColor:fontColorGrey,
+    },
+
+    pasosNombre:{
+        padding: 10
+    },
+
+    pasosDescripcionView:{
+        height: 130,
+        width: 300,
+        borderStyle: "solid",
+        borderRadius: 10, 
+        borderWidth: 1, 
+        borderColor:fontColorGrey,
+    },
+    pasosDescripcion:{
+        padding:10
+    },  
   });
