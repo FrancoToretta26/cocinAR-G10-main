@@ -98,13 +98,20 @@ export default function Registro({ navigation, route }) {
         <Text style={styles.TyC}>Continuando, aceptas los terminos y condiciones del servicio y politicas de privacidad</Text>
         <View>
       <Button title="Show modal" onPress={toggleModal} />
-
+      </View>
+      <View>
       <Modal style={styles.modal}isVisible={isModalVisible}>
         <View>
-          <Text> Hello!</Text>
-          <Image source={{uri:'https://smaller-pictures.appspot.com/images/dreamstime_xxl_65780868_small.jpg'}}></Image>
-          <Button title="Hide modal" onPress={toggleModal} />
+          <Image style={styles.imagestyle} source={{
+          uri: 'https://i.postimg.cc/cCBqF1TR/istockphoto-1181209880-612x612.jpg',
+        }}></Image>
         </View>
+          <Text style={styles.ModalText}> El Alias ingresado ya existe.</Text>
+          <Text style={styles.ModalText2}> Alias sugeridos:</Text>
+          <Text style={styles.ModalText2}> - Alias 1</Text>
+          <Text style={styles.ModalText2}> - Alias 2</Text>
+          <Text style={styles.ModalText2}> - Alias 3</Text>
+          <Button style={styles.ModalButton} title="Hide modal" onPress={toggleModal} />
       </Modal>
     </View>
       <Button onPress={handleSubmit(onSubmit)} label="Registrarse"/>
@@ -125,16 +132,54 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     alignItems: 'center',
     color: '#979C9E',
-    backgroundColor: '#FAFAFA',
+    backgroundColor: '#222121',
   },
   modal: {
-    fontSize: 18,
+    height: 10,
+    width: 350,
+    marginTop: 100,
+    marginBottom: 100,
+    marginHorizontal: 24,
+    alignItems: 'center',
+    backgroundColor: '#222121',
+    borderRadius: 30
+  },
+  imagestyle: {
+    marginTop: 0,
+    width: 340,
+    height: 200,
+    borderRadius: 20
+  },
+  ModalText: {
+    fontSize: 25,
     lineHeight: 20 * 1.4,
     marginTop: 35,
-    marginBottom: 10,
-    marginHorizontal: 20,
-    alignItems: 'center',
-    color: '#979C9E',
-    backgroundColor: '#FAFAFA',
+    marginBottom: 0,
+    marginHorizontal: 10,
+    textAlign: 'center',
+    color: '#FFFFFFFF',
+    backgroundColor: '#222121',
+    fontWeight: "bold",
   },
+  ModalText2: {
+    fontSize: 25,
+    lineHeight: 20 * 1.4,
+    marginTop: 6,
+    marginBottom: 0,
+    marginHorizontal: 80,
+    textAlign: 'center',
+    color: '#FFFFFFFF',
+    backgroundColor: '#222121',
+    fontWeight: "bold",
+  },
+  ModalButton: {
+    width:10,
+    backgroundColor: '#F7456A',
+    borderRadius: 30,
+    marginHorizontal: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+
 });
