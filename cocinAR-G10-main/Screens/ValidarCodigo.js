@@ -104,7 +104,7 @@ const VerificationScreen = ({navigation,
             ref={fifthInput}
             onChangeText={text => {
               setOtp({...otp, 5: text});
-              text ? fifthInput.current.focus() : fourthInput.current.focus();
+              text ? sixthInput.current.focus() : fourthInput.current.focus();
             }}
           />
         </View>
@@ -116,7 +116,7 @@ const VerificationScreen = ({navigation,
             ref={sixthInput}
             onChangeText={text => {
               setOtp({...otp, 6: text});
-              !text && fifthInput.current.focus();
+              text ? sixthInput.current.focus() : fifthInput.current.focus();
             }}
           />
         </View>
@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 27,
-    fontFamily: Fonts.POPPINS_MEDIUM,
     lineHeight: 20 * 1.4,
     width: Display.setWidth(80),
     textAlign: 'center',
@@ -152,7 +151,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontFamily: Fonts.POPPINS_MEDIUM,
     lineHeight: 20 * 1.4,
     marginTop: 35,
     marginBottom: 10,
@@ -162,7 +160,6 @@ const styles = StyleSheet.create({
   },
   title2: {
     fontSize: 18,
-    fontFamily: Fonts.POPPINS_MEDIUM,
     lineHeight: 20 * 1.4,
     marginTop: 50,
     marginBottom: 10,
@@ -173,7 +170,6 @@ const styles = StyleSheet.create({
   },
   title3: {
     fontSize: 18,
-    fontFamily: Fonts.POPPINS_MEDIUM,
     lineHeight: 1 * 1.4,
     marginTop: 0,
     marginBottom: 10,
@@ -183,7 +179,6 @@ const styles = StyleSheet.create({
   },
   title4: {
     fontSize: 18,
-    fontFamily: Fonts.POPPINS_MEDIUM,
     lineHeight: 20 * 1.4,
     marginTop: 50,
     marginBottom: 10,
@@ -194,7 +189,6 @@ const styles = StyleSheet.create({
   },
   content: {
     fontSize: 20,
-    fontFamily: Fonts.POPPINS_MEDIUM,
     marginTop: 10,
     marginBottom: 20,
     marginHorizontal: 20,
@@ -211,6 +205,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderColor: "#F7456A",
     borderWidth: 2.5,
+    height: 55,
+    width: 55,
   },
   otpText: {
     fontSize: 25,
@@ -233,7 +229,6 @@ const styles = StyleSheet.create({
     fontSize: 21,
     lineHeight: 18 * 1.4,
     color: "#FAFAFA",
-    fontFamily: Fonts.POPPINS_MEDIUM,
   },
 });
 

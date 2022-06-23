@@ -21,18 +21,22 @@ export default function Registro({ navigation, route }) {
   };
 
   const onSubmit = (data) => {
-    setModalVisible(!isModalVisible);
+    setModalVisible3(!isModalVisible3);
     //navigation.navigate('ValidarCodigo')
   };
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [isModalVisible2, setModalVisible2] = useState(false);
+  const [isModalVisible3, setModalVisible3] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
   const toggleModal2 = () => {
     setModalVisible2(!isModalVisible2);
+  };
+  const toggleModal3 = () => {
+    setModalVisible3(!isModalVisible3);
   };
 
   return (
@@ -105,6 +109,17 @@ export default function Registro({ navigation, route }) {
     </Pressable>
     <Pressable style={styles.modalbuttonback} onPress={toggleModal2}>
       <Text style={styles.modalbuttonbacktext}>Volver</Text>
+    </Pressable>
+    </Modal>
+    <Modal style={styles.modal}isVisible={isModalVisible3}>
+      <View style={styles.modalcontainer} >
+          <Image style={styles.imagestyle} source={{
+          uri: 'https://i.postimg.cc/NjzyT0wV/Mx-Headerbild-1860x550-180924-Help-Desk.png',
+        }}></Image>
+          <Text style={styles.ModalTextm2}> No se puede completar el registro. Por favor envia un correo electrónico a soporte@cocinar.com</Text>
+          </View>
+          <Pressable style={styles.button3} onPress={toggleModal3}>
+      <Text style={styles.modalbuttontext}>Volver</Text>
     </Pressable>
     </Modal>
     </View>
@@ -200,6 +215,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 60,
+    borderRadius: 30,
+    elevation: 3,
+    backgroundColor: '#F7456A',
+  },
+
+  button3: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 57,
     paddingVertical: 12,
     paddingHorizontal: 60,
     borderRadius: 30,
