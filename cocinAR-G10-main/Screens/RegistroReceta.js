@@ -20,6 +20,12 @@ import {Picker} from '@react-native-picker/picker';
 
 import { AntDesign } from '@expo/vector-icons';
 
+import Button2 from '../Components/Button';
+import { submitRecipe } from '../controller/recipe.controller';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 export default class RegistroReceta extends Component {
 
     constructor(props) {
@@ -28,7 +34,7 @@ export default class RegistroReceta extends Component {
         this.state = {
             
             image: null,
-            porciones:'',
+            porciones:'1',
             descripcion:"",
 
             ingredientes: [{
@@ -37,6 +43,7 @@ export default class RegistroReceta extends Component {
             }],
 
             pasos: [{
+                idPaso:"",
                 nombre:"",
                 imagen:null,
                 descripcion:""
@@ -65,10 +72,41 @@ export default class RegistroReceta extends Component {
         }
       };
 
+      onPress = async () => {
+        var nombre = "Pollo al horno"
+        const idUsuario = await AsyncStorage.getItem('idUsuario')
+        const idUser = parseInt(idUsuario)
+        var receta = []
+        var recetaInfo = {
+            nombre : nombre,
+            descripcion : this.state.descripcion,
+            foto : this.state.foto,
+            porciones : this.state.porciones,
+            cantidadPersonas : 3,
+            tag : this.state.choosenIndex,
+            idUsuario: idUser,
+        }
+        receta.push(recetaInfo)
+
+        var data = {
+            //nombre: 
+            receta: receta,
+            ingredientes : this.state.ingredientes,
+            pasos : this.state.pasos,
+        }
+        console.log(data, 'data')
+
+        let enviarReceta = await submitRecipe(data)
+        // if(enviarReceta){
+        //   alert('Receta Guardada')
+        // }
+      }
+
     render() {
         const { ingredientes } = this.state
         const { pasos } = this.state
         const {image} = this.state
+        const {porciones} = this.state
 
 
         return (
@@ -110,7 +148,7 @@ export default class RegistroReceta extends Component {
                         decreaseButtonBackgroundColor='black'
                         horizontal
                         onChange={(counter) => {
-                        console.log("onChange Counter:", counter);
+                        this.setState({porciones: counter})
                         }}
                     />
 
@@ -175,8 +213,8 @@ export default class RegistroReceta extends Component {
                     <Text style={styles.ingredienteText}>Pasos</Text>
                     {
                         pasos.map((item, index) => {
+                            return (                            
 
-                            return (
                                 <View style={styles.pasosInside}>
                                     <View >
                                         <View style={styles.pasosNombreView}>
@@ -184,7 +222,7 @@ export default class RegistroReceta extends Component {
                                                 value={item.nombre}
                                                 style={ styles.pasosNombre }
                                                 onChangeText={text => {
-                                                    this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, nombre: text } : c) })
+                                                    this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, nombre: text, idPaso: index+1 } : c)  })
                                                 }} />
                                          </View>
 
@@ -271,7 +309,9 @@ export default class RegistroReceta extends Component {
                     
 
                 </View>
+                <Button2 onPress={this.onPress} label="Enviar Receta" />
                 </ScrollView>
+                
             </SafeAreaView>
         )
     }

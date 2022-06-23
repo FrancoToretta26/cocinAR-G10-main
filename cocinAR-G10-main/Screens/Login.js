@@ -28,11 +28,11 @@ export default function Login({ navigation, route }) {
         mail: data.mail,
         password: data.password,
       }
+      console.log(datos)
       let nuevoLogin = await login(datos)
-      if(nuevoLogin){
+      if(nuevoLogin.rdo==0){
         alert('Usuario logueado con exito')
         navigation.navigate('Inicio')
-
       }
       else{
         alert('Reintente nuevamente')

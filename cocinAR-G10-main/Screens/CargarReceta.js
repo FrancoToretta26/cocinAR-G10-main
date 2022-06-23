@@ -35,7 +35,7 @@ export default function CargarReceta({ navigation, route }) {
         name="nombreReceta"
         rules={{required:{
             value: true,
-            message: 'El Correo Electrónico es obligatorio'
+            message: 'El Nombre es Obligatorio'
         },
     }}
         control={control}

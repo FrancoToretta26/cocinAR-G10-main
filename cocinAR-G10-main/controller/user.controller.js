@@ -7,7 +7,7 @@ export const registro= async function(registro)
     //armo json con datos
     try
     {
-        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/register',{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.17:8080/register',{ // Poner la IPV4 de cada uno.
             method: 'POST', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -56,7 +56,7 @@ export const login= async function(login)
     //armo json con datos
     try
     {
-        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/login',{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.17:8080/login',{ // Poner la IPV4 de cada uno.
             method: 'POST', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -69,16 +69,20 @@ export const login= async function(login)
         });
 
         let data = await response.json();
-        const setAlias = await AsyncStorage.setItem('alias', data.alias)
-
-
-        
-        
+        console.log('data',data)
         let rdo = response.status;
+        console.log(rdo)
+
+        const setAlias = await AsyncStorage.setItem('alias', data.alias)
+        const idUsuario = String(data.id)
+        const setIdUsuario = await AsyncStorage.setItem('idUsuario', idUsuario)
+        console.log(idUsuario)
+        console.log(rdo)
         switch(rdo)
         {
             case 200:   
             { 
+                console.log('entre al case')
                 return ({rdo:0,mensaje:"Ok"});//correcto
             }
             case 201:   
@@ -101,7 +105,7 @@ export const finalizarRegistro = async function(data)
     const alias = await AsyncStorage.getItem('alias')
     try
     {
-        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/register/endRegister',{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.17:8080/register/endRegister',{ // Poner la IPV4 de cada uno.
             method: 'POST', // or 'PUT'
             headers: {
                 Accept: 'application/json',
