@@ -56,7 +56,7 @@ class BuscarRecetaFiltros extends Component{
         super(props);
         this._renderItem = this._renderItem.bind(this)
         this.state = { 
-            usuario: "",
+            usuario: null,
             ingredientList : [],
             notIngredientList : [],
             isLoading: false,

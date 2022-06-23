@@ -90,7 +90,7 @@ export default function Registro({ navigation, route }) {
         name="imagen"
         control={control}
         render={({ field: { onChange, image } }) => (
-            <Button value={image} title="Pick an image from camera roll" onPress={pickImage} onChange={(image) => onChange(image)} />
+            <Button value={image} title="Elegir Foto" onPress={pickImage} onChange={(image) => onChange(image)} />
         )}
         />
         {image && <Image source={{ uri: image }} style={{ width: 100, height: 100}} />}
@@ -150,6 +150,7 @@ export default function Registro({ navigation, route }) {
                 errorText={errors.password?.message}
                 onChangeText={(password) => onChange(password)}
                 value={password}
+                secureTextEntry
                 placeholder="Contraseña"
             />
         )}
@@ -169,6 +170,7 @@ export default function Registro({ navigation, route }) {
                 errorText={errors.password2?.message}
                 onChangeText={(value) => onChange(value)}
                 value={value}
+                secureTextEntry
                 placeholder="Confirmar Contraseña"
             />
         )}

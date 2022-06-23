@@ -22,14 +22,14 @@ export const getRecipes= async function(data)
     if(tipo!=null){
         endPoint +="type="+tipo
     }
-    if(user!=""){
+    if(user!=null){
         endPoint +="user="+user
     }
     console.log(endPoint,'endpoint previo al fetch')
     //armo json con datos
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recipe'+endPoint,{ // Poner la IPV4 de cada uno.
+        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/recipe'+endPoint,{ // Poner la IPV4 de cada uno.
             method: 'GET', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -72,7 +72,7 @@ export const getRecipesForLater= async function()
     console.log(alias, 'alias get')
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recipeForLater'+'/'+alias,{ // Poner la IPV4 de cada uno.
+        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/recipeForLater'+'/'+alias,{ // Poner la IPV4 de cada uno.
             method: 'GET', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -113,7 +113,7 @@ export const saveRecipes= async function(data)
 
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recipeForLater'+'/'+idReceta+'/'+alias,{ // Poner la IPV4 de cada uno.
+        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/recipeForLater'+'/'+idReceta+'/'+alias,{ // Poner la IPV4 de cada uno.
             method: 'POST', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -153,7 +153,7 @@ export const deleteRecipeForLater= async function(data)
 
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recipeForLater'+'/'+idReceta,{ // Poner la IPV4 de cada uno.
+        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/recipeForLater'+'/'+idReceta,{ // Poner la IPV4 de cada uno.
             method: 'DELETE', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -187,7 +187,7 @@ export const getIngredients= async function()
 
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/ingredient',{ // Poner la IPV4 de cada uno.
+        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/ingredient',{ // Poner la IPV4 de cada uno.
             method: 'GET', // or 'PUT'
             headers: {
                 Accept: 'application/json',
