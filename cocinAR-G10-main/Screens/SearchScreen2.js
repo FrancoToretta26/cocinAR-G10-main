@@ -51,7 +51,7 @@ const SearchScreen2 = ({navigation, route}) => {
             >
                             <TouchableOpacity onPress={() => {              navigation.navigate('Recetas', {
                 screen: 'SearchScreen',
-                params: {recetass: item.receta }, pasos: item.pasos, usuario: item.creatorNickname, ingredientes: item.ingredienteConCantidad, tags: item.tagString
+                params: {recetass: item.receta }, pasos: item.pasos, usuario: item.creatorNickname, ingredientes: item.ingredienteConCantidad, tags: item.tagString, calificacion: item.calificacion
               });}}>
 
             <Avatar source={{ uri: item.receta.foto }} style={{width: 140, height: 90, }} rounded />

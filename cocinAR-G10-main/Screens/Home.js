@@ -7,7 +7,7 @@ import { t, color } from 'react-native-tailwindcss';
 import { Searchbar } from 'react-native-paper';
 import Button from '../Components/ButtonSearch'
 import { useForm, Controller } from 'react-hook-form';
-import { getRecipes } from '../controller/recipe.controller';
+import { getRecipes, getRecipesForLater } from '../controller/recipe.controller';
 
 export default function Home({navigation, route}) {
     const homeName = "Descubrir";
@@ -34,6 +34,7 @@ export default function Home({navigation, route}) {
 
     const onSubmit = async function(data){
         let recetas = await getRecipes();
+        let recetasForLater = await getRecipesForLater();
         if(recetas){
           navigation.navigate('SearchScreen', {
             postId: 3006,

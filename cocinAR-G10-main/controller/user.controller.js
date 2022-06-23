@@ -32,6 +32,16 @@ export const registro= async function(registro)
             { 
                 return ({rdo:0,mensaje:"Ok"});//correcto
             }
+            case 400:
+                {
+                    return({rdo:1, mensaje:"Alias ya existente"}) //Alias ya existente
+    
+                }
+                case 409:
+                    {
+                    return({rdo:2, mensaje:"Correo electronico ya existente"}) // Mail ya existente
+        
+                    }
     }
 }
     catch(error)
@@ -58,6 +68,10 @@ export const login= async function(login)
               })
         });
 
+        let data = await response.json();
+        const setAlias = await AsyncStorage.setItem('alias', data.alias)
+
+
         
         
         let rdo = response.status;
@@ -71,6 +85,7 @@ export const login= async function(login)
             { 
                 return ({rdo:0,mensaje:"Ok"});//correcto
             }
+
     }
 }
     catch(error)
@@ -96,13 +111,13 @@ export const finalizarRegistro = async function(data)
                 nombre: data.nombre,
                 apellido: data.apellido,
                 password: data.password,
-                alias: alias
+                alias: alias,
+                avatar: data.avatar
               })
         });
         
         
         let rdo = response.status;
-        alert(rdo)
         switch(rdo)
         {
             case 200:   

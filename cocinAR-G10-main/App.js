@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, Alert, ImageBackground, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, ImageBackground, TouchableOpacity, Platform, Image} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Inicio from './Screens/Inicio';
@@ -17,6 +17,9 @@ import BuscarRecetasFiltros from './Screens/BuscarRecetaFiltros';
 import SearchScreen from './Screens/SearchScreen2';
 import Recetas from './Screens/Recetas';
 import "./ignoreWarnings";
+import DescripcionReceta from './Screens/DescripcionRecetaGuardada'
+import * as ImagePicker from 'expo-image-picker';
+import Home from './Screens/Home';
 
 const Stack = createStackNavigator();
 
@@ -112,6 +115,26 @@ export default function App() {
       component={Recetas}
       options={{
         title: 'Recetas',
+        headerTintColor: '#F7456A',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#222121',
+          elevation: 0,
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft:15}}>
+            <Ionicons name="arrow-back-outline" size={25} color="#F7456A" />
+          </View>
+                  ),
+                }}
+              />
+
+<Stack.Screen
+      name="Descripcion"
+      component={DescripcionReceta}
+      options={{
+        title: 'Descripcion',
         headerTintColor: '#F7456A',
         headerTitleAlign: 'center',
         headerStyle: {

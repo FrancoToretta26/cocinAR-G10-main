@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { View, Text, StyleSheet, FlatList, Image} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-elements'
+import {deleteRecipeForLater} from '../controller/recipe.controller';
 
 
 class RecetasGuardadas extends Component{
@@ -35,28 +36,46 @@ class RecetasGuardadas extends Component{
     }
 
     onDelte = (id) =>{
-        const { data } = this.state
-        let filterArray = data.filter((val, i)=>{
-            if(val.id !== id){
-                return val
+        console.log(users,'delete')
+        let filterArray = users.filter((val, i)=>{
+            if(val.idUsuario !== id){
+                return val.idUsuario
             }
         })
         console.log('filter array', filterArray)
-        this.setState({data: filterArray})
+        this.setState({users: filterArray})
     }
+
+    onPress = async (item) => {
+        alert('Hola')
+       // let guardarReceta = await saveRecipes(params.recetass.idReceta)
+       // if(guardarReceta){
+       // }
+      }
+  
 
     renderItems = ({ item }) => {
         return(
             <View style={styles.flatlistStyle}>
+                        <TouchableOpacity onPress={() => {              this.props.navigation.navigate('DescripcionReceta', {
+            screen: 'SearchScreen',
+            params: {recetass: item.receta }, pasos: item.pasos, usuario: item.nickName, ingredientes: item.ingredienteConCantidad, tags: item.tagString, calificacion: item.calificacion
+          });}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Image source={{uri: item.image}} style={styles.imgStyle}></Image>
+                <Image source={{uri: item.receta.foto}} style={styles.imgStyle}></Image>
                 <View style={{marginLeft: 8}}>
-                <Text style={styles.textName}>{item.name}</Text>
-                <Text style={styles.textUser}>{item.user}</Text>
+                <Text style={styles.textName}>{item.receta.nombre}</Text>
+                <Text style={styles.textUser}>{item.nickName}</Text>
                 </View>
-                </View>
+                </View></TouchableOpacity>
 
-            <TouchableOpacity styles={styles.btnStyle} onPress={()=> this.onDelte(item.id)}>
+            <TouchableOpacity styles={styles.btnStyle} onPress={async () => {
+                        let deleteReceta = await deleteRecipeForLater(item.idRecetaPorUsuario)
+                        if(deleteReceta.rdo==0){
+                            alert('Receta Eliminada')
+                            this.props.navigation.navigate('Inicio')
+
+            }}}>
             <Icon
             name='delete'
             color='#F7456A' />
@@ -67,9 +86,11 @@ class RecetasGuardadas extends Component{
 
     render(){
         const {data} = this.state
+        const { postId, users } = this.props.route.params;
+        console.log(users,'entre a RecipeSave')
         return(
         <View style={styles.container}>
-            <FlatList data={data} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>
+            <FlatList data={users} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>
         </View>
     )
     }

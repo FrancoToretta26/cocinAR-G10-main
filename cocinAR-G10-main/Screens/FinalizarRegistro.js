@@ -1,27 +1,28 @@
-import React, { useState } from 'react';
-import { StyleSheet, Switch, Text, View, } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Switch, Text, View, Platform, Button, Image } from 'react-native';
 import { t, color } from 'react-native-tailwindcss';
+import { Avatar } from 'react-native-elements';
+
 
 import Input from '../Components/Input'
-import Button from '../Components/Button';
+import Button2 from '../Components/Button';
 
 import { useForm, Controller } from 'react-hook-form';
 
-import ImagePicker from '../Components/ImagePicker';
 
 import { finalizarRegistro } from '../controller/user.controller';
 
 import { getRecipes } from '../controller/recipe.controller';
 
+import * as ImagePicker from 'expo-image-picker';
+
+
 
 export default function Registro({ navigation, route }) {
   const [isBillingDifferent, setIsBillingDifferent] = useState(false);
   const { handleSubmit, control, formState: { errors } } = useForm();
-
-
-
-
-
+  const [image, setImage] = useState(null);
+  
 
   const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -33,13 +34,15 @@ export default function Registro({ navigation, route }) {
 
 
   const onSubmit = async function(data){
+    const avatar = image;
     if(data.password==data.password2){
-        if (data.nombre!=="" && data.apellido!=="" && data.password!=="")
+        if (data.nombre!=="" && data.apellido!=="" && data.password!=="" && data.image!="")
         {
         let datos = {
             nombre: data.nombre,
             apellido: data.apellido,
-            password: data.password
+            password: data.password,
+            avatar: avatar
         }
         let finRegistro = await finalizarRegistro(datos)
         if(finRegistro){
@@ -47,7 +50,6 @@ export default function Registro({ navigation, route }) {
             let recetas = await getRecipes();
             if(recetas){
                 const nuevaData = JSON.stringify(recetas)
-                console.log(nuevaData, 'controller boca')
               navigation.navigate('Inicio', {
                 postId: 3006,
                 users: nuevaData})
@@ -64,10 +66,36 @@ export default function Registro({ navigation, route }) {
    } 
   };
 
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
 
   return (
     <View style={styles.container}>
-        <ImagePicker></ImagePicker>
+              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              <Controller
+        defaultValue=""
+        name="imagen"
+        control={control}
+        render={({ field: { onChange, image } }) => (
+            <Button value={image} title="Pick an image from camera roll" onPress={pickImage} onChange={(image) => onChange(image)} />
+        )}
+        />
+        {image && <Image source={{ uri: image }} style={{ width: 100, height: 100}} />}
+
+      </View>
         <Controller
         defaultValue=""
         name="nombre"
@@ -146,7 +174,7 @@ export default function Registro({ navigation, route }) {
         )}
         />
         <Text style={styles.TyC}>Continuando, aceptas los terminos y condiciones del servicio y politicas de privacidad</Text>
-        <Button onPress={handleSubmit(onSubmit)} label="Registrarse" />
+        <Button2 onPress={handleSubmit(onSubmit)} label="Registrarse" />
 
     </View>
   );
