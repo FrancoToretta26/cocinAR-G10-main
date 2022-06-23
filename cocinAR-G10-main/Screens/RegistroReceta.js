@@ -48,6 +48,7 @@ export default class RegistroReceta extends Component {
                 idPaso:1,
                 multimedia:null,
                 descripcion:"",
+                nombrePaso:""
             }],
 
             choosenIndex: 0,
@@ -91,6 +92,7 @@ export default class RegistroReceta extends Component {
         }
 
         var data = {
+
             receta: recetaInfo,
             creatorNickname: alias,
             ingredienteConCantidad : this.state.ingredientes,
@@ -100,6 +102,7 @@ export default class RegistroReceta extends Component {
         let enviarReceta = await submitRecipe(data)
         if(enviarReceta){
             alert('Receta Creada')
+            this.props.navigation.navigate('Inicio')
         }
       }
 
@@ -140,6 +143,15 @@ export default class RegistroReceta extends Component {
                         />
 
                 </View>
+
+                <View
+        style={{
+          marginTop: 20,
+          height: 1,
+          width: "100%",
+          backgroundColor: "#CED0CE",
+        }}
+      />
 
 
                 <View style={styles.counterContainer}>
@@ -216,6 +228,14 @@ export default class RegistroReceta extends Component {
                         </TouchableOpacity>
                     </View>
 
+                    <View
+        style={{
+          height: 1,
+          width: "100%",
+          backgroundColor: "#CED0CE",
+        }}
+      />
+
                    
                     <Text style={styles.ingredienteText}>Pasos</Text>
                     {
@@ -229,16 +249,16 @@ export default class RegistroReceta extends Component {
                                             <View style={styles.pasosNombreView}>
 
                                                 <TextInput placeholder='Nombre' placeholderTextColor={"#808080"}
-                                                    value={item.nombre}
+                                                    value={item.nombrePaso}
                                                     style={ styles.pasosNombre }
                                                     onChangeText={text => {
-                                                        this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, idPaso: index+1 } : c) })
+                                                        this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, nombrePaso: text, idPaso: index+1 } : c) })
                                                     }} />
                                              </View>
                                          </View>
 
                                          <StatusBar hidden={true} />
-                                         
+                                         <View style={styles.ButtonPasos}>
                                             {this.state.pasos[index].multimedia &&  <Image source={{uri:this.state.pasos[index].multimedia}} style = {{ width: 200, height: 120, borderRadius: 10, alignSelf:"center"}} />}
                                             <Button title="Subir imagen" 
                                             color={"#F7456A"}
@@ -252,7 +272,7 @@ export default class RegistroReceta extends Component {
                                                                 this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, multimedia: result.uri } : c)  });
 
                                                         }
-                                                        }}/>
+                                                        }}/></View>
 
                                         <StatusBar style="auto" />
 
@@ -280,6 +300,7 @@ export default class RegistroReceta extends Component {
                             )
                         })
                     }
+                    
 
                     <View style={styles.Addcontainer}>
                         <TouchableOpacity style={styles.Addbutton}>
@@ -297,14 +318,22 @@ export default class RegistroReceta extends Component {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.container}>
+                                     <View
+        style={{
+          height: 1,
+          width: "100%",
+          backgroundColor: "#CED0CE",
+        }}
+      />   
 
-                <Text style={styles.etiquetasText}>Agregar etiquetas</Text>
+                <View style={styles.container}>
 
+                <Text style={styles.etiquetasText}>Agregar Etiquetas</Text>
+                <View style={styles.containerPicker}>
                 <Picker style={styles.pickerStyle}
                         selectedValue={this.state.categoria}
                         onValueChange={(itemValue, itemPosition) =>
-                            this.setState({categoria: itemValue, choosenIndex: itemPosition})}
+                            this.setState({categoria: itemValue, choosenIndex: itemPosition+1})}
                             >
                             <Picker.Item label="Pasta" value="Pasta" />
                             <Picker.Item label="Parrilla" value="Parrilla" />
@@ -317,6 +346,7 @@ export default class RegistroReceta extends Component {
                             <Picker.Item label="Peruana" value="Peruana" />
                             <Picker.Item label="Vegana" value="Vegana" />
                 </Picker>
+                </View>
 
                 
             </View>
@@ -508,15 +538,19 @@ const styles = StyleSheet.create({
         padding:10,
         color: fontColorWhite,
     },  
-
     etiquetasText:{
+        marginRight: 150,
+        marginBottom: 20,
         color: fontColorWhite,
         fontWeight: "bold",
         fontSize: 18,
         paddingTop:40,
     },
     pickerStyle:{
+        marginLeft: 80,
         height: 100,
+        color: red,
+        borderWidth: 2,
     },
 
     counter:{
@@ -524,7 +558,19 @@ const styles = StyleSheet.create({
     },
 
     imageText:{
+        marginBottom: 10,
         left:20,
         alignSelf: "flex-start",
     },
+    containerPicker:{
+        width: 250,
+        borderWidth: 1,
+        borderColor: red,
+    },
+    ButtonPasos:{
+        marginBottom: 25,
+        marginLeft: 120,
+        width: 100,
+    }
+    
   });

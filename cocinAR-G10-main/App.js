@@ -21,10 +21,15 @@ import DescripcionReceta from './Screens/DescripcionRecetaGuardada'
 import * as ImagePicker from 'expo-image-picker';
 import Home from './Screens/Home';
 import ValidarCodigo from './Screens/ValidarCodigo'
+import { LogBox } from 'react-native';
+
+
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  LogBox.ignoreAllLogs();//Ignore all log notifications
+
 
   return (
     <NavigationContainer>

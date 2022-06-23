@@ -84,7 +84,8 @@ export default function Registro({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              <View style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={styles.contenedorFoto}>
               <Controller
         defaultValue=""
         name="imagen"
@@ -94,6 +95,8 @@ export default function Registro({ navigation, route }) {
         )}
         />
         {image && <Image source={{ uri: image }} style={{ width: 100, height: 100}} />}
+        </View>
+    <View style={styles.formsInput}>
 
       </View>
         <Controller
@@ -177,7 +180,7 @@ export default function Registro({ navigation, route }) {
         />
         <Text style={styles.TyC}>Continuando, aceptas los terminos y condiciones del servicio y politicas de privacidad</Text>
         <Button2 onPress={handleSubmit(onSubmit)} label="Registrarse" />
-
+        </View>
     </View>
   );
 }
@@ -185,4 +188,10 @@ export default function Registro({ navigation, route }) {
 const styles = StyleSheet.create({
   container: [t.flex1, t.justifyCenter, t.itemsCenter, t.p6, {backgroundColor: "#222121"}],
   TyC: {textAlign: 'center', color: "#F7456A"},
+  contenedorFoto:{
+
+  },
+  formsInput:{
+    marginBottom: 40 ,
+  },
 });

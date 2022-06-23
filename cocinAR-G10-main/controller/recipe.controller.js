@@ -1,14 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export const getRecipes= async function(data)
+export const getRecipes= async function(datos)
 {
     //url webservices
     var endPoint = "?";
-    const listaIngredientes = data.ingredientes
-    const listaNotIngredientes = data.notIngredientes
-    const tipo = data.tipo
-    const user = data.user
+    const listaIngredientes = datos.ingredientes
+    const listaNotIngredientes = datos.notIngredientesnp
+    const tipo = datos.tipo
+    const user = datos.user
     if(listaIngredientes!=null){
         listaIngredientes.forEach(element => {
             endPoint +="ingredients="+element.nombre+"&"
@@ -224,6 +224,7 @@ export const getIngredients= async function()
 
 export const submitRecipe= async function(datos)
 {
+    console.log(datos,'previo al endpoint')
 
 
 

@@ -28,7 +28,7 @@ const VerificationScreen = ({navigation,
   const { handleSubmit, control, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
-  navigation.navigate('FinalizarRegistro')};
+  navigation.navigate('Home')};
 
   return (
     <View style={styles.container}>
