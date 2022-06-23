@@ -35,6 +35,8 @@
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~2.2.1",
     "react-native-image-crop-picker": "^0.37.3",
+    "react-native-modal": "^13.0.1",
+    "react-native-model": "^1.0.5",
     "react-native-paper": "^4.12.1",
     "react-native-reanimated": "^2.8.0",
     "react-native-screens": "~3.11.1",

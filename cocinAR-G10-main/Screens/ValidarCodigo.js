@@ -12,8 +12,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Colors from '../Constants/Colors';
 import Fonts from '../Constants/Fonts';
 import Display from '../Utils/Display';
+import { useForm, Controller } from 'react-hook-form';
 
-const VerificationScreen = ({
+const VerificationScreen = ({navigation,
   route: {
   },
 }) => {
@@ -21,13 +22,19 @@ const VerificationScreen = ({
   const secondInput = useRef();
   const thirdInput = useRef();
   const fourthInput = useRef();
-  const [otp, setOtp] = useState({1: '', 2: '', 3: '', 4: ''});
+  const fifthInput = useRef();
+  const sixthInput = useRef();
+  const [otp, setOtp] = useState({1: '', 2: '', 3: '', 4: '',5: '',6: ''});
+  const { handleSubmit, control, formState: { errors } } = useForm();
+
+  const onSubmit = (data) => {
+  navigation.navigate('FinalizarRegistro')};
 
   return (
     <View style={styles.container}>
       <StatusBar
         barStyle="dark-content"
-        backgroundColor={Colors.DEFAULT_WHITE}
+        backgroundColor='#222121'
         translucent
       />
       <View style={styles.headerContainer}>
@@ -76,7 +83,7 @@ const VerificationScreen = ({
               text ? fourthInput.current.focus() : secondInput.current.focus();
             }}
           />
-        </View>
+                </View>
         <View style={styles.otpBox}>
           <TextInput
             style={styles.otpText}
@@ -85,14 +92,38 @@ const VerificationScreen = ({
             ref={fourthInput}
             onChangeText={text => {
               setOtp({...otp, 4: text});
-              !text && thirdInput.current.focus();
+              text ? fifthInput.current.focus() : thirdInput.current.focus();
+            }}
+          />
+                </View>
+        <View style={styles.otpBox}>
+          <TextInput
+            style={styles.otpText}
+            keyboardType="number-pad"
+            maxLength={1}
+            ref={fifthInput}
+            onChangeText={text => {
+              setOtp({...otp, 5: text});
+              text ? fifthInput.current.focus() : fourthInput.current.focus();
+            }}
+          />
+        </View>
+        <View style={styles.otpBox}>
+          <TextInput
+            style={styles.otpText}
+            keyboardType="number-pad"
+            maxLength={1}
+            ref={sixthInput}
+            onChangeText={text => {
+              setOtp({...otp, 6: text});
+              !text && fifthInput.current.focus();
             }}
           />
         </View>
       </View>
       <TouchableOpacity
         style={styles.signinButton}
-        onPress={() => console.log(otp)}>
+        onPress={handleSubmit(onSubmit)} label='Verificar codigo'>
         <Text style={styles.signinButtonText}>Continuar</Text>
       </TouchableOpacity>
     </View>

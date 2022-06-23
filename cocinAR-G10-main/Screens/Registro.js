@@ -1,12 +1,34 @@
 import React, { useState } from 'react';
 import { StyleSheet, Switch, Text, View } from 'react-native';
 import { t, color } from 'react-native-tailwindcss';
-
+import Modal from "react-native-modal";
+import { Image } from 'react-native-elements/dist/image/Image';
 import Input from '../Components/Input'
 import Button from '../Components/Button';
 
 import { useForm, Controller } from 'react-hook-form';
 
+function ModalTester() {
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  return (
+    <View style={{ flex: 1 }}>
+      <Button title="Show modal" onPress={toggleModal} />
+
+      <Modal isVisible={isModalVisible}>
+        <View style={{ flex: 1 }}>
+          <Text>Hello!</Text>
+
+          <Button title="Hide modal" onPress={toggleModal} />
+        </View>
+      </Modal>
+    </View>
+  );
+}
 
 export default function Registro({ navigation, route }) {
   const [isBillingDifferent, setIsBillingDifferent] = useState(false);
@@ -20,9 +42,15 @@ export default function Registro({ navigation, route }) {
   };
 
   const onSubmit = (data) => {
-    navigation.navigate('ValidarCodigo')
+    setModalVisible(!isModalVisible);
+    //navigation.navigate('ValidarCodigo')
   };
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   return (
     <View style={styles.container}>
@@ -68,7 +96,18 @@ export default function Registro({ navigation, route }) {
         )}
         />
         <Text style={styles.TyC}>Continuando, aceptas los terminos y condiciones del servicio y politicas de privacidad</Text>
-      <Button onPress={handleSubmit(onSubmit)} label="Registrarse" />
+        <View>
+      <Button title="Show modal" onPress={toggleModal} />
+
+      <Modal style={styles.modal}isVisible={isModalVisible}>
+        <View>
+          <Text> Hello!</Text>
+          <Image source={{uri:'https://smaller-pictures.appspot.com/images/dreamstime_xxl_65780868_small.jpg'}}></Image>
+          <Button title="Hide modal" onPress={toggleModal} />
+        </View>
+      </Modal>
+    </View>
+      <Button onPress={handleSubmit(onSubmit)} label="Registrarse"/>
 
     </View>
   );
@@ -76,6 +115,26 @@ export default function Registro({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: [t.flex1, t.justifyCenter, t.itemsCenter, t.p6, {backgroundColor: "#222121"}],
-  TyC: {textAlign: 'center', color: "#F7456A"}
+  TyC: {textAlign: 'center', color: "#F7456A"},
 
+  title: {
+    fontSize: 18,
+    lineHeight: 20 * 1.4,
+    marginTop: 35,
+    marginBottom: 10,
+    marginHorizontal: 20,
+    alignItems: 'center',
+    color: '#979C9E',
+    backgroundColor: '#FAFAFA',
+  },
+  modal: {
+    fontSize: 18,
+    lineHeight: 20 * 1.4,
+    marginTop: 35,
+    marginBottom: 10,
+    marginHorizontal: 20,
+    alignItems: 'center',
+    color: '#979C9E',
+    backgroundColor: '#FAFAFA',
+  },
 });
