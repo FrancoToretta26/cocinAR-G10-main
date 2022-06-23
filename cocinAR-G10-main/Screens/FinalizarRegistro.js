@@ -47,7 +47,7 @@ export default function Registro({ navigation, route }) {
         let finRegistro = await finalizarRegistro(datos)
         if(finRegistro){
             alert('Usuario registrado con exito')
-            let recetas = await getRecipes();
+            let recetas = await getRecipes(data);
             if(recetas){
                 const nuevaData = JSON.stringify(recetas)
               navigation.navigate('Inicio', {

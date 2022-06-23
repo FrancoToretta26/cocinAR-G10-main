@@ -1,23 +1,51 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export const getRecipes= async function(getRecipes)
+export const getRecipes= async function(data)
 {
     //url webservices
+    var endPoint = "?";
+    const listaIngredientes = data.ingredientes
+    const listaNotIngredientes = data.notIngredientes
+    const tipo = data.tipo
+    const user = data.user
+    if(listaIngredientes!=null){
+        listaIngredientes.forEach(element => {
+            endPoint +="ingredients="+element.nombre+"&"
+        });
+    }
+    if(listaNotIngredientes!=null){
+        listaNotIngredientes.forEach(element => {
+            endPoint +="notIngredients="+element.nombre+"&"
+        });
+    }
+    if(tipo!=null){
+        endPoint +="type="+tipo
+    }
+    if(user!=""){
+        endPoint +="user="+user
+    }
+    console.log(endPoint,'endpoint previo al fetch')
     //armo json con datos
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recipe',{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.17:8080/recipe'+endPoint,{ // Poner la IPV4 de cada uno.
             method: 'GET', // or 'PUT'
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
               },
         });
+
         
         
         let rdo = response.status;
+        console.log('rdo',rdo)
+
         let data = await response.json();
+
+        console.log(data,'data')
+
         switch(rdo)
         {
             case 200:   
@@ -153,3 +181,43 @@ export const deleteRecipeForLater= async function(data)
     };
 }
 
+
+export const getIngredients= async function()
+{
+
+    try
+    {
+        let response = await fetch('http://192.168.0.17:8080/ingredient',{ // Poner la IPV4 de cada uno.
+            method: 'GET', // or 'PUT'
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+        });
+
+        
+        
+        let rdo = response.status;
+        console.log('rdo',rdo)
+
+        let data = await response.json();
+
+        console.log(data,'data')
+
+        switch(rdo)
+        {
+            case 200:   
+            { 
+                return (data);//correcto
+            }
+            case 201:   
+            { 
+                return (data);//correcto
+            }
+    }
+}
+    catch(error)
+    {
+        console.log("error",error);
+    };
+}
