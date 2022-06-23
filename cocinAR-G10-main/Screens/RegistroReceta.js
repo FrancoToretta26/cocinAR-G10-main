@@ -67,7 +67,6 @@ export default class RegistroReceta extends Component {
           allowsEditing:true
         });
         if (!result.cancelled) {
-            console.log(result.uri);
           this.setState({ image: result.uri });
         }
       };
@@ -114,14 +113,20 @@ export default class RegistroReceta extends Component {
                 <ScrollView>
                 <View style={styles.flatlistStyle}>
 
-                <StatusBar hidden={true} />
-                        {image && <Image source={{uri:image}} style={{flex:1,width:600}} />}
-                        <Button title="Subir imagen" 
+                <View style={styles.imageText}>
+                    <Button style={styles.imageText} title="Subir imagen" 
+                                
                                 onPress={this.pickImage}
                                 color={"#F7456A"}
                                 />
+                </View>
+
+                    <View >
+                    <StatusBar hidden={true}  />
+                        {this.state.image &&  <Image source={{uri: this.state.image}} style = {{ width: 300, height: 170, borderRadius: 10 , }} />}
+                        
                                 
-                    <StatusBar style="auto" />
+                    </View>
 
                 <View style={styles.inputView}>
                     <TextInput placeholder='Descripción' placeholderTextColor={"#808080"}
@@ -140,7 +145,7 @@ export default class RegistroReceta extends Component {
                     <Text style={styles.textCounter}>Porciones</Text>
 
                     <CounterInput
-                        width={150}
+                        width={130}
                         style={styles.counter}
                         backgroundColor='#F7456A'
                         initial={1}
@@ -177,7 +182,7 @@ export default class RegistroReceta extends Component {
                                             }} />
 
                                         <TouchableOpacity style={styles.Removebutton}>
-                                            <AntDesign name="minuscircle" size={24} color="#F7456A" 
+                                            <AntDesign name="minuscircle" size={25} color="#F7456A" 
                                             onPress={() => {
                                                 const filterList = ingredientes.filter((item, inner) => inner != index)
                                                 this.setState({ ingredientes: filterList })
@@ -217,17 +222,22 @@ export default class RegistroReceta extends Component {
 
                                 <View style={styles.pasosInside}>
                                     <View >
-                                        <View style={styles.pasosNombreView}>
-                                            <TextInput placeholder='Nombre' placeholderTextColor={"#808080"}
-                                                value={item.nombre}
-                                                style={ styles.pasosNombre }
-                                                onChangeText={text => {
-                                                    this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, nombre: text, idPaso: index+1 } : c)  })
-                                                }} />
+                                        <View style={styles.pasoNumberContainer}>
+                                            <Text style={styles.pasoNumber} >{index+1}</Text>
+                                            <View style={styles.pasosNombreView}>
+
+                                                <TextInput placeholder='Nombre' placeholderTextColor={"#808080"}
+                                                    value={item.nombre}
+                                                    style={ styles.pasosNombre }
+                                                    onChangeText={text => {
+                                                        this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, nombre: text, idPaso: index+1 } : c) })
+                                                    }} />
+                                             </View>
                                          </View>
 
                                          <StatusBar hidden={true} />
-                                            {image && <Image source={{uri:image}} style={{flex:1,width:600}} />}
+                                         
+                                            {this.state.pasos[index].imagen &&  <Image source={{uri:this.state.pasos[index].imagen}} style = {{ width: 200, height: 120, borderRadius: 10, alignSelf:"center"}} />}
                                             <Button title="Subir imagen" 
                                             color={"#F7456A"}
                                                 onPress={ async () => {
@@ -240,7 +250,7 @@ export default class RegistroReceta extends Component {
                                                                 this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, imagen: result.uri } : c)  });
 
                                                         }
-                                                        console.log(pasos);}}/>
+                                                        }}/>
 
                                         <StatusBar style="auto" />
 
@@ -256,7 +266,7 @@ export default class RegistroReceta extends Component {
                                     </View>
 
                                     <TouchableOpacity style={styles.Removebutton}>
-                                            <AntDesign name="minuscircle" size={24} color="#F7456A" 
+                                            <AntDesign name="minuscircle" size={25} color="#F7456A" 
                                             onPress={() => {
                                                 const filterList = pasos.filter((item, inner) => inner != index)
                                                 this.setState({ pasos: filterList })
@@ -286,7 +296,8 @@ export default class RegistroReceta extends Component {
                     </View>
 
                     <View style={styles.container}>
-                <Text style={styles.ingredienteText}>Agregar etiquetas</Text>
+
+                <Text style={styles.etiquetasText}>Agregar etiquetas</Text>
 
                 <Picker style={styles.pickerStyle}
                         selectedValue={this.state.categoria}
@@ -305,8 +316,8 @@ export default class RegistroReceta extends Component {
                             <Picker.Item label="Vegana" value="Vegana" />
                 </Picker>
 
+                
             </View>
-                    
 
                 </View>
                 <Button2 onPress={this.onPress} label="Enviar Receta" />
@@ -337,6 +348,7 @@ const styles = StyleSheet.create({
     },
 
     inputView:{
+        marginTop:20,
         height: 130,
         width: 350,
         borderStyle: "solid",
@@ -356,11 +368,12 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
         alignItems: "baseline",
         padding: 10,
+        marginTop:30,
         
     },
 
     textCounter:{
-        paddingRight:80,
+        paddingRight:100,
         color: fontColorWhite,
         fontWeight: "bold",
         fontSize: 18,
@@ -386,6 +399,7 @@ const styles = StyleSheet.create({
         color: fontColorWhite,
         fontWeight: "bold",
         fontSize: 18,
+        marginTop:25,
     },
 
     ingrediente:{
@@ -444,12 +458,25 @@ const styles = StyleSheet.create({
 
     pasosInside:{
         flexDirection: 'row',
-        justifyContent:"space-evenly",
+        alignItems: "center",
         paddingTop:30,
-        paddingBottom:20
-
+        paddingBottom:35
 
     },
+
+    pasoNumberContainer:{
+        flexDirection: 'row',
+        alignItems: "center",
+        paddingBottom: 20,
+    },
+
+    pasoNumber:{
+        fontWeight: 'bold',
+        fontSize: 16,
+        color: red,
+        paddingRight: 20,
+    },
+
     
     pasosNombreView:{
         height: 40,
@@ -461,7 +488,8 @@ const styles = StyleSheet.create({
     },
 
     pasosNombre:{
-        padding: 10
+        padding: 10,
+        color: fontColorWhite,
     },
 
     pasosDescripcionView:{
@@ -471,8 +499,30 @@ const styles = StyleSheet.create({
         borderRadius: 10, 
         borderWidth: 1, 
         borderColor:fontColorGrey,
+        marginLeft: 28,
+        marginTop: 15,
     },
     pasosDescripcion:{
-        padding:10
+        padding:10,
+        color: fontColorWhite,
     },  
+
+    etiquetasText:{
+        color: fontColorWhite,
+        fontWeight: "bold",
+        fontSize: 18,
+        paddingTop:40,
+    },
+    pickerStyle:{
+        height: 100,
+    },
+
+    counter:{
+        height: 40,
+    },
+
+    imageText:{
+        left:20,
+        alignSelf: "flex-start",
+    },
   });
