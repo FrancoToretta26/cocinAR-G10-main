@@ -8,7 +8,8 @@ import {
     Image,
     StatusBar,
     StyleSheet,
-    Alert,
+    ScrollView,
+    TouchableOpacity,
 } from 'react-native';
 
 import CounterInput from 'react-native-counter-input';
@@ -17,7 +18,9 @@ import * as ImagePicker from 'expo-image-picker';
 
 import {Picker} from '@react-native-picker/picker';
 
-export default class Home extends Component {
+import { AntDesign } from '@expo/vector-icons';
+
+export default class RegistroReceta extends Component {
 
     constructor(props) {
         super(props)
@@ -25,12 +28,12 @@ export default class Home extends Component {
         this.state = {
             
             image: null,
-            porciones:'1',
-            descripcion:"como va",
+            porciones:'',
+            descripcion:"",
 
             ingredientes: [{
-                ingrediente: 'John doe',
-                cantidad: '1'
+                ingrediente: '',
+                cantidad: ''
             }],
 
             pasos: [{
@@ -66,68 +69,100 @@ export default class Home extends Component {
         const { ingredientes } = this.state
         const { pasos } = this.state
         const {image} = this.state
-        const { categorias } = this.state;
 
 
         return (
-            <SafeAreaView style={{ flex: 1 }}>
-                <View style={{ flex: 1 }}>
+            <SafeAreaView style={ styles.container }>
+                <ScrollView>
+                <View style={styles.flatlistStyle}>
 
-                <CounterInput
-                                        width={150}
-                                        style={styles.counter}
-                                        backgroundColor='#F7456A'
-                                        initial={1}
-                                        increaseButtonBackgroundColor='black'
-                                        decreaseButtonBackgroundColor='black'
-                                        horizontal
-                                        onChange={(counter) => {
-                                        console.log("onChange Counter:", counter);
-                                        }}
-                                    />
 
+                <View style={styles.inputView}>
+                <TextInput placeholder='Descripción' placeholderTextColor={"#808080"}
+                    style={styles.input}
+                    value={this.state.descripcion}
+                    onChangeText={text => {
+                        this.setState({descripcion: text})
+                    }} 
+                    />
+                </View>
+
+
+                <View style={styles.counterContainer}>
+
+                    <Text style={styles.textCounter}>Porciones</Text>
+
+                    <CounterInput
+                        width={150}
+                        style={styles.counter}
+                        backgroundColor='#F7456A'
+                        initial={1}
+                        increaseButtonBackgroundColor='black'
+                        decreaseButtonBackgroundColor='black'
+                        horizontal
+                        onChange={(counter) => {
+                        console.log("onChange Counter:", counter);
+                        }}
+                    />
+
+                </View>
+
+                <Text style={styles.ingredienteText}>Ingredientes</Text>
 
                     {
                         ingredientes.map((item, index) => {
 
                             return (
-                                <View style={{ margin: 5, padding: 10, }}>
-                                    <TextInput placeholder='Ingredientes'
-                                        value={item.ingrediente}
-                                        style={{ borderRadius: 4, borderWidth: 1, borderColor: '#212121', padding: 8 }}
-                                        onChangeText={text => {
-                                            this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, ingrediente: text } : c) })
-                                        }} />
-                                    <TextInput placeholder='Cantidad'
-                                        value={item.cantidad}
-                                        style={{ borderRadius: 4, borderWidth: 1, borderColor: '#212121', padding: 8, marginTop: 5 }}
-                                        onChangeText={text => {
-                                            this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, cantidad: text } : c) })
-                                        }} />
-                                    <Text style={{
-                                        alignSelf: 'flex-start', borderRadius: 4,
-                                        padding: 3, marginTop: 5, backgroundColor: 'red', color: 'white'
-                                    }} onPress={() => {
-                                        const filterList = ingredientes.filter((item, inner) => inner != index)
-                                        this.setState({ ingredientes: filterList })
-                                    }}>
-                                        Remove
-                                    </Text>
+
+                                <View  style={styles.ingredientesContainer}>
+                                    <View style={styles.ingredienteContainer}>
+                                        <TextInput placeholder='Ingredientes' placeholderTextColor={"#808080"}
+                                            value={item.ingrediente}
+                                            style={styles.ingrediente}
+                                            onChangeText={text => {
+                                                this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, ingrediente: text } : c) })
+                                            }} />
+                                        <TextInput placeholder='Cantidad' placeholderTextColor={"#808080"}
+                                            value={item.cantidad}
+                                            style={styles.cantidad}
+                                            onChangeText={text => {
+                                                this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, cantidad: text } : c) })
+                                            }} />
+
+                                        <TouchableOpacity style={styles.Removebutton}>
+                                            <AntDesign name="minuscircle" size={24} color="#F7456A" 
+                                            onPress={() => {
+                                                const filterList = ingredientes.filter((item, inner) => inner != index)
+                                                this.setState({ ingredientes: filterList })
+                                            }}
+                                            />
+                                        </TouchableOpacity>
+
+                                    </View>
+
+                                   
                                 </View>
                             )
                         })
                     }
 
-                    <Text style={{ padding: 16, textAlign: 'center', backgroundColor: 'black', color: 'white' }} onPress={() => {
-                        this.setState({
-                            ingredientes: [...ingredientes, {
-                              ingrediente: '',
-                                cantidad: ''
-                            }]
-                        })
-                    }}>
-                        Add
-                    </Text>
+
+                    <View style={styles.Addcontainer}>
+                        <TouchableOpacity style={styles.Addbutton}>
+                            <AntDesign name="pluscircle" size={24} color="#F7456A" />
+                            <Text style={styles.Addtext}
+                            onPress={() => {
+                                this.setState({
+                                    ingredientes: [...ingredientes, {
+                                      ingrediente: '',
+                                        cantidad: ''
+                                    }]
+                                })
+                            }} >Ingrediente</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                   
 
                     {
                         pasos.map((item, index) => {
@@ -222,90 +257,134 @@ export default class Home extends Component {
                     <StatusBar style="auto" />
 
                 </View>
+                </ScrollView>
             </SafeAreaView>
         )
     }
 }
+const backgroundColor= "#222122"
+const fontColorGrey= "#808080"
+const fontColorWhite= "#F1F1F1"
+const red="#F7456A"
 
 const styles = StyleSheet.create({
+
     container: {
       flex: 1,
+      backgroundColor: backgroundColor,
     },
-    image: {
-      flex: 1,
-      justifyContent: "center"
+
+    flatlistStyle:{
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 16,
+        padding: 8,
+        borderRadius: 8
     },
-    pickerStyle:{
-        height: 150,
-        width: "80%",
-        color: '#344953',
-        justifyContent: 'center',
+
+    inputView:{
+        height: 130,
+        width: 350,
+        borderStyle: "solid",
+        borderRadius: 15, 
+        borderWidth: 1, 
+        borderColor: fontColorGrey,
     },
-    header:{
-      marginLeft: 120,
-      marginTop: 460,
-      flexDirection: 'row',
-      textAlign: 'center',
+
+    input:{
+        padding:20,
+        color:fontColorWhite,
     },
-    text: {
-      color: "white",
-      fontSize: 42,
-      lineHeight: 84,
-      fontWeight: "bold",
-      textAlign: "center",
+
+    counterContainer:{
+        display: "flex",
+        flexDirection:'row',
+        justifyContent: "space-evenly",
+        alignItems: "baseline",
+        padding: 10,
+        
     },
-    header2: {
-      color: "#F7456A",
-      fontSize: 42,
-      lineHeight: 84,
-      fontWeight: "bold",
-      textAlign: "center",
+
+    textCounter:{
+        paddingRight:80,
+        color: fontColorWhite,
+        fontWeight: "bold",
+        fontSize: 18,
     },
-    description: {
-      color: "white",
-      fontSize: 20,
-      lineHeight: 44,
-      fontWeight: "bold",
-      textAlign: "center",
-      backgroundColor: "#000000c0"
+
+    ingredientesContainer:{
+        display: "flex",
+        justifyContent: "space-evenly",
     },
-    fixToText: {
-      marginLeft: 50,
-      marginRight: 50,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+
+    ingredienteContainer:{
+        display: "flex",
+        justifyContent: "space-evenly",
+        flexDirection:'row',
+        color: fontColorGrey,
+        padding: 10,
+        alignItems: "baseline",
     },
-    appButtonContainer: {
-      marginTop: 25,
-      elevation: 8,
-      backgroundColor: "#F7456A",
-      borderRadius: 48,
-      paddingVertical: 10,
-      paddingHorizontal: 12,
-      color: "white"
+
+    ingredienteText:{
+        alignSelf:"flex-start",
+        paddingRight:80,
+        color: fontColorWhite,
+        fontWeight: "bold",
+        fontSize: 18,
     },
-    appButtonContainerRegister: {
-      marginTop: 25,
-      elevation: 8,
-      backgroundColor: "#F7A1B3",
-      borderRadius: 48,
-      paddingVertical: 10,
-      paddingHorizontal: 12,
-      color: "white"
+
+    ingrediente:{
+        flexDirection:'row',
+        color: fontColorWhite,
+        borderWidth: 1, 
+        borderBottomColor:red,
+        borderRightColor: "transparent",
+        borderLeftColor: "transparent",
+        borderTopColor: "transparent",
+        marginRight:30,
+        paddingRight:50,
+        fontSize: 16,
     },
-    appButtonText: {
-      backgroundColor: "#F7456A",
-      fontSize: 22,
-      color: "black",
-      fontWeight: "bold",
-      alignSelf: "center",
+
+    cantidad:{
+        flexDirection:'row',
+        color: fontColorWhite,
+        fontSize: 16,
+        borderWidth: 1, 
+        borderBottomColor:red,
+        borderRightColor: "transparent",
+        borderLeftColor: "transparent",
+        borderTopColor: "transparent",
     },
-    appButtonRegister:{
-      backgroundColor: "#F7A1B3",
-      fontSize: 22,
-      color: "white",
-      fontWeight: "bold",
-      alignSelf: "center",
-  
-    },
+
+        Addcontainer: {
+          flex: 1,
+          justifyContent: 'center',
+          padding: 8,
+        },
+
+        Addbutton: {
+          height: 40,
+          borderRadius: 6,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+
+        Removebutton: {
+            height: 40,
+            borderRadius: 6,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingLeft:30
+          },
+
+        Addtext: {
+          fontWeight: 'bold',
+          fontSize: 16,
+          color: red,
+          marginLeft: 10,
+        },
   });
