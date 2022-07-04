@@ -147,7 +147,7 @@ export default function App() {
       name="SearchScreen"
       component={SearchScreen}
       options={{
-        title: 'SearchScreen',
+        title: 'Buscar Receta',
         headerTintColor: '#F7456A',
         headerTitleAlign: 'center',
         headerStyle: {
@@ -167,7 +167,7 @@ export default function App() {
       name="RecetasGuardadas"
       component={RecetasGuardadas}
       options={{
-        title: 'RecetasGuardadas',
+        title: 'Recetas Guardadas',
         headerTintColor: '#F7456A',
         headerTitleAlign: 'center',
         headerStyle: {
@@ -188,7 +188,7 @@ export default function App() {
       name="BuscarRecetasFiltros"
       component={BuscarRecetasFiltros}
       options={{
-        title: 'BuscarRecetasFiltros',
+        title: 'Filtros',
         headerTintColor: '#F7456A',
         headerTitleAlign: 'center',
         headerStyle: {
@@ -248,7 +248,7 @@ export default function App() {
       name="RegistroReceta"
       component={RegistroReceta}
       options={{
-        title: 'RegistroReceta',
+        title: 'Cargar una Receta',
       }}
         />
 

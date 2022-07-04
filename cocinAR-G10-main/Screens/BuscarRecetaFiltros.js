@@ -92,6 +92,7 @@ componentDidMount() {
 selectionHandler=(ind)=>{
     
     const { postId, ingredientes } = this.props.route.params;
+    console.log(ingredientes, 'ingredientessss')
     var {ingredientList} = this.state
     var {notIngredientList} = this.state
     let arr = ingredientes.map((item, index)=>{
@@ -100,6 +101,7 @@ selectionHandler=(ind)=>{
                 item.backgroundColor = 'white'
                 var ubicacion = notIngredientList.indexOf(item)
                 notIngredientList.splice(ubicacion,1)
+                console.log('hice un splice notingredient')
             }
             else if(ind == index && item.backgroundColor=='white'){
                 item.backgroundColor = 'green'

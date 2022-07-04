@@ -5,19 +5,22 @@ import IconLabel from './IconLabel';
 
 const iconColor = '#F7456A';
 const RecipeCard = ({ info }) => {
-  const { name, author, rating, image } = info;
+  const receta = info.receta;
+  const calificacion = info;
+  const creatorNickname = info;
+
 
   return (
     <View style={styles.container}>
       <View style={styles.cardContainer}>
-        <Image style={styles.imageStyle} source={image} />
+        <Image style={styles.imageStyle} source={receta.foto} />
         <View style={styles.infoStyle}>
-          <Text style={styles.titleStyle}>{name}</Text>
-          <Text style={styles.categoryStyle}>{author}</Text>
+          <Text style={styles.titleStyle}>{receta.nombre}</Text>
+          <Text style={styles.categoryStyle}>{creatorNickname}</Text>
 
           <View style={styles.iconLabelStyle}>
             <IconLabel name="md-heart" color={iconColor}></IconLabel> 
-            <Text style={styles.deliveryTime}>{rating}</Text>
+            <Text style={styles.deliveryTime}>{calificacion}</Text>
           </View>
         </View>
       </View>

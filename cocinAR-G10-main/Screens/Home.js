@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Alert, ImageBackground, TouchableOpacity, FlatList } from 'react-native';
 import Card from '../Components/RecipeCard';
@@ -8,12 +8,16 @@ import { Searchbar } from 'react-native-paper';
 import Button from '../Components/ButtonSearch'
 import { useForm, Controller } from 'react-hook-form';
 import { getIngredients, getRecipes, getRecipesForLater } from '../controller/recipe.controller';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home({navigation, route}) {
+    const [filterdData, setfilterdData] = useState([]);
     const homeName = "Descubrir";
     const detailsName = "Agregar";
     const settingsName = "Guardadas";
     const { handleSubmit} = useForm();
+    const recipess = AsyncStorage.getItem('recetas');
+    console.log(recipess)
 
     const recipes = [
       {
@@ -54,7 +58,7 @@ export default function Home({navigation, route}) {
     <StatusBar barStyle="dark-content" />
 
     <FlatList
-      data={recipes}
+      data={recipess}
       renderItem={({ item }) => {
         return <Card info={item} />;
       } }

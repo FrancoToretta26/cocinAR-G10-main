@@ -19,6 +19,7 @@ export const getRecipes= async function(datos)
             endPoint +="notIngredients="+element.nombre+"&"
         });
     }
+
     if(tipo!=null){
         endPoint +="type="+tipo
     }

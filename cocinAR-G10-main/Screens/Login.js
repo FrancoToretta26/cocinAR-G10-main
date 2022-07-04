@@ -7,7 +7,11 @@ import Button from '../Components/Button';
 
 import { useForm, Controller } from 'react-hook-form';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { login } from '../controller/user.controller';
+
+import { getRecipes } from '../controller/recipe.controller';
 
 export default function Login({ navigation, route }) {
   const [isBillingDifferent, setIsBillingDifferent] = useState(false);
@@ -30,6 +34,9 @@ export default function Login({ navigation, route }) {
       }
       console.log(datos)
       let nuevoLogin = await login(datos)
+      let recetas = await getRecipes(data);
+      await AsyncStorage.setItem('recetas', JSON.stringify(recetas))
+      console.log(recetas, 'recetas previo al if')
       if(nuevoLogin.rdo==0){
         alert('Usuario logueado con exito')
         navigation.navigate('Inicio')

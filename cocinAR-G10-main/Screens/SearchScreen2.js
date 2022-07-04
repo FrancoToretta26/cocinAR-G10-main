@@ -20,6 +20,7 @@ const SearchScreen2 = ({navigation, route}) => {
 
     const fetchPosts = () =>{
         const { itemId, users } = route.params;
+        console.log(users, 'users ingresando al coso')
         setfilterdData(users);
         setmasterData(users);
         }
