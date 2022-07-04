@@ -34,9 +34,6 @@ export default function Login({ navigation, route }) {
       }
       console.log(datos)
       let nuevoLogin = await login(datos)
-      let recetas = await getRecipes(data);
-      await AsyncStorage.setItem('recetas', JSON.stringify(recetas))
-      console.log(recetas, 'recetas previo al if')
       if(nuevoLogin.rdo==0){
         alert('Usuario logueado con exito')
         navigation.navigate('Inicio')

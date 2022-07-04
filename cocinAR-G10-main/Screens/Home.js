@@ -16,8 +16,14 @@ export default function Home({navigation, route}) {
     const detailsName = "Agregar";
     const settingsName = "Guardadas";
     const { handleSubmit} = useForm();
-    const recipess = AsyncStorage.getItem('recetas');
-    console.log(recipess)
+
+    useEffect( async () => {
+      const recipess = await AsyncStorage.getItem('recetas')
+      console.log(recipess, 'recipesss')
+      setfilterdData(recipess)
+
+    })
+
 
     const recipes = [
       {
@@ -58,7 +64,7 @@ export default function Home({navigation, route}) {
     <StatusBar barStyle="dark-content" />
 
     <FlatList
-      data={recipess}
+      data={filterdData}
       renderItem={({ item }) => {
         return <Card info={item} />;
       } }
