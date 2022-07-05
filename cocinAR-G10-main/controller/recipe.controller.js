@@ -271,3 +271,44 @@ export const submitRecipe= async function(datos)
 
 
 }
+
+export const calificar= async function(data)
+{
+    //url webservices
+    //armo json con datos
+    const idReceta = data.idReceta
+    const creatorNickname = data.creatorNickname
+    const calificacion = data.calificacion
+    console.log('entre al endpoint')
+
+    try
+    {
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/calificacion'+'/'+creatorNickname+'/'+calificacion+'/'+idReceta,{ // Poner la IPV4 de cada uno.
+            method: 'POST', // or 'PUT'
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+        });
+        
+        
+        let rdo = response.status;
+        console.log(rdo,'rdo calificar')
+        let data = await response.json();
+        switch(rdo)
+        {
+            case 200:   
+            { 
+                return ({rdo:0,mensaje:"Ok"});//correcto
+            }
+            case 201:   
+            { 
+                return ({rdo:0,mensaje:"Ok"});//correcto
+            }
+    }
+}
+    catch(error)
+    {
+        console.log("error",error);
+    };
+}

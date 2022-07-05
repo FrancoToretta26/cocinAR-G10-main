@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ActivityIndicator, StyleSheet, Switch, Text, View, StatusBar, ScrollView, TouchableOpacity, Dimensions, Image, TextInput } from 'react-native';
+import { ActivityIndicator, StyleSheet, Switch, Text, View, StatusBar, ScrollView, TouchableOpacity, Dimensions, Image, TextInput, Touchable } from 'react-native';
 import { t, color } from 'react-native-tailwindcss';
 
 import Button from '../Components/Button';
@@ -16,7 +16,7 @@ import Carousel from 'react-native-snap-carousel'; // Version can be specified i
 import { scrollInterpolator, animatedStyles } from '../utils/animations';
 import { SafeAreaView } from "react-navigation";
 import { FlatList } from "react-native-gesture-handler";
-import { getRecipes } from "../controller/recipe.controller";
+import { getRecipes, getIngredients } from "../controller/recipe.controller";
 import Input from '../Components/Input'
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
@@ -140,6 +140,17 @@ selectionHandler=(ind)=>{
         }
   }
 
+  onPressIngredient = async () => {
+    let ingredientes = await getIngredients();
+    if(ingredientes){
+        this.props.navigation.navigate('SearchIngredients', {
+          postId: 3006,
+          ingredientes: ingredientes})
+       }
+
+
+  }
+
   handleUser = (text) => {
     this.setState({ usuario: text })
  }
@@ -199,11 +210,16 @@ selectionHandler=(ind)=>{
         </SafeAreaView>
         <ScrollView contentContainerStyle={{flex:1, backgroundColor: 'black'}}>    
         <View style={{marginTop: 1}}>
+        <TouchableOpacity
+        onPress={this.onPressIngredient}
+        >
         <TextInput style = {styles.inputIngrediente}
                underlineColorAndroid = "transparent"
                placeholder = "Buscar Ingrediente"
                placeholderTextColor = "#F7456A"
-               autoCapitalize = "none"/>
+               autoCapitalize = "none"
+               />
+               </TouchableOpacity>
         <View style={{flexDirection:'row', alignItems:'center'}}>
         <Icon name='stop' color='white' />
         <Text style={{color: 'white'}}>Puede contener</Text></View>
