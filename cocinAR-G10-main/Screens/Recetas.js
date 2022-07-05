@@ -126,9 +126,16 @@ class Recetas extends Component{
             <Text style={styles.tituloDescription}>Preparacion</Text>
               <FlatList
               data={pasos}
-              renderItem={({ item }) => (
+              renderItem={({ item, index }) => (
               <View>
-              <Text style={styles.textPasos}>{`Paso - ${item.descripcion}`}</Text></View>
+              <Text style={styles.textPasos}>{`Paso ${index+1}: - ${item.descripcion}`}</Text>
+              {item.multimedia.map((element, index) => {
+                console.log(element);
+                return(
+                <Image source={{ uri: element }} style={styles.imgStylePaso} defaultImage={{uri: 'https://reactnative-examples.com/wp-content/uploads/2022/02/default-loading-image.png' }}/>
+                )
+              })}
+              </View>
               )}></FlatList>
                <View style={styles.containerRating}>
                     <Text style={styles.textoRating}>Recomendarias esta receta? </Text>
@@ -307,6 +314,12 @@ const styles = StyleSheet.create({
       alignItems: 'flex-end',
       padding: 10
     },
+    imgStylePaso:{
+      width: 270,
+      height: 180,
+      borderRadius: 20,
+      marginLeft: 60,
+  },
 
 })
 
