@@ -47,8 +47,17 @@ class Recetas extends Component{
       console.log('entre')
       console.log(params.recetass.idReceta)
       let guardarReceta = await saveRecipes(params.recetass.idReceta)
-      if(guardarReceta){
+      if(guardarReceta.rdo==0){
         alert('Receta Guardada')
+      }
+      if(guardarReceta.rdo==1){
+        alert('Esta receta ya esta guardada')
+      }
+      if(guardarReceta.rdo==2){
+        alert('Ya tienes un maximo de 5 recetas guardadas')
+      }
+      if(guardarReceta.rdo==3){
+        alert('No puedes guardar una receta propia.')
       }
     }
 

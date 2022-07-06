@@ -123,9 +123,13 @@ export const saveRecipes= async function(data)
               },
         });
         
-        
+        let responsetotal = response
+        console.log(responsetotal)
+
         let rdo = response.status;
         console.log(rdo,'rdo')
+        let mensaje = response.message;
+        console.log(mensaje)
         let data = await response.json();
         switch(rdo)
         {
@@ -137,6 +141,19 @@ export const saveRecipes= async function(data)
             { 
                 return ({rdo:0,mensaje:"Ok"});//correcto
             }
+            case 403:
+                {
+                    return ({rdo:1,mensaje:"Ok"}); // Ya esta guardada
+                }
+            case 409:
+                    {
+                        return ({rdo:2,mensaje:"Ok"}); // Maximo 5 recetas
+                    }
+            case 400:
+                {
+                    return({rdo:3, mensaje:'Ok'}) // Receta propia
+                }
+
     }
 }
     catch(error)
