@@ -561,9 +561,8 @@ const styles = StyleSheet.create({
         paddingTop:40,
     },
     pickerStyle:{
-        marginLeft: 80,
-        height: 100,
-        color: red,
+        marginLeft: 10,
+        height: 50,
         borderWidth: 2,
     },
 
@@ -577,20 +576,20 @@ const styles = StyleSheet.create({
         alignSelf: "flex-start",
     },
     containerPicker:{
-        width: 250,
-        borderWidth: 1,
-        borderColor: red,
+        width: 180,
+        backgroundColor: red,
     },
     
     containerPickerIngrediente:{
         width: 100,
-        borderWidth: 1,
-        borderColor: red,
+        marginLeft:20,
+        height: 80,
+        top:5,
     },
     pickerIngrediente:{
         marginLeft: 0,
-        height: 80,
         borderWidth:0,
+        backgroundColor:red,
     },
 
     ButtonPasos:{
