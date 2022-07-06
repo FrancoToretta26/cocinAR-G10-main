@@ -329,3 +329,36 @@ export const calificar= async function(data)
         console.log("error",error);
     };
 }
+
+export const getBestRecipes= async function()
+{
+    try
+    {
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/bestRecipes',{ // Poner la IPV4 de cada uno.
+            method: 'GET', // or 'PUT'
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+        });
+        
+        
+        let rdo = response.status;
+        let data = await response.json();
+        switch(rdo)
+        {
+            case 200:   
+            { 
+                return (data);//correcto
+            }
+            case 201:   
+            { 
+                return (data);//correcto
+            }
+    }
+}
+    catch(error)
+    {
+        console.log("error",error);
+    };
+}

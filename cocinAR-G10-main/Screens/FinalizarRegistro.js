@@ -12,7 +12,7 @@ import { useForm, Controller } from 'react-hook-form';
 
 import { finalizarRegistro } from '../controller/user.controller';
 
-import { getRecipes } from '../controller/recipe.controller';
+import { getBestRecipes, getRecipes } from '../controller/recipe.controller';
 
 import * as ImagePicker from 'expo-image-picker';
 
@@ -47,12 +47,11 @@ export default function Registro({ navigation, route }) {
         let finRegistro = await finalizarRegistro(datos)
         if(finRegistro){
             alert('Usuario registrado con exito')
-            let recetas = await getRecipes(data);
-            if(recetas){
-                const nuevaData = JSON.stringify(recetas)
+            let bestRecetas = await getBestRecipes(data);
+            if(bestRecetas){
               navigation.navigate('Inicio', {
                 postId: 3006,
-                users: nuevaData})
+                users: bestRecetas})
             }
 
         }

@@ -115,7 +115,7 @@ class Recetas extends Component{
 
                 <Text style={styles.textName}>{recetass.nombre}</Text>
                 <Text style={styles.textUser}>Por {usuario}</Text>
-                <Text style={styles.textRating}>Rating: {calificacion}</Text>
+                <Text style={styles.textRating}>Rating: {recetass.calificacion}</Text>
                 <Image source={{ uri: recetass.foto }} style={styles.imgStyle}></Image>
                 <Text style={styles.tituloDescription}>Descripcion</Text>
                 <View style={styles.containerDescription}>

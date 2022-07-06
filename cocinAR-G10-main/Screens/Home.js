@@ -7,7 +7,7 @@ import { t, color } from 'react-native-tailwindcss';
 import { Searchbar } from 'react-native-paper';
 import Button from '../Components/ButtonSearch'
 import { useForm, Controller } from 'react-hook-form';
-import { getIngredients, getRecipes, getRecipesForLater } from '../controller/recipe.controller';
+import { getBestRecipes, getIngredients, getRecipes, getRecipesForLater } from '../controller/recipe.controller';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconLabel from '../Components/IconLabel';
 
@@ -22,12 +22,20 @@ export default function Home({navigation, route}) {
     const settingsName = "Guardadas";
     const { handleSubmit} = useForm();
 
-    useEffect( async () => {
-      const recipess = await AsyncStorage.getItem('recetas')
-      console.log(recipess, 'recipesss')
-      setfilterdData(recipess)
 
-    }, [])
+
+
+
+  useEffect(() => {
+    async function loadData() {
+      const response = await getBestRecipes('');
+      console.log(response);
+      setfilterdData(response); // change this based on the response, you may or may not need to call json() on it
+    }
+    loadData();
+}, []);
+
+
 
 
 
@@ -61,31 +69,34 @@ export default function Home({navigation, route}) {
    
     
   return (
-    <><View style={styles.container}>
+    <View style={styles.container}>
     <Button onPress={handleSubmit(onSubmit)} label="Buscar" />
 
 
     <Header label="Mejores Recetas" />
     {/* <Card /> */}
     <StatusBar barStyle="dark-content" />
-
+    {console.log(filterdData, 'mostrame la filterdata pa')}
     <FlatList
-      data={recipes}
-      renderItem={( {item} ) => (    <View style={styles.containerCard}>
+      data={filterdData}
+      renderItem={( {item} ) => (
+        <View style={styles.containerCard}>
       <View style={styles.cardContainer}>
-      <Image style={styles.imageStyle} source={item.image} />
+      <Image source={{ uri: item.receta.foto }} style={styles.imageStyle}></Image>
         <View style={styles.infoStyle}>
-          <Text style={styles.titleStyle}>{item.name}</Text>
-          <Text style={styles.categoryStyle}>{item.author}</Text>
+          <Text style={styles.titleStyle}>{item.receta.nombre}</Text>
+          <Text style={styles.categoryStyle}>{item.creatorNickname}</Text>
 
           <View style={styles.iconLabelStyle}>
             <IconLabel name="md-heart" color={iconColor}></IconLabel> 
-            <Text style={styles.deliveryTime}>{item.rating}</Text>
+            <Text style={styles.deliveryTime}>{item.receta.calificacion}</Text>
           </View>
         </View>
       </View>
     </View> )}
-      showsVerticalScrollIndicator={false} /></View></>
+      keyExtractor={(item, index) => index.toString()}
+
+      /></View>
   );
 }
 
