@@ -16,6 +16,8 @@ import CounterInput from 'react-native-counter-input';
 
 import * as ImagePicker from 'expo-image-picker';
 
+import * as VideoThumbnails from 'expo-video-thumbnails';
+
 import {Picker} from '@react-native-picker/picker';
 
 import { AntDesign } from '@expo/vector-icons';
@@ -46,6 +48,7 @@ export default class RegistroReceta extends Component {
 
             pasos: [{
                 idPaso:1,
+                thumbnail:null,
                 multimedia:null,
                 descripcion:"",
                 nombrePaso:""
@@ -70,6 +73,20 @@ export default class RegistroReceta extends Component {
         });
         if (!result.cancelled) {
           this.setState({ image: result.uri });
+        }
+      };
+
+    generateThumbnail = async (video) => {
+        try {
+          const { uri } = await VideoThumbnails.getThumbnailAsync(
+            video,
+            {
+              time: 100,
+            }
+          );
+          return uri;
+        } catch (e) {
+          console.warn(e);
         }
       };
 
@@ -273,7 +290,8 @@ export default class RegistroReceta extends Component {
 
                                          <StatusBar hidden={true} />
                                          <View style={styles.ButtonPasos}>
-                                            {this.state.pasos[index].multimedia &&  <Image source={{uri:this.state.pasos[index].multimedia}} style = {{ width: 200, height: 120, borderRadius: 10, alignSelf:"center"}} />}
+                                         { this.state.pasos[index].thumbnail &&  <Image source={{uri:this.state.pasos[index].thumbnail}} style = {{ width: 200, height: 120, borderRadius: 10, alignSelf:"center"}} /> }
+                                            
                                             <Button title="Subir imagen" 
                                             color={"#F7456A"}
                                                 onPress={ async () => {
@@ -283,8 +301,26 @@ export default class RegistroReceta extends Component {
                                                             allowsEditing:true
                                                             });
                                                             if (!result.cancelled) {
-                                                                this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, multimedia: result.uri } : c)  });
+                   
+                                                                if (result.type=="video"){
+                                                                        try {
+                                                                          const { uri } = await VideoThumbnails.getThumbnailAsync(
+                                                                            result.uri,
+                                                                            {
+                                                                              time: 1,
+                                                                            }
+                                                                          );
+                                                                          this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, thumbnail: uri ,multimedia: result.uri} : c)  });
+                                                                          console.log( this.state.pasos[index].thumbnail,this.state.pasos[index].multimedia );
+                                                                        } catch (e) {
+                                                                          console.warn(e);
+                                                                        }
 
+                                                                }
+                                                                else{
+                                                                    this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, thumbnail: result.uri ,multimedia: result.uri } : c)  });
+                                                                    console.log("3", this.state.pasos[index].thumbnail,this.state.pasos[index].multimedia );
+                                                                }
                                                         }
                                                         }}/></View>
 
