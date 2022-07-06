@@ -40,7 +40,7 @@ export default class RegistroReceta extends Component {
             ingredientes: [{
                 nombre: '',
                 cantidad: '',
-                medida: 'gramos'
+                medida: ''
 
             }],
 
@@ -194,6 +194,16 @@ export default class RegistroReceta extends Component {
                                             onChangeText={text => {
                                                 this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, cantidad: text } : c) })
                                             }} />
+                                            <Picker style={styles}
+                                                selectedValue={item.medida}
+                                                onValueChange={(itemValue, itemPosition) =>
+                                                    this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, medida: itemValue, choosenIndex: itemPosition+1 } : c) })}
+                                                >
+                                                    <Picker.Item label="gr" value="gramos" />
+                                                    <Picker.Item label="kg" value="kilos" />
+                                                    <Picker.Item label="Unidades" value="unidades" />
+                                                    <Picker.Item label="Porciones" value="porciones" />
+                                                 </Picker>
 
                                         <TouchableOpacity style={styles.Removebutton}>
                                             <AntDesign name="minuscircle" size={25} color="#F7456A" 
@@ -264,7 +274,7 @@ export default class RegistroReceta extends Component {
                                             color={"#F7456A"}
                                                 onPress={ async () => {
                                                            let result = await ImagePicker.launchImageLibraryAsync({
-                                                            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                                                            mediaTypes: ImagePicker.MediaTypeOptions.All,
                                                             quality: 1,
                                                             allowsEditing:true
                                                             });

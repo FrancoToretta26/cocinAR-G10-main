@@ -30,7 +30,7 @@ export const getRecipes= async function(datos)
     //armo json con datos
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recetasApi/recipe'+endPoint,{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.110:8080/recetasApi/recipe'+endPoint,{ // Poner la IPV4 de cada uno.
             method: 'GET', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -74,7 +74,7 @@ export const getRecipesForLater= async function()
     console.log(alias, 'alias get')
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recetasApi/recipeForLater'+'/'+alias,{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.110:8080/recetasApi/recipeForLater'+'/'+alias,{ // Poner la IPV4 de cada uno.
             method: 'GET', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -115,7 +115,7 @@ export const saveRecipes= async function(data)
 
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recetasApi/recipeForLater'+'/'+idReceta+'/'+alias,{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.110:8080/recetasApi/recipeForLater'+'/'+idReceta+'/'+alias,{ // Poner la IPV4 de cada uno.
             method: 'POST', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -155,7 +155,7 @@ export const deleteRecipeForLater= async function(data)
 
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recetasApi/recipeForLater'+'/'+idReceta,{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.110:8080/recetasApi/recipeForLater'+'/'+idReceta,{ // Poner la IPV4 de cada uno.
             method: 'DELETE', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -189,7 +189,7 @@ export const getIngredients= async function()
 
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recetasApi/ingredient',{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.110:8080/recetasApi/ingredient',{ // Poner la IPV4 de cada uno.
             method: 'GET', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -234,7 +234,7 @@ export const submitRecipe= async function(datos)
 
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recetasApi/recipe',{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.110:8080/recetasApi/recipe',{ // Poner la IPV4 de cada uno.
             method: 'POST', // or 'PUT'
             headers: {
                 Accept: 'application/json',
