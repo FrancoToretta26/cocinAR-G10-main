@@ -188,13 +188,15 @@ export default class RegistroReceta extends Component {
                                             onChangeText={text => {
                                                 this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, nombre: text, medida:"gramos" } : c) })
                                             }} />
-                                        <TextInput placeholder='Cantidad' placeholderTextColor={"#808080"}
-                                            value={item.cantidad}
-                                            style={styles.cantidad}
-                                            onChangeText={text => {
-                                                this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, cantidad: text } : c) })
-                                            }} />
-                                            <Picker style={styles}
+
+                                            <TextInput placeholder='Cantidad' placeholderTextColor={"#808080"}
+                                                value={item.cantidad}
+                                                style={styles.cantidad}
+                                                onChangeText={text => {
+                                                    this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, cantidad: text } : c) })
+                                                }} />
+                                        <View style={styles.containerPickerIngrediente}>
+                                            <Picker style={styles.pickerIngrediente}
                                                 selectedValue={item.medida}
                                                 onValueChange={(itemValue, itemPosition) =>
                                                     this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, medida: itemValue, choosenIndex: itemPosition+1 } : c) })}
@@ -204,6 +206,8 @@ export default class RegistroReceta extends Component {
                                                     <Picker.Item label="Unidades" value="unidades" />
                                                     <Picker.Item label="Porciones" value="porciones" />
                                                  </Picker>
+                                            </View>
+                                           
 
                                         <TouchableOpacity style={styles.Removebutton}>
                                             <AntDesign name="minuscircle" size={25} color="#F7456A" 
@@ -431,7 +435,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
         flexDirection:'row',
         color: fontColorGrey,
-        padding: 10,
+        padding: 5,
         alignItems: "baseline",
     },
 
@@ -453,7 +457,7 @@ const styles = StyleSheet.create({
         borderLeftColor: "transparent",
         borderTopColor: "transparent",
         marginRight:30,
-        paddingRight:50,
+        paddingRight:0,
         fontSize: 16,
     },
 
@@ -577,6 +581,18 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: red,
     },
+    
+    containerPickerIngrediente:{
+        width: 100,
+        borderWidth: 1,
+        borderColor: red,
+    },
+    pickerIngrediente:{
+        marginLeft: 0,
+        height: 80,
+        borderWidth:0,
+    },
+
     ButtonPasos:{
         marginBottom: 25,
         marginLeft: 120,
