@@ -1,3 +1,4 @@
+import React, {useState, useEffect} from 'react'
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, Alert, ImageBackground, TouchableOpacity, FlatList } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -23,6 +24,7 @@ export default function Home({navigation}) {
     const detailsName = "Agregar";
     const settingsName = "Guardadas";
 
+
     const Tab = createBottomTabNavigator();
 
     const onSubmit = async function(props){
@@ -44,7 +46,7 @@ export default function Home({navigation}) {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          let rn = route.name;
+          let rn = route.name; 
 
           if (rn === homeName) {
             iconName = focused ? 'search' : 'search';
