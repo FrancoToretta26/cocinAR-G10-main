@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { ListItem, SearchBar, Avatar } from "react-native-elements";
+import { Icon } from 'react-native-elements'
 
 
 const SearchScreen2 = ({navigation, route}) => {
@@ -48,22 +49,23 @@ const SearchScreen2 = ({navigation, route}) => {
             var ingredientList = []
             var notIngredientList = []
             let arr = ingredientes.map((item, index)=>{
-                if(ind == index){
-                    if(ind == index && item.backgroundColor=='red'){
+                if(ind == item.idIngrediente){
+                    console.log(item)
+                    if(ind == item.idIngrediente && item.backgroundColor=='red'){
                         item.backgroundColor = 'white'
                         setColour(item.backgroundColor = 'white')
                         var ubicacion = notIngredientList.indexOf(item)
                         notIngredientList.splice(ubicacion,1)
                         console.log('hice un splice notingredient')
                     }
-                    else if(ind == index && item.backgroundColor=='white'){
+                    else if(ind == item.idIngrediente && item.backgroundColor=='white'){
                         item.backgroundColor = 'green'
                         setColour(item.backgroundColor = 'green')
                         ingredientList.push(item)
                         console.log(ingredientList);
                     }
         
-                    else if(ind == index && item.backgroundColor=='green'){
+                    else if(ind == item.idIngrediente && item.backgroundColor=='green'){
                         item.backgroundColor = 'red'
                         setColour(item.backgroundColor = 'red')
                         notIngredientList.push(item)
@@ -81,31 +83,30 @@ const SearchScreen2 = ({navigation, route}) => {
     const ItemView = ({item}) => {
         return(
             <View
-            style={{
-                flex:1,
-                flexWrap: 'wrap',
-                flexDirection: 'row',
-                alignItems: 'flex-start'
-            }}
+                style={{
+                    flex: 1,
+                    flexWrap: 'wrap',
+                    flexDirection: 'row',
+                    alignItems: 'flex-start'
+                }}
             >
-                        <TouchableOpacity
+                    <TouchableOpacity
                         onPress={''}
                         style={{
-                            marginTop: 20 ,
+                            marginTop: 20,
                             height: 50,
                             width: 100,
                             borderRadius: 12,
-                            backgroundColor:item.backgroundColor,
+                            backgroundColor: item.backgroundColor,
                             justifyContent: 'center',
                             alignItems: 'center',
-                
                         }}
                     >
-                        <Text stlye={{color: 'white', fontWeight: 'bold', fontSize: 15,}}>{item.nombre}</Text>
-    
+                        <Text stlye={{ color: 'white', fontWeight: 'bold', fontSize: 15, }}>{item.nombre}</Text>
+
                     </TouchableOpacity>
-                    
-        
+
+
                 </View>
         )
     }
@@ -124,16 +125,22 @@ const SearchScreen2 = ({navigation, route}) => {
         )
     }
 
-
-
-
-
     return(
         <SafeAreaView style={{flex:1, backgroundColor: 'black'}}>
             <View style={StyleSheet.container}>
                 <TextInput style={styles.textInputStyle} value={search} placeholder="Buscar Ingrediente" underlineColorAndroid="transparent" onChangeText={(text) => searchFilter(text)}>
 
                 </TextInput>
+                <View style={{flexDirection:'row', alignItems:'center'}}>
+        <Icon name='stop' color='white' />
+        <Text style={{color: 'white'}}>Puede contener</Text></View>
+        <View style={{flexDirection:'row', alignItems:'center'}}>
+        <Icon name='stop' color='green' />
+        <Text style={{color: 'white'}}>Debe contener</Text></View>
+        <View style={{flexDirection:'row', alignItems:'center'}}>
+        <Icon name='stop' color='red' />
+        <Text style={{color: 'white'}}>No debe contener</Text>
+        </View>
                 <View
             style={{
                 flex:1,
@@ -145,7 +152,7 @@ const SearchScreen2 = ({navigation, route}) => {
                 {filterdData.map((item, index)=>{
                     return(
                         <TouchableOpacity
-                        onPress={() => selectionHandler(index)}
+                        onPress={() => selectionHandler(item.idIngrediente)}
                         style={{
                             marginTop: 20 ,
                             height: 50,
