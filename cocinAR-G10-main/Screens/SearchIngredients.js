@@ -3,6 +3,8 @@ import { SafeAreaView, StyleSheet, View, Text, TextInput, Image, TouchableOpacit
 import { FlatList } from 'react-native-gesture-handler';
 import { ListItem, SearchBar, Avatar } from "react-native-elements";
 import { Icon } from 'react-native-elements'
+import { getRecipes } from '../controller/recipe.controller';
+import Button from '../Components/Button';
 
 
 const SearchScreen2 = ({navigation, route}) => {
@@ -10,6 +12,9 @@ const SearchScreen2 = ({navigation, route}) => {
     const [masterData, setmasterData] = useState([]);
     const [search, setsearch ] = useState('');
     const [colour, setColour] = useState('white');
+    const [ingredientList, setIngredientList] = useState([]);
+    const [notingredientList, setnotIngredientList] = useState([]);
+
 
 
 
@@ -45,17 +50,13 @@ const SearchScreen2 = ({navigation, route}) => {
 
          const selectionHandler=(ind)=>{
             const { postId, ingredientes } = route.params;
-            console.log(ingredientes, 'ingredientessss')
-            var ingredientList = []
-            var notIngredientList = []
             let arr = ingredientes.map((item, index)=>{
                 if(ind == item.idIngrediente){
-                    console.log(item)
                     if(ind == item.idIngrediente && item.backgroundColor=='red'){
                         item.backgroundColor = 'white'
                         setColour(item.backgroundColor = 'white')
-                        var ubicacion = notIngredientList.indexOf(item)
-                        notIngredientList.splice(ubicacion,1)
+                        var ubicacion = notingredientList.indexOf(item)
+                        notingredientList.splice(ubicacion,1)
                         console.log('hice un splice notingredient')
                     }
                     else if(ind == item.idIngrediente && item.backgroundColor=='white'){
@@ -68,15 +69,34 @@ const SearchScreen2 = ({navigation, route}) => {
                     else if(ind == item.idIngrediente && item.backgroundColor=='green'){
                         item.backgroundColor = 'red'
                         setColour(item.backgroundColor = 'red')
-                        notIngredientList.push(item)
+                        notingredientList.push(item)
                         var ubicacion = ingredientList.indexOf(item)
                         ingredientList.splice(ubicacion,1)
                     }
-                    console.log(notIngredientList);
+                    console.log(notingredientList);
+                    
                 }
+                setIngredientList(ingredientList)
+                setnotIngredientList(notingredientList)
                 return{...item}
             })
         
+          }
+
+       const onPress = async () => {
+            console.log(ingredientList,'ingredient list dentro del onpress')
+            console.log(notingredientList,'notingredient list dentro del onpress')
+        
+            var data = {
+                ingredientes : ingredientList,
+                notIngredientes : notingredientList,
+            }
+            let filtrarRecetas = await getRecipes(data);
+            if(filtrarRecetas){
+                navigation.navigate('SearchScreen', {
+                    postId: 3006,
+                    users: filtrarRecetas})
+                }
           }
     
 
@@ -131,6 +151,8 @@ const SearchScreen2 = ({navigation, route}) => {
                 <TextInput style={styles.textInputStyle} value={search} placeholder="Buscar Ingrediente" underlineColorAndroid="transparent" onChangeText={(text) => searchFilter(text)}>
 
                 </TextInput>
+                <Button onPress={onPress} label="Filtrar" />
+
                 <View style={{flexDirection:'row', alignItems:'center'}}>
         <Icon name='stop' color='white' />
         <Text style={{color: 'white'}}>Puede contener</Text></View>
@@ -174,8 +196,13 @@ const SearchScreen2 = ({navigation, route}) => {
                 })
                 
                 }
+
                 </View>
+
+
+
             </View>
+
         </SafeAreaView>
     );
 }

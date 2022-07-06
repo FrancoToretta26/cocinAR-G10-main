@@ -6,7 +6,7 @@ export const getRecipes= async function(datos)
     //url webservices
     var endPoint = "?";
     const listaIngredientes = datos.ingredientes
-    const listaNotIngredientes = datos.notIngredientesnp
+    const listaNotIngredientes = datos.notIngredientes
     const tipo = datos.tipo
     const user = datos.user
     if(listaIngredientes!=null){
