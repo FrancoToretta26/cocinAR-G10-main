@@ -362,3 +362,45 @@ export const getBestRecipes= async function()
         console.log("error",error);
     };
 }
+
+export const validateRecipe= async function(data)
+{
+    //url webservices
+    //armo json con datos
+    const alias = await AsyncStorage.getItem('alias')
+    console.log(alias,'alias en validate')
+    const nombreReceta = await AsyncStorage.getItem('nombreReceta')
+    console.log(nombreReceta,'nombreReceta')
+    try
+    {
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/validateRecipe?alias='+alias+'&recipeName='+nombreReceta,{ // Poner la IPV4 de cada uno.
+            method: 'GET', // or 'PUT'
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+        });
+        
+        
+        let rdo = response.status;
+        let data = await response.json();
+        console.log(data,'fede')
+        switch(rdo)
+        {
+            case 200:   
+            { 
+                return (data);//correcto
+            }
+            case 201:   
+            { 
+                return (data);//correcto
+            }
+            case 500:{
+                return (false)}
+    }
+}
+    catch(error)
+    {
+        console.log("error",error);
+    };
+}

@@ -25,6 +25,7 @@ import ValidarCodigo from './Screens/ValidarCodigo'
 import ValidarCodigoPass from './Screens/ValidarCodigoPass'
 import { LogBox } from 'react-native';
 import CambiarPassword from './Screens/CambiarPassword';
+import EditarReceta from './Screens/EditarReceta';
 
 
 
@@ -276,6 +277,15 @@ export default function App() {
         title: 'Cargar una Receta',
       }}
         />
+
+<Stack.Screen
+      name="EditarReceta"
+      component={EditarReceta}
+      options={{
+        title: 'Editar una receta',
+      }}
+        />
+
 
 <Stack.Screen
       name="ValidarCodigo"
