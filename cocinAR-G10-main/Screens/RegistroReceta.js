@@ -16,6 +16,8 @@ import CounterInput from 'react-native-counter-input';
 
 import * as ImagePicker from 'expo-image-picker';
 
+import * as VideoThumbnails from 'expo-video-thumbnails';
+
 import {Picker} from '@react-native-picker/picker';
 
 import { AntDesign } from '@expo/vector-icons';
@@ -46,17 +48,14 @@ export default class RegistroReceta extends Component {
 
             pasos: [{
                 idPaso:1,
+                nombrePaso:"",
+                thumbnail:null,
                 multimedia:null,
                 descripcion:"",
-                nombrePaso:""
             }],
 
             choosenIndex: 0,
             categoria: null,
-            categorias: [
-                {label: 'Apple', value: 'apple'},
-                {label: 'Banana', value: 'banana'}
-              ]
         };
     }
 
@@ -70,6 +69,20 @@ export default class RegistroReceta extends Component {
         });
         if (!result.cancelled) {
           this.setState({ image: result.uri });
+        }
+      };
+
+    generateThumbnail = async (video) => {
+        try {
+          const { uri } = await VideoThumbnails.getThumbnailAsync(
+            video,
+            {
+              time: 100,
+            }
+          );
+          return uri;
+        } catch (e) {
+          console.warn(e);
         }
       };
 
@@ -188,12 +201,26 @@ export default class RegistroReceta extends Component {
                                             onChangeText={text => {
                                                 this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, nombre: text, medida:"gramos" } : c) })
                                             }} />
-                                        <TextInput placeholder='Cantidad' placeholderTextColor={"#808080"}
-                                            value={item.cantidad}
-                                            style={styles.cantidad}
-                                            onChangeText={text => {
-                                                this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, cantidad: text } : c) })
-                                            }} />
+
+                                            <TextInput placeholder='Cantidad' placeholderTextColor={"#808080"}
+                                                value={item.cantidad}
+                                                style={styles.cantidad}
+                                                onChangeText={text => {
+                                                    this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, cantidad: text } : c) })
+                                                }} />
+                                        <View style={styles.containerPickerIngrediente}>
+                                            <Picker style={styles.pickerIngrediente}
+                                                selectedValue={item.medida}
+                                                onValueChange={(itemValue, itemPosition) =>
+                                                    this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, medida: itemValue, choosenIndex: itemPosition+1 } : c) })}
+                                                >
+                                                    <Picker.Item label="gr" value="gramos" />
+                                                    <Picker.Item label="kg" value="kilogramos" />
+                                                    <Picker.Item label="Unidades" value="unidades" />
+                                                    <Picker.Item label="Porciones" value="porciones" />
+                                                 </Picker>
+                                            </View>
+                                           
 
                                         <TouchableOpacity style={styles.Removebutton}>
                                             <AntDesign name="minuscircle" size={25} color="#F7456A" 
@@ -259,18 +286,37 @@ export default class RegistroReceta extends Component {
 
                                          <StatusBar hidden={true} />
                                          <View style={styles.ButtonPasos}>
-                                            {this.state.pasos[index].multimedia &&  <Image source={{uri:this.state.pasos[index].multimedia}} style = {{ width: 200, height: 120, borderRadius: 10, alignSelf:"center"}} />}
+                                         { this.state.pasos[index].thumbnail &&  <Image source={{uri:this.state.pasos[index].thumbnail}} style = {{ width: 200, height: 120, borderRadius: 10, alignSelf:"center"}} /> }
+                                            
                                             <Button title="Subir imagen" 
                                             color={"#F7456A"}
                                                 onPress={ async () => {
                                                            let result = await ImagePicker.launchImageLibraryAsync({
-                                                            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                                                            mediaTypes: ImagePicker.MediaTypeOptions.All,
                                                             quality: 1,
                                                             allowsEditing:true
                                                             });
                                                             if (!result.cancelled) {
-                                                                this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, multimedia: result.uri } : c)  });
+                   
+                                                                if (result.type=="video"){
+                                                                        try {
+                                                                          const { uri } = await VideoThumbnails.getThumbnailAsync(
+                                                                            result.uri,
+                                                                            {
+                                                                              time: 1,
+                                                                            }
+                                                                          );
+                                                                          this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, thumbnail: uri ,multimedia: result.uri} : c)  });
+                                                                          console.log( this.state.pasos[index].thumbnail,this.state.pasos[index].multimedia );
+                                                                        } catch (e) {
+                                                                          console.warn(e);
+                                                                        }
 
+                                                                }
+                                                                else{
+                                                                    this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, thumbnail: result.uri ,multimedia: result.uri } : c)  });
+                                                                    console.log("3", this.state.pasos[index].thumbnail,this.state.pasos[index].multimedia );
+                                                                }
                                                         }
                                                         }}/></View>
 
@@ -421,7 +467,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
         flexDirection:'row',
         color: fontColorGrey,
-        padding: 10,
+        padding: 5,
         alignItems: "baseline",
     },
 
@@ -443,7 +489,7 @@ const styles = StyleSheet.create({
         borderLeftColor: "transparent",
         borderTopColor: "transparent",
         marginRight:30,
-        paddingRight:50,
+        paddingRight:0,
         fontSize: 16,
     },
 
@@ -547,9 +593,8 @@ const styles = StyleSheet.create({
         paddingTop:40,
     },
     pickerStyle:{
-        marginLeft: 80,
-        height: 100,
-        color: red,
+        marginLeft: 10,
+        height: 50,
         borderWidth: 2,
     },
 
@@ -563,10 +608,22 @@ const styles = StyleSheet.create({
         alignSelf: "flex-start",
     },
     containerPicker:{
-        width: 250,
-        borderWidth: 1,
-        borderColor: red,
+        width: 180,
+        backgroundColor: red,
     },
+    
+    containerPickerIngrediente:{
+        width: 100,
+        marginLeft:20,
+        height: 80,
+        top:5,
+    },
+    pickerIngrediente:{
+        marginLeft: 0,
+        borderWidth:0,
+        backgroundColor:red,
+    },
+
     ButtonPasos:{
         marginBottom: 25,
         marginLeft: 120,
