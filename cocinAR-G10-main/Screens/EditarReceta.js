@@ -77,11 +77,10 @@ export default class EditarReceta extends Component {
       };
 
       onPress = async () => {
+        
         const idUsuario = await AsyncStorage.getItem('idUsuario')
         const alias = await AsyncStorage.getItem('alias')
         const nombre = await AsyncStorage.getItem('nombreReceta')
-
-        console.log(this.state.ingredientes2, 'el array de ingredietnes 2')
 
         
         const idUser = parseInt(idUsuario)
@@ -102,37 +101,31 @@ export default class EditarReceta extends Component {
             ingredienteConCantidad : this.state.ingredientes,
             pasos : this.state.pasos,
         }
+        console.log(data)
 
-        let enviarReceta = await submitRecipe(data)
-        if(enviarReceta){
-            alert('Receta Creada')
-            this.props.navigation.navigate('Inicio')
-        }
+        
       }
       
       async componentDidMount(){ 
         const { postId, params} = this.props.route.params;
         this.setState({image: params.receta.foto})
         this.setState({descripcion: params.receta.descripcion})
-      };
-
-      myFunction = () => {
-        this.props.updateItem(this.state)
+       await this.setState({ingredientes: params.ingredienteConCantidad})
+       await this.setState({pasos: params.pasos})
       }
-    
-    render() {
-        const { ingredientes } = this.state
 
-        const { ingredientes2} = this.state
+    render() {
         const { pasos } = this.state
         const {image} = this.state
         const {porciones} = this.state
+        const {ingredientes} = this.state
 
         const { postId, params} = this.props.route.params;
-        const ingredientess = params.ingredienteConCantidad
-        const recetass = params.receta
 
-        console.log(ingredientes2.nombre, 'ingrediente nombre nuevo');
+        const recetass = params.receta
+        const ingredientesparams  = params.ingredienteConCantidad
+
+        console.log(this.state.pasos, 'ingrediente nombre nuevo');
 
                 return (
                     <SafeAreaView style={ styles.container }>
@@ -197,24 +190,24 @@ export default class EditarReceta extends Component {
                         <Text style={styles.ingredienteText}>Ingredientes</Text>
         
                                 {
-                                ingredientess.map((item, index) => {
+                                ingredientes.map((item, index) => {
         
                                     return (
         
                                         <View  style={styles.ingredientesContainer}>
                                             <View style={styles.ingredienteContainer}>
                                                 <TextInput placeholder={item.nombre} placeholderTextColor={"#808080"}
-                                                    value={this.state.ingredientes2.nombre}
+                                                    value={item.nombre}
                                                     style={styles.ingrediente}
                                                     onChangeText={text => {
-                                                        this.setState({ ingredientes2: ingredientes2.map((c, innerIndex) => innerIndex === index-1 ? { ...c, nombre: text } : c) })
+                                                        this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, nombre: text } : c) })
                                                     }} />
         
                                                     <TextInput placeholder={String(item.cantidad)} placeholderTextColor={"#808080"}
-                                                        value={this.state.prueba}
+                                                        value={String(item.cantidad)}
                                                         style={styles.cantidad}
                                                         onChangeText={text => {
-                                                            this.setState({ ingredientes: ingredientess.map((c, innerIndex) => innerIndex === index ? { ...c, cantidad: text } : c) })
+                                                            this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, cantidad: text } : c) })
                                                         }} />
                                                     
                                                 <View style={styles.containerPickerIngrediente}>
@@ -235,7 +228,7 @@ export default class EditarReceta extends Component {
                                                     <AntDesign name="minuscircle" size={25} color="#F7456A" 
                                                     onPress={() => {
                                                         const filterList = ingredientes.filter((item, inner) => inner != index)
-                                                        this.setState({ ingredientes2: filterList })
+                                                        this.setState({ ingredientes: filterList })
                                                     }}
                                                     />
                                                 </TouchableOpacity>
@@ -320,7 +313,7 @@ export default class EditarReceta extends Component {
         
                                                 <View style={styles.pasosDescripcionView}>
                                                     <TextInput placeholder={item.descripcion} placeholderTextColor={"#808080"}
-                                                        value={''}
+                                                        value={item.descripcion}
                                                         style={styles.pasosDescripcion}
                                                         onChangeText={text => {
                                                             this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, descripcion: text } : c) })
