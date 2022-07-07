@@ -404,3 +404,47 @@ export const validateRecipe= async function(data)
         console.log("error",error);
     };
 }
+
+export const editRecipe= async function(datos, id)
+{
+
+
+    try
+    {
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/recipe/'+id,{ // Poner la IPV4 de cada uno.
+            method: 'PUT', // or 'PUT'
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify({
+                creatorNickname: datos.creatorNickname,
+                receta: datos.receta,
+                ingredienteConCantidad: datos.ingredienteConCantidad,
+                pasos: datos.pasos,
+            })
+        });
+        
+        
+        let rdo = response.status;
+        console.log(rdo,'rdo post receta')
+        let data = await response.json();
+        switch(rdo)
+        {
+            case 200:   
+            { 
+                return ({rdo:0,mensaje:"Ok"});//correcto
+            }
+            case 201:   
+            { 
+                return ({rdo:0,mensaje:"Ok"});//correcto
+            }
+    }
+}
+    catch(error)
+    {
+        console.log("error",error);
+    };
+
+
+}

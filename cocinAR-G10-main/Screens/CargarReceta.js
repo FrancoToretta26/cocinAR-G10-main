@@ -74,8 +74,8 @@ export default function CargarReceta({ navigation, route }) {
   const onSubmitReemplazar  = async function(data){
     let verificarReceta = await validateRecipe('')
     if(verificarReceta){
-      navigation.navigate('EditarReceta', {
-        screen: 'EditarReceta',
+      navigation.navigate('ReemplazarReceta', {
+        screen: 'ReemplazarReceta',
         params: verificarReceta,
     });
     }
