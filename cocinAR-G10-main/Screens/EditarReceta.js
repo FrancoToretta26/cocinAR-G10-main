@@ -274,7 +274,17 @@ export default class EditarReceta extends Component {
                                         <View style={styles.pasosInside}>
                                             <View >
                                                 <Text style={styles.pasoNumber} >{index+1}</Text>
-        
+
+                                                <View style={styles.pasosNombreView}>
+
+                                                <TextInput placeholder='Nombre' placeholderTextColor={"#808080"}
+                                                    value={item.nombrePaso}
+                                                    style={ styles.pasosNombre }
+                                                    onChangeText={text => {
+                                                        this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, nombrePaso: text, idPaso: index+1 } : c) })
+                                                    }} />
+                                             </View>
+                                             
                                                  <StatusBar hidden={true} />
                                                  <View style={styles.ButtonPasos}>
                                                  { this.state.pasos[index].multimedia &&  <Image source={{uri:this.state.pasos[index].multimedia}} style = {{ width: 200, height: 120, borderRadius: 10, alignSelf:"center"}} /> }
