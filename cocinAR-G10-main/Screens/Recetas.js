@@ -39,8 +39,17 @@ class Recetas extends Component{
             calificacion:1,
             calificacionnueva: 2,
             rating:1,
+            cantidad: [],
           };
     }
+
+    // componentDidMount() {
+    //   const { idd3, ingredientes} = this.props.route.params;
+    //   ingredientes.map((item, index) => {
+    //   this.setState({cantidad:item.cantidad});
+    //   console.log('entre')
+    //   })
+    // }
 
     onPress = async () => {
       const { postId, params} = this.props.route.params;
@@ -69,6 +78,8 @@ class Recetas extends Component{
     
     }
 
+
+
     
     onPressCalificar = async () => {
       const { postId, params} = this.props.route.params;
@@ -86,6 +97,26 @@ class Recetas extends Component{
       }
     }
 
+    onPressCantidad = async (counterPorciones) => {
+      const { postId, params} = this.props.route.params;
+      const recetass = params.recetass;
+      const { idd3, ingredientes} = this.props.route.params;
+      let lista = []
+
+      ingredientes.map((item, index) => {
+        let newValue = (counterPorciones*item.cantidad)/recetass.porciones // sin redondear
+        let newnewValue = Math.floor(newValue) // redondeado
+        console.log(newnewValue, 'newvalue')
+        lista.push(newnewValue)
+        this.setState({cantidad:lista}, () =>
+        console.log('setstate'));
+       
+
+        })
+    }
+
+
+
 
 
 
@@ -96,7 +127,6 @@ class Recetas extends Component{
         const { idd3, ingredientes} = this.props.route.params;
         const { idd4, tags} = this.props.route.params;
         const { idd5, calificacion} = this.props.route.params;
-
         const {setIsSwitchOn} = this.props
 
         const recetass = params.recetass;
@@ -134,30 +164,19 @@ class Recetas extends Component{
                   increaseButtonBackgroundColor='black'
                   decreaseButtonBackgroundColor='black'
                   horizontal
-                  onChange={(counter) => {
-                  console.log("onChange Counter:", counter);
+                  onChange={(counterPorciones) => { this.onPressCantidad(counterPorciones)
+              
                   }}
                 />
                 </View></View>
               
                 <FlatList
                         data={ingredientes}
-                        renderItem={({ item }) => (
+                        renderItem={({ item, index }) => (
                           <View style={styles.containerIngredientes}>
                           <Text style={styles.ingredienteText}>{`${item.nombre} en (${item.medida})`}</Text>
                           <View style={styles.containerIngredientCounter}>
-                              <CounterInput
-                                width={150}
-                                style={styles.counter}
-                                backgroundColor='#F7456A'
-                                initial={item.cantidad}
-                                increaseButtonBackgroundColor='black'
-                                decreaseButtonBackgroundColor='black'
-                                horizontal
-                                onChange={(counter) => {
-                                console.log("onChange Counter:", counter);
-                                }}
-                              />
+                            <Text>{this.state.cantidad.length==0? item.cantidad:this.state.cantidad[index]}</Text>
                               </View>
                               </View>
                          
@@ -172,12 +191,7 @@ class Recetas extends Component{
               renderItem={({ item, index }) => (
               <View>
               <Text style={styles.textPasos}>{`Paso ${index+1}: - ${item.descripcion}`}</Text>
-              {item.multimedia.map((element, index) => {
-                console.log(element);
-                return(
-                <Image source={{ uri: element }} style={styles.imgStylePaso} defaultImage={{uri: 'https://reactnative-examples.com/wp-content/uploads/2022/02/default-loading-image.png' }}/>
-                )
-              })}
+                <Image source={{ uri: item.multimedia }} style={styles.imgStylePaso} defaultImage={{uri: 'https://reactnative-examples.com/wp-content/uploads/2022/02/default-loading-image.png' }}/>
               </View>
               )}></FlatList>
                <View style={styles.containerRating}>
