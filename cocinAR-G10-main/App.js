@@ -15,13 +15,17 @@ import RegistroReceta from './Screens/RegistroReceta'
 
 import BuscarRecetasFiltros from './Screens/BuscarRecetaFiltros';
 import SearchScreen from './Screens/SearchScreen2';
+import SearchIngredients from './Screens/SearchIngredients';
 import Recetas from './Screens/Recetas';
 import "./ignoreWarnings";
 import DescripcionReceta from './Screens/DescripcionRecetaGuardada'
 import * as ImagePicker from 'expo-image-picker';
 import Home from './Screens/Home';
 import ValidarCodigo from './Screens/ValidarCodigo'
+import ValidarCodigoPass from './Screens/ValidarCodigoPass'
 import { LogBox } from 'react-native';
+import CambiarPassword from './Screens/CambiarPassword';
+import EditarReceta from './Screens/EditarReceta';
 
 
 
@@ -111,6 +115,28 @@ export default function App() {
                   ),
                 }}
               />
+
+<Stack.Screen
+      name="CambiarPassword"
+      component={CambiarPassword}
+      options={{
+        title: 'Ingrese su nueva contraseña',
+        headerTintColor: '#F7456A',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#222121',
+          elevation: 0,
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft:15}}>
+            <Ionicons name="arrow-back-outline" size={25} color="#F7456A" />
+          </View>
+                  ),
+                }}
+              />          
+
+
       <Stack.Screen
       name="FinalizarRegistro"
       component={FinalizarRegistro}
@@ -253,6 +279,15 @@ export default function App() {
         />
 
 <Stack.Screen
+      name="EditarReceta"
+      component={EditarReceta}
+      options={{
+        title: 'Editar una receta',
+      }}
+        />
+
+
+<Stack.Screen
       name="ValidarCodigo"
       component={ValidarCodigo}
       options={{
@@ -271,6 +306,47 @@ export default function App() {
                   ),
                 }}
               />
+
+<Stack.Screen
+      name="ValidarCodigoPass"
+      component={ValidarCodigoPass}
+      options={{
+        title: '',
+        headerTintColor: '#F7456A',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#222121',
+          elevation: 0,
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft:15}}>
+            <Ionicons name="arrow-back-outline" size={25} color="#F7456A" />
+          </View>
+                  ),
+                }}
+              />
+
+<Stack.Screen
+      name="SearchIngredients"
+      component={SearchIngredients}
+      options={{
+        title: 'Buscar por Ingrediente',
+        headerTintColor: '#F7456A',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#222121',
+          elevation: 0,
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft:15}}>
+            <Ionicons name="arrow-back-outline" size={25} color="#F7456A" />
+          </View>
+                  ),
+                }}
+              />
+
 
               
 

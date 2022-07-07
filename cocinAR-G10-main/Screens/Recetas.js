@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { View, Text, StyleSheet, FlatList, Image, SafeAreaView} from 'react-native'
+import { View, Text, StyleSheet, FlatList, Image, SafeAreaView, Button} from 'react-native'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-elements'
 import { shadow } from 'react-native-paper';
 import { ListItem, SearchBar, Avatar } from "react-native-elements";
 import CounterInput from "react-native-counter-input";
 import { Switch } from 'react-native-paper';
-import {saveRecipes} from '../controller/recipe.controller';
+import {saveRecipes, calificar} from '../controller/recipe.controller';
+import { Rating, AirbnbRating } from 'react-native-ratings';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const onPress = async function() {
@@ -18,6 +21,8 @@ const onPress = async function() {
   let guardarReceta = await saveRecipes(dato)
   alert('Receta Guardada')
 }
+
+
 
 
 class Recetas extends Component{
@@ -31,6 +36,9 @@ class Recetas extends Component{
             error: null,
             isSwitchOn: false,
             setIsSwitchOn: false,
+            calificacion:1,
+            calificacionnueva: 2,
+            rating:1,
           };
     }
 
@@ -39,10 +47,45 @@ class Recetas extends Component{
       console.log('entre')
       console.log(params.recetass.idReceta)
       let guardarReceta = await saveRecipes(params.recetass.idReceta)
-      if(guardarReceta){
+      if(guardarReceta.rdo==0){
         alert('Receta Guardada')
       }
+      if(guardarReceta.rdo==1){
+        alert('Esta receta ya esta guardada')
+      }
+      if(guardarReceta.rdo==2){
+        alert('Ya tienes un maximo de 5 recetas guardadas')
+      }
+      if(guardarReceta.rdo==3){
+        alert('No puedes guardar una receta propia.')
+      }
     }
+
+    ratingCompleted = async (rate) => {
+      console.log("Rating is: " + rate)
+      let count = this.state.rating
+      this.setState(this.state.rating = rate)
+      console.log(this.state.rating,'thisstaterating')
+    
+    }
+
+    
+    onPressCalificar = async () => {
+      const { postId, params} = this.props.route.params;
+      const { idd2, usuario} = this.props.route.params;
+
+      var calificacion = {
+        idReceta: params.recetass.idReceta,
+        creatorNickname: usuario,
+        calificacion: this.state.rating
+      }
+      console.log(calificacion)
+      let calificarMetodo = await calificar(calificacion)
+      if(calificarMetodo){
+        alert('Receta Calificada con Exito')
+      }
+    }
+
 
 
 
@@ -72,7 +115,7 @@ class Recetas extends Component{
 
                 <Text style={styles.textName}>{recetass.nombre}</Text>
                 <Text style={styles.textUser}>Por {usuario}</Text>
-                <Text style={styles.textRating}>Rating: {calificacion}</Text>
+                <Text style={styles.textRating}>Rating: {recetass.calificacion}</Text>
                 <Image source={{ uri: recetass.foto }} style={styles.imgStyle}></Image>
                 <Text style={styles.tituloDescription}>Descripcion</Text>
                 <View style={styles.containerDescription}>
@@ -126,21 +169,36 @@ class Recetas extends Component{
             <Text style={styles.tituloDescription}>Preparacion</Text>
               <FlatList
               data={pasos}
-              renderItem={({ item }) => (
+              renderItem={({ item, index }) => (
               <View>
-              <Text style={styles.textPasos}>{`Paso - ${item.descripcion}`}</Text></View>
+              <Text style={styles.textPasos}>{`Paso ${index+1}: - ${item.descripcion}`}</Text>
+              {item.multimedia.map((element, index) => {
+                console.log(element);
+                return(
+                <Image source={{ uri: element }} style={styles.imgStylePaso} defaultImage={{uri: 'https://reactnative-examples.com/wp-content/uploads/2022/02/default-loading-image.png' }}/>
+                )
+              })}
+              </View>
               )}></FlatList>
                <View style={styles.containerRating}>
                     <Text style={styles.textoRating}>Recomendarias esta receta? </Text>
-                    <Icon
-                    style={styles.iconRating}
-                    name='done'
-                    color='green' />
-                    <Icon
-                    style={styles.iconRating}
-                    name='close'
-                    color='red' />
                 </View>
+
+                <Rating
+                  type='custom'
+                  ratingCount={5}
+                  imageSize={60}
+                  showRating
+                  onFinishRating={this.ratingCompleted}
+                  style={{backgroundColor:'#222121'}}
+                  tintColor='#222121'
+                />
+
+                <Button
+                  onPress={this.onPressCalificar}
+                  title="Calificar"
+                  color="#C6A80F"
+                />
                 
                 
                 <SafeAreaView style={styles.containerTipos}>
@@ -256,11 +314,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     containerRating:{
+        marginTop: 50, 
         flexDirection: 'row',
+        alignSelf: 'center',
 
     },
     textoRating:{
-        fontSize: 16,
+        fontSize: 25,
         color: 'white',
         fontWeight: 'bold',
 
@@ -307,6 +367,12 @@ const styles = StyleSheet.create({
       alignItems: 'flex-end',
       padding: 10
     },
+    imgStylePaso:{
+      width: 270,
+      height: 180,
+      borderRadius: 20,
+      marginLeft: 60,
+  },
 
 })
 

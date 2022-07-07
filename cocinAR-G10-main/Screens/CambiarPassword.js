@@ -10,10 +10,10 @@ import {useNavigation} from 'react-navigation'
 import { useForm, Controller } from 'react-hook-form';
 
 import { getRecipes } from '../controller/recipe.controller';
-import { recuperarPass } from '../controller/user.controller';
+import { recuperarPass, resetPassword } from '../controller/user.controller';
 
 
-export default function OlvidePassword({ navigation, route }) {
+export default function CambiarPassword({ navigation, route }) {
   const [isBillingDifferent, setIsBillingDifferent] = useState(false);
   const { handleSubmit, control, formState: { errors } } = useForm();
 
@@ -25,16 +25,20 @@ export default function OlvidePassword({ navigation, route }) {
   };
 
   const onSubmit = async function (data){
-    console.log(data.email);
-    let recibirToken = await recuperarPass(data.email)
-    console.log(recibirToken.rdo, 'rdo')
-    if(recibirToken.rdo==0){
+    if(data.npassword==data.password){
+      console.log('entre al if')
+    let cambiarPass = await resetPassword(data.password)
+    if(cambiarPass.rdo==0){
       navigation.navigate('ValidarCodigoPass')
-      alert('Se ha enviado el codigo a tu correo electronico.')
+      alert('Se ha actualizado la contraseña')
     }
-    if(recibirToken.rdo==1){
-      alert('El correo electronico no esta registrado')
+    else{
+      alert('Ha ocurrido un error')
     }
+  }
+  else{
+    alert('Las contraseñas no coinciden')
+  }
     }
   
 
@@ -43,23 +47,38 @@ export default function OlvidePassword({ navigation, route }) {
     <View style={styles.container}>
         <Controller
         defaultValue=""
-        name="email"
+        name="password"
         rules={{required:{
             value: true,
-            message: 'El correo electronico es requerido'
-        },
-        pattern:{
-            value: EMAIL_REGEX,
-            message: 'El correo electronico es invalido'
-        }}}
+            message: 'La password es requerida'
+        },}}
         control={control}
         render={({ field: { onChange, value } }) => (
             <Input
-                error={errors.email}
-                errorText={errors.email?.message}
+                error={errors.password}
+                errorText={errors.password?.message}
                 onChangeText={(value) => onChange(value)}
                 value={value}
-                placeholder="Correo Electrónico"
+                placeholder="Contraseña"
+            />
+        )}
+        />
+
+<Controller
+        defaultValue=""
+        name="npassword"
+        rules={{required:{
+            value: true,
+            message: 'La password es requerida'
+        },}}
+        control={control}
+        render={({ field: { onChange, value } }) => (
+            <Input
+                error={errors.npassword}
+                errorText={errors.npassword?.message}
+                onChangeText={(value) => onChange(value)}
+                value={value}
+                placeholder="Confirmar Contraseña"
             />
         )}
         />

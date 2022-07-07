@@ -9,7 +9,7 @@ import { useForm, Controller } from 'react-hook-form';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
+import { validateRecipe } from '../controller/recipe.controller';
 
 export default function CargarReceta({ navigation, route }) {
   const [isBillingDifferent, setIsBillingDifferent] = useState(false);
@@ -23,7 +23,18 @@ export default function CargarReceta({ navigation, route }) {
 
   const onSubmit = async function(data){
     await AsyncStorage.setItem('nombreReceta', data.nombreReceta)
-    navigation.navigate('RegistroReceta')
+    let verificarReceta = await validateRecipe('')
+    if(verificarReceta){
+      alert('Aca deberia aparecer modal ')
+      console.log(verificarReceta, 'verificarreceta')
+        navigation.navigate('EditarReceta', {
+          screen: 'EditarReceta',
+          params: verificarReceta,
+      });
+    }
+    else{
+      navigation.navigate('RegistroReceta')
+    }
 
   };
 

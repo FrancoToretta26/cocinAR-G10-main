@@ -51,7 +51,7 @@ export default function Registro({ navigation, route }) {
       console.log(nuevoRegistro.rdo,'nuevoRegistro')
       if(nuevoRegistro.rdo==0){
         alert('Usuario registrado con exito')
-        navigation.navigate('FinalizarRegistro')
+        navigation.navigate('ValidarCodigo')
       }
       else if(nuevoRegistro.rdo==1)
       {

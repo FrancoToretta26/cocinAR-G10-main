@@ -139,3 +139,163 @@ export const finalizarRegistro = async function(data)
         console.log("error",error);
     };
 }
+
+export const getToken = async function(tokenUser)
+{
+
+    console.log('entre al controller')
+    //url webservices
+    //armo json con datos
+    var token = tokenUser;
+    try
+    {
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/registrationConfirm?token='+token,{ // Poner la IPV4 de cada uno.
+            method: 'GET', // or 'PUT'
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+        });
+        
+        
+        let rdo = response.status;
+        console.log(rdo)
+        switch(rdo)
+        {
+            case 200:   
+            { 
+                return ({rdo:0});//correcto
+            }
+            case 201:   
+            { 
+                return ({rdo:0});//correcto
+            }
+            case 500:   
+            { 
+                return ({rdo:1});//Incorrecto
+            }
+    }
+}
+    catch(error)
+    {
+        console.log("error",error);
+    };
+}
+
+export const recuperarPass = async function(email)
+{
+
+ 
+    const mail = email;
+    const mailcache = await AsyncStorage.setItem('mailNP', mail)
+    console.log()
+    try
+    {
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/validationToken?mail='+mail,{ // Poner la IPV4 de cada uno.
+            method: 'GET', // or 'PUT'
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+        });
+        
+        
+        let rdo = response.status;
+        console.log(rdo, 'recuperarPass')
+        switch(rdo)
+        {
+            case 200:   
+            { 
+                return ({rdo:0});//correcto
+            }
+            case 201:   
+            { 
+                return ({rdo:0});//correcto
+            }
+            case 500:   
+            { 
+                return ({rdo:1});//Incorrecto
+            }
+    }
+}
+    catch(error)
+    {
+        console.log("error",error);
+    };
+}
+
+export const confirmToken = async function(token)
+{
+    var tokenUser = token;
+    try
+    {
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/confirmToken?token='+tokenUser,{ // Poner la IPV4 de cada uno.
+            method: 'GET', // or 'PUT'
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+        });
+        
+        
+        let rdo = response.status;
+        console.log(rdo, 'recuperarPass')
+        switch(rdo)
+        {
+            case 200:   
+            { 
+                return ({rdo:0});//correcto
+            }
+            case 201:   
+            { 
+                return ({rdo:0});//correcto
+            }
+            case 500:   
+            { 
+                return ({rdo:1});//Incorrecto
+            }
+    }
+}
+    catch(error)
+    {
+        console.log("error",error);
+    };
+}
+
+export const resetPassword = async function(data)
+{
+    //url webservices
+    //armo json con datos
+    const mail = await AsyncStorage.getItem('mailNP')
+    const newPassword = data
+    console.log('mail', mail)
+    console.log('newPassword', newPassword)
+    try
+    {
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/resetPassword?mail='+mail+'&newPassword='+newPassword,{ // Poner la IPV4 de cada uno.
+            method: 'PUT', 
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+        });
+        
+        
+        let rdo = response.status;
+        switch(rdo)
+        {
+            case 200:   
+            { 
+                return ({rdo:0,mensaje:"Ok"});//correcto
+            }
+            case 201:   
+            { 
+                return ({rdo:0,mensaje:"Ok"});//correcto
+            }
+    }
+}
+    catch(error)
+    {
+        console.log("error",error);
+    };
+}

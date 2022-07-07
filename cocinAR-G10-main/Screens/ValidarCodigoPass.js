@@ -13,7 +13,7 @@ import Colors from './Constants/Colors';
 import Fonts from './Constants/Fonts'
 import Display from './Utils/Display';
 import { useForm, Controller } from 'react-hook-form';
-import { getToken } from '../controller/user.controller';
+import { confirmToken, getToken } from '../controller/user.controller';
 
 const VerificationScreen = ({navigation,
   route: {
@@ -38,10 +38,10 @@ const VerificationScreen = ({navigation,
     console.log(primerDigito, 'primerdigi')
     const otpToken = primerDigito+segundoDigito+tercerDigito+cuartoDigito+quintoDigito+sextoDigito
     console.log(otpToken, 'token')
-    let nuevoToken = await getToken(otpToken)
+    let nuevoToken = await confirmToken(otpToken)
     if(nuevoToken.rdo==0){
       alert('Token ingresado con exito')
-      navigation.navigate('FinalizarRegistro')};
+      navigation.navigate('CambiarPassword')};
     if(nuevoToken.rdo==1){
       alert('El Token ingresado no es correcto')
     }
