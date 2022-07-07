@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { View, Text, StyleSheet, FlatList, Image, SafeAreaView, Button} from 'react-native'
+import { View, Text, StyleSheet, FlatList, SafeAreaView, Button, Image} from 'react-native'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-elements'
 import { shadow } from 'react-native-paper';
@@ -144,7 +144,7 @@ class Recetas extends Component{
                         data={ingredientes}
                         renderItem={({ item }) => (
                           <View style={styles.containerIngredientes}>
-                          <Text style={styles.ingredienteText}>{item.nombre}</Text>
+                          <Text style={styles.ingredienteText}>{`${item.nombre} en (${item.medida})`}</Text>
                           <View style={styles.containerIngredientCounter}>
                               <CounterInput
                                 width={150}
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
     containerIngredientCounter:{
-      marginLeft: 150,
+      marginLeft: 40,
     },
     containerPorciones:{
       flexDirection: 'row',
