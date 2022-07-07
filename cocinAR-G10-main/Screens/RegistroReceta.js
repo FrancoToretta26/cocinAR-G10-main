@@ -28,6 +28,7 @@ import { submitRecipe } from '../controller/recipe.controller';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
+
 export default class RegistroReceta extends Component {
 
     constructor(props) {

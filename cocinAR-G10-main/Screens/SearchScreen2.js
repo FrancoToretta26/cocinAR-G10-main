@@ -1,15 +1,20 @@
 import React, {useState, useEffect} from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, TextInput, Image, TouchableOpacity, Pressable } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { ListItem, SearchBar, Avatar } from "react-native-elements";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Modal from "react-native-modal";
 
 
 const SearchScreen2 = ({navigation, route}) => {
     const [filterdData, setfilterdData] = useState([]);
     const [masterData, setmasterData] = useState([]);
     const [search, setsearch ] = useState('');
+    const [isModalVisibleSort, setModalVisibleSort] = useState(false);
 
+    const toggleModalSort = () => {
+        setModalVisibleSort(!isModalVisibleSort);
+      };
 
     useEffect(()=>{
         fetchPosts();
@@ -40,6 +45,11 @@ const SearchScreen2 = ({navigation, route}) => {
             setsearch(text);
         }
          }
+
+         const handleOrderClickModal = () => {
+            setModalVisibleSort(!isModalVisibleSort);
+          };
+
 
          const handleOrderClick = () => {
             let newList = [...filterdData];
@@ -105,7 +115,29 @@ const SearchScreen2 = ({navigation, route}) => {
                 <TextInput style={styles.textInputStyle} value={search} placeholder="Buscar receta" underlineColorAndroid="transparent" onChangeText={(text) => searchFilter(text)}>
                 </TextInput>
                 <View>
-                <TouchableOpacity onPress={handleOrderClick} style={styles.orderButton}>
+                <View>
+      <Modal style={styles.modal}isVisible={isModalVisibleSort}>
+      <View style={styles.modalcontainer} >
+          <Text style={styles.ModalText}> Seleccione el orden deseado</Text>
+          </View>
+          <View style={[{flexDirection:'row',alignItems:'center'}]}>
+            <View style={[{flex:1,flexDirection:'row'}]}>
+          <Pressable style={styles.buttonSort} onPress={handleOrderClick}>
+      <Text style={styles.modalbuttontext}>Por Receta</Text>
+    </Pressable>
+    </View>
+    <View stlye={[{justifyContent:'space-evenly', marginVertical:10}]}>
+    <Pressable style={styles.buttonSort2} onPress={handleOrderClickUser}>
+      <Text style={styles.modalbuttontext}>Por Usuario</Text>
+    </Pressable>
+    </View>
+    </View>
+      </Modal>
+      </View>
+      </View>
+
+                <View>
+                <TouchableOpacity onPress={handleOrderClickModal} style={styles.orderButton}>
                     <MaterialCommunityIcons
                         name="order-alphabetical-ascending"
                         size={32}
@@ -154,6 +186,61 @@ const styles = StyleSheet.create({
     orderButton: {
         width: 32,
         marginRight: 30,
+      },
+      modal: {
+        position:'relative',
+        bottom:-350,
+        height:10,
+        width: 395,
+        marginTop: 250,
+        marginBottom: 340,
+        marginHorizontal: 0,
+        alignItems: 'center',
+        backgroundColor: '#222121',
+        borderRadius:30
+      },
+      ModalText: {
+        fontSize: 25,
+        lineHeight: 20 * 1.4,
+        marginTop: 20,
+        marginBottom: 0,
+        marginHorizontal: 10,
+        textAlign: 'center',
+        color: '#FFFFFFFF',
+        backgroundColor: '#222121',
+        fontWeight: "bold",
+      },
+      buttonSort: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        marginHorizontal:20,
+        borderRadius: 12,
+        elevation: 3,
+        backgroundColor: '#FFFFFF',
+      },
+      buttonSort2: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
+        paddingVertical: 12,
+        paddingHorizontal: 10,
+        marginHorizontal:20,
+        borderRadius: 12,
+        elevation: 3,
+        backgroundColor: '#FFFFFF',
+      },
+    
+      modalcontainer:{
+        marginBottom: 30,
+      },
+    
+      modalbuttontext:{
+        color:'#000000',
+        fontWeight: "bold",
+        fontSize: 18,
       },
 })
 

@@ -176,7 +176,7 @@ class Recetas extends Component{
                           <View style={styles.containerIngredientes}>
                           <Text style={styles.ingredienteText}>{`${item.nombre} en (${item.medida})`}</Text>
                           <View style={styles.containerIngredientCounter}>
-                            <Text>{this.state.cantidad.length==0? item.cantidad:this.state.cantidad[index]}</Text>
+                            <Text style={styles.containerIngredienteCantidad}>{this.state.cantidad.length==0? item.cantidad:this.state.cantidad[index]}</Text>
                               </View>
                               </View>
                          
@@ -367,6 +367,7 @@ const styles = StyleSheet.create({
     },
     containerPorciones:{
       flexDirection: 'row',
+      marginBottom: 20,
     },
     textoPorciones:{
       padding: 15,
@@ -387,6 +388,17 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       marginLeft: 60,
   },
+  containerIngredienteCantidad:{
+    alignItems: 'flex-end',
+    backgroundColor: '#F7456A',
+    marginBottom: 16,
+    marginLeft: 10,
+    padding: 9 ,
+    borderRadius: 20,
+    fontSize: 20,
+    paddingHorizontal: 40,
+    fontWeight: 'bold'
+  }
 
 })
 
