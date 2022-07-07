@@ -300,7 +300,7 @@ export const calificar= async function(data)
 
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recetasApi/calificacion'+'/'+creatorNickname+'/'+calificacion+'/'+idReceta,{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.110:8080/recetasApi/calificacion'+'/'+creatorNickname+'/'+calificacion+'/'+idReceta,{ // Poner la IPV4 de cada uno.
             method: 'POST', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -334,7 +334,7 @@ export const getBestRecipes= async function()
 {
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recetasApi/bestRecipes',{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.110:8080/recetasApi/bestRecipes',{ // Poner la IPV4 de cada uno.
             method: 'GET', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -373,7 +373,7 @@ export const validateRecipe= async function(data)
     console.log(nombreReceta,'nombreReceta')
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recetasApi/validateRecipe?alias='+alias+'&recipeName='+nombreReceta,{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.110:8080/recetasApi/validateRecipe?alias='+alias+'&recipeName='+nombreReceta,{ // Poner la IPV4 de cada uno.
             method: 'GET', // or 'PUT'
             headers: {
                 Accept: 'application/json',

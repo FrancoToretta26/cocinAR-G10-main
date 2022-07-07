@@ -42,24 +42,20 @@ export default class RegistroReceta extends Component {
             ingredientes: [{
                 nombre: '',
                 cantidad: '',
-                medida: ''
+                medida: 'gramos'
 
             }],
 
             pasos: [{
                 idPaso:1,
+                nombrePaso:"",
                 thumbnail:null,
                 multimedia:null,
                 descripcion:"",
-                nombrePaso:""
             }],
 
             choosenIndex: 0,
             categoria: null,
-            categorias: [
-                {label: 'Apple', value: 'apple'},
-                {label: 'Banana', value: 'banana'}
-              ]
         };
     }
 
@@ -219,7 +215,7 @@ export default class RegistroReceta extends Component {
                                                     this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, medida: itemValue, choosenIndex: itemPosition+1 } : c) })}
                                                 >
                                                     <Picker.Item label="gr" value="gramos" />
-                                                    <Picker.Item label="kg" value="kilos" />
+                                                    <Picker.Item label="kg" value="kilogramos" />
                                                     <Picker.Item label="Unidades" value="unidades" />
                                                     <Picker.Item label="Porciones" value="porciones" />
                                                  </Picker>
