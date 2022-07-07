@@ -22,7 +22,9 @@ import DescripcionReceta from './Screens/DescripcionRecetaGuardada'
 import * as ImagePicker from 'expo-image-picker';
 import Home from './Screens/Home';
 import ValidarCodigo from './Screens/ValidarCodigo'
+import ValidarCodigoPass from './Screens/ValidarCodigoPass'
 import { LogBox } from 'react-native';
+import CambiarPassword from './Screens/CambiarPassword';
 
 
 
@@ -112,6 +114,28 @@ export default function App() {
                   ),
                 }}
               />
+
+<Stack.Screen
+      name="CambiarPassword"
+      component={CambiarPassword}
+      options={{
+        title: 'Ingrese su nueva contraseña',
+        headerTintColor: '#F7456A',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#222121',
+          elevation: 0,
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft:15}}>
+            <Ionicons name="arrow-back-outline" size={25} color="#F7456A" />
+          </View>
+                  ),
+                }}
+              />          
+
+
       <Stack.Screen
       name="FinalizarRegistro"
       component={FinalizarRegistro}
@@ -256,6 +280,26 @@ export default function App() {
 <Stack.Screen
       name="ValidarCodigo"
       component={ValidarCodigo}
+      options={{
+        title: '',
+        headerTintColor: '#F7456A',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#222121',
+          elevation: 0,
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft:15}}>
+            <Ionicons name="arrow-back-outline" size={25} color="#F7456A" />
+          </View>
+                  ),
+                }}
+              />
+
+<Stack.Screen
+      name="ValidarCodigoPass"
+      component={ValidarCodigoPass}
       options={{
         title: '',
         headerTintColor: '#F7456A',
