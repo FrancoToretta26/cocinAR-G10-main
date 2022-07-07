@@ -10,6 +10,7 @@ import { Switch } from 'react-native-paper';
 import {saveRecipes, calificar} from '../controller/recipe.controller';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Video, AVPlaybackStatus } from 'expo-av';
 
 
 
@@ -191,7 +192,19 @@ class Recetas extends Component{
               renderItem={({ item, index }) => (
               <View>
               <Text style={styles.textPasos}>{`Paso ${index+1}: - ${item.descripcion}`}</Text>
-                <Image source={{ uri: item.multimedia }} style={styles.imgStylePaso} defaultImage={{uri: 'https://reactnative-examples.com/wp-content/uploads/2022/02/default-loading-image.png' }}/>
+
+                            {(() => {
+              if(item.multimedia!=null){
+              var lastFive = item.multimedia.substr(item.multimedia.length - 3); // => "Tabs1"
+              console.log(lastFive, 'lastfive')
+              if (lastFive=="mp4" || lastFive=="avi" || lastFive=='mov' ){
+                console.log('entre al if');
+                return(<Video style={styles.imgStylePaso} source={{uri: item.multimedia}} useNativeControls isLooping/>)}
+              else{
+                return(<Image source={{ uri: item.multimedia }} style={styles.imgStylePaso} defaultImage={{uri: 'https://reactnative-examples.com/wp-content/uploads/2022/02/default-loading-image.png' }}/>)
+              }
+            }
+            })()}
               </View>
               )}></FlatList>
                <View style={styles.containerRating}>
