@@ -1,13 +1,23 @@
 import React, {useState, useEffect} from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, TextInput, Image, TouchableOpacity, Pressable } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { ListItem, SearchBar, Avatar } from "react-native-elements";
+<<<<<<< Updated upstream
+=======
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Modal from "react-native-modal";
+>>>>>>> Stashed changes
 
 
 const SearchScreen2 = ({navigation, route}) => {
     const [filterdData, setfilterdData] = useState([]);
     const [masterData, setmasterData] = useState([]);
     const [search, setsearch ] = useState('');
+    const [isModalVisibleSort, setModalVisibleSort] = useState(false);
+
+    const toggleModalSort = () => {
+        setModalVisibleSort(!isModalVisibleSort);
+      };
 
 
     useEffect(()=>{
@@ -39,6 +49,27 @@ const SearchScreen2 = ({navigation, route}) => {
             setsearch(text);
         }
          }
+<<<<<<< Updated upstream
+=======
+
+         const handleOrderClick = () => {
+            setModalVisibleSort(!isModalVisibleSort);
+            //let newList = [...filterdData];
+        
+            //newList.sort((a, b) => (a.receta.nombre > b.receta.nombre ? 1 : b.receta.nombre > a.receta.nombre ? -1 : 0));
+        
+            //setfilterdData(newList);
+          };
+
+          
+         const handleOrderClickUser = () => {
+            let newList = [...filterdData];
+        
+            newList.sort((a, b) => (a.creatorNickname > b.creatorNickname ? 1 : b.creatorNickname > a.creatorNickname ? -1 : 0));
+        
+            setfilterdData(newList);
+          };
+>>>>>>> Stashed changes
     
 
     const ItemView = ({item}) => {
@@ -85,6 +116,42 @@ const SearchScreen2 = ({navigation, route}) => {
                 <TextInput style={styles.textInputStyle} value={search} placeholder="Buscar receta" underlineColorAndroid="transparent" onChangeText={(text) => searchFilter(text)}>
 
                 </TextInput>
+<<<<<<< Updated upstream
+=======
+                <View>
+                <View>
+      <Modal style={styles.modal}isVisible={isModalVisibleSort}>
+      <View style={styles.modalcontainer} >
+          <Text style={styles.ModalText}> Seleccione el orden deseado</Text>
+          </View>
+          <View style={[{flexDirection:'row',alignItems:'center'}]}>
+            <View style={[{flex:1,flexDirection:'row'}]}>
+          <Pressable style={styles.buttonSort} onPress={toggleModalSort}>
+      <Text style={styles.modalbuttontext}>Por Receta</Text>
+    </Pressable>
+    </View>
+    <View stlye={[{justifyContent:'space-evenly', marginVertical:10}]}>
+    <Pressable style={styles.buttonSort2} onPress={toggleModalSort}>
+      <Text style={styles.modalbuttontext}>Por Usuario</Text>
+    </Pressable>
+    </View>
+    </View>
+      </Modal>
+      </View>
+                <TouchableOpacity onPress={handleOrderClick} style={styles.orderButton}>
+                    <MaterialCommunityIcons
+                        name="order-alphabetical-ascending"
+                        size={32}
+                        color="#888" />
+                </TouchableOpacity></View>
+                <View>
+                <TouchableOpacity onPress={handleOrderClickUser} style={styles.orderButton}>
+                    <MaterialCommunityIcons
+                        name="order-alphabetical-ascending"
+                        size={32}
+                        color="red" />
+                </TouchableOpacity></View>
+>>>>>>> Stashed changes
                 <FlatList
                     data={filterdData}
                     keyExtractor={(item, index) => index.toString()}
@@ -117,7 +184,71 @@ const styles = StyleSheet.create({
     },
     avatar:{
         width: 50,
+<<<<<<< Updated upstream
     }
+=======
+    },
+    orderButton: {
+        width: 32,
+        marginRight: 30,
+      },
+    
+      modal: {
+        position:'relative',
+        bottom:-350,
+        height:10,
+        width: 395,
+        marginTop: 250,
+        marginBottom: 340,
+        marginHorizontal: 0,
+        alignItems: 'center',
+        backgroundColor: '#222121',
+        borderRadius:30
+      },
+      ModalText: {
+        fontSize: 25,
+        lineHeight: 20 * 1.4,
+        marginTop: 20,
+        marginBottom: 0,
+        marginHorizontal: 10,
+        textAlign: 'center',
+        color: '#FFFFFFFF',
+        backgroundColor: '#222121',
+        fontWeight: "bold",
+      },
+      buttonSort: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        marginHorizontal:20,
+        borderRadius: 12,
+        elevation: 3,
+        backgroundColor: '#FFFFFF',
+      },
+      buttonSort2: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
+        paddingVertical: 12,
+        paddingHorizontal: 10,
+        marginHorizontal:20,
+        borderRadius: 12,
+        elevation: 3,
+        backgroundColor: '#FFFFFF',
+      },
+    
+      modalcontainer:{
+        marginBottom: 30,
+      },
+    
+      modalbuttontext:{
+        color:'#000000',
+        fontWeight: "bold",
+        fontSize: 18,
+      },
+>>>>>>> Stashed changes
 })
 
 export default SearchScreen2;
