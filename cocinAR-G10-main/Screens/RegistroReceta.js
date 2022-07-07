@@ -213,7 +213,7 @@ export default class RegistroReceta extends Component {
                                             <Picker style={styles.pickerIngrediente}
                                                 selectedValue={item.medida}
                                                 onValueChange={(itemValue, itemPosition) =>
-                                                    this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, medida: itemValue, choosenIndex: itemPosition+1 } : c) })}
+                                                    this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, medida: 'gramos', choosenIndex: itemPosition+1 } : c) })}
                                                 >
                                                     <Picker.Item label="gr" value="gramos" />
                                                     <Picker.Item label="kg" value="kilogramos" />
