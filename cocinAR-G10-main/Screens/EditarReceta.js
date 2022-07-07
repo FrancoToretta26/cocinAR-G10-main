@@ -34,12 +34,6 @@ export default class EditarReceta extends Component {
         super(props)
         
         this.state = {
-
-            ingredientes2:[{
-                nombre:'',
-                cantidad: '2',
-                medida: 'gramos'
-            }],
             
             image: null,
             porciones:2,
@@ -48,15 +42,14 @@ export default class EditarReceta extends Component {
             ingredientes: [{
                 nombre: '',
                 cantidad: '2',
-                medida: ''
+                medida: 'gramos'
 
             }],
 
             pasos: [{
                 idPaso:1,
                 multimedia:null,
-                descripcion:"",
-                nombrePaso:""
+                descripcion:""
             }],
 
             choosenIndex: 1,
@@ -207,14 +200,14 @@ export default class EditarReceta extends Component {
         
                                         <View  style={styles.ingredientesContainer}>
                                             <View style={styles.ingredienteContainer}>
-                                                <TextInput placeholder={item.nombre} placeholderTextColor={"#808080"}
+                                                <TextInput placeholder="Nombre" placeholderTextColor={"#808080"}
                                                     value={item.nombre}
                                                     style={styles.ingrediente}
                                                     onChangeText={text => {
-                                                        this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, nombre: text, medida:'gramos' } : c) })
+                                                        this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, nombre: text} : c) })
                                                     }} />
         
-                                                    <TextInput placeholder={String(item.cantidad)} placeholderTextColor={"#808080"}
+                                                    <TextInput placeholder="Cantidad" placeholderTextColor={"#808080"}
                                                         value={String(item.cantidad)}
                                                         style={styles.cantidad}
                                                         onChangeText={text => {
@@ -225,10 +218,10 @@ export default class EditarReceta extends Component {
                                                     <Picker style={styles.pickerIngrediente}
                                                         selectedValue={item.medida}
                                                         onValueChange={(itemValue, itemPosition) =>
-                                                            this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, medida: 'gramos', choosenIndex: itemPosition+1 } : c)})}
+                                                            this.setState({ ingredientes: ingredientes.map((c, innerIndex) => innerIndex === index ? { ...c, medida: itemValue, choosenIndex: itemPosition+1 } : c)})}
                                                         >
                                                             <Picker.Item label="gr" value="gramos" />
-                                                            <Picker.Item label="kg" value="kilogramos" />
+                                                            <Picker.Item label="kg" value="kg" />
                                                             <Picker.Item label="Unidades" value="unidades" />
                                                             <Picker.Item label="Porciones" value="porciones" />
                                                          </Picker>
@@ -285,17 +278,6 @@ export default class EditarReceta extends Component {
                                         <View style={styles.pasosInside}>
                                             <View >
                                                 <Text style={styles.pasoNumber} >{index+1}</Text>
-
-                                                <View style={styles.pasosNombreView}>
-
-                                                <TextInput placeholder='Nombre' placeholderTextColor={"#808080"}
-                                                    value={item.nombrePaso}
-                                                    style={ styles.pasosNombre }
-                                                    onChangeText={text => {
-                                                        this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, nombrePaso: text, } : c) })
-                                                    }} />
-                                             </View>
-                                             
                                                  <StatusBar hidden={true} />
                                                  <View style={styles.ButtonPasos}>
                                                  <View>
@@ -329,7 +311,7 @@ export default class EditarReceta extends Component {
                                                 <StatusBar style="auto" />
         
                                                 <View style={styles.pasosDescripcionView}>
-                                                    <TextInput placeholder={item.descripcion} placeholderTextColor={"#808080"}
+                                                    <TextInput placeholder='Descripción' placeholderTextColor={"#808080"}
                                                         value={item.descripcion}
                                                         style={styles.pasosDescripcion}
                                                         onChangeText={text => {

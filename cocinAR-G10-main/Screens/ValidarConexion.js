@@ -29,7 +29,7 @@ export default function ValidarConexion({ navigation, route }) {
                 alert('La receta se ha subido con exito')
                 navigation.navigate('Inicio')
             }
-            else{
+            if(enviarReceta.rdo==1){
                 alert('La subida de la receta ha fallado')
                 navigation.navigate('Inicio')
             }     

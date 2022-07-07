@@ -23,7 +23,7 @@ import {Picker} from '@react-native-picker/picker';
 import { AntDesign } from '@expo/vector-icons';
 
 import Button2 from '../Components/Button';
-import { submitRecipe } from '../controller/recipe.controller';
+import { editRecipe } from '../controller/recipe.controller';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -125,6 +125,7 @@ export default class RegistroReceta extends Component {
         let recetaEdita = await editRecipe(data, idReceta)
         if(recetaEdita){
             alert('Receta editada')
+            navigation.navigate('Inicio')
         }
 
 
