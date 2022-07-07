@@ -3,6 +3,8 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "urlRandomness": null,
-  "https": true
+  "urlRandomness": "gt-vt2",
+  "https": false,
+  "scheme": "exp+cocinar",
+  "devClient": false
 }

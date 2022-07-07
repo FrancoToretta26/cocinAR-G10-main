@@ -1,5 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19001,
-  "packagerPort": 19001
+  "expoServerPort": null,
+  "packagerPort": 19000,
+  "expoServerNgrokUrl": "https://gt-vt2.francotoretta.cocinar-g10-main.exp.direct",
+  "packagerNgrokUrl": "https://gt-vt2.francotoretta.cocinar-g10-main.exp.direct",
+  "ngrokPid": 35236,
+  "packagerPid": null,
+  "webpackServerPort": null
 }

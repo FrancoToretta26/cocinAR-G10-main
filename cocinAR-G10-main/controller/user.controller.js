@@ -7,7 +7,7 @@ export const registro= async function(registro)
     //armo json con datos
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recetasApi/register',{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.77.197:9000/recetasApi/register',{ // Poner la IPV4 de cada uno.
             method: 'POST', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -56,7 +56,7 @@ export const login= async function(login)
     //armo json con datos
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recetasApi/login',{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.77.197:9000/recetasApi/login',{ // Poner la IPV4 de cada uno.
             method: 'POST', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -105,7 +105,7 @@ export const finalizarRegistro = async function(data)
     const alias = await AsyncStorage.getItem('alias')
     try
     {
-        let response = await fetch('http://192.168.0.17:8080/recetasApi/register/endRegister',{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.77.197:9000/recetasApi/register/endRegister',{ // Poner la IPV4 de cada uno.
             method: 'POST', // or 'PUT'
             headers: {
                 Accept: 'application/json',
