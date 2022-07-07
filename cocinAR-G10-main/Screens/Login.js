@@ -38,9 +38,10 @@ export default function Login({ navigation, route }) {
         alert('Usuario logueado con exito')
         navigation.navigate('Inicio')
       }
-      else{
+      if(nuevoLogin.rdo==1){
         alert('Reintente nuevamente')
       }
+      
     }
   };
 

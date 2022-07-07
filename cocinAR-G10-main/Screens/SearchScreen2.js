@@ -57,6 +57,8 @@ const SearchScreen2 = ({navigation, route}) => {
             newList.sort((a, b) => (a.receta.nombre > b.receta.nombre ? 1 : b.receta.nombre > a.receta.nombre ? -1 : 0));
         
             setfilterdData(newList);
+            setModalVisibleSort(!isModalVisibleSort);
+
           };
 
           
@@ -66,6 +68,8 @@ const SearchScreen2 = ({navigation, route}) => {
             newList.sort((a, b) => (a.creatorNickname > b.creatorNickname ? 1 : b.creatorNickname > a.creatorNickname ? -1 : 0));
         
             setfilterdData(newList);
+            setModalVisibleSort(!isModalVisibleSort);
+
           };
     
 
@@ -112,6 +116,14 @@ const SearchScreen2 = ({navigation, route}) => {
     return(
         <SafeAreaView style={{flex:1, backgroundColor: 'black'}}>
             <View style={StyleSheet.container}>
+            <View>
+                <TouchableOpacity onPress={handleOrderClickModal} style={styles.orderButton}>
+                    <MaterialCommunityIcons
+                        name="order-alphabetical-ascending"
+                        size={32}
+                        color="#F7456A" />
+                </TouchableOpacity></View>
+                
                 <TextInput style={styles.textInputStyle} value={search} placeholder="Buscar receta" underlineColorAndroid="transparent" onChangeText={(text) => searchFilter(text)}>
                 </TextInput>
                 <View>
@@ -135,21 +147,6 @@ const SearchScreen2 = ({navigation, route}) => {
       </Modal>
       </View>
       </View>
-
-                <View>
-                <TouchableOpacity onPress={handleOrderClickModal} style={styles.orderButton}>
-                    <MaterialCommunityIcons
-                        name="order-alphabetical-ascending"
-                        size={32}
-                        color="#888" />
-                </TouchableOpacity></View>
-                <View>
-                <TouchableOpacity onPress={handleOrderClickUser} style={styles.orderButton}>
-                    <MaterialCommunityIcons
-                        name="order-alphabetical-ascending"
-                        size={32}
-                        color="red" />
-                </TouchableOpacity></View>
                 <FlatList
                     data={filterdData}
                     keyExtractor={(item, index) => index.toString()}
@@ -179,13 +176,17 @@ const styles = StyleSheet.create({
         backgroundColor: 'gray',
         marginLeft: 100,
         marginBottom: 20,
+        flexWrap: 'wrap',
+        flexDirection: 'row'
     },
     avatar:{
         width: 50,
     },
     orderButton: {
-        width: 32,
-        marginRight: 30,
+        width: 55,
+        marginLeft: 20,
+        marginBottom: -50,
+        flexWrap: 'wrap',
       },
       modal: {
         position:'relative',

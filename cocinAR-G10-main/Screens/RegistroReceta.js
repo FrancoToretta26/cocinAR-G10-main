@@ -113,10 +113,10 @@ export default class RegistroReceta extends Component {
             pasos : this.state.pasos,
         }
 
-        let enviarReceta = await submitRecipe(data)
-        if(enviarReceta){
-            alert('Receta Creada')
-            this.props.navigation.navigate('Inicio')
+        if(data){
+            this.props.navigation.navigate('ValidarConexion',{
+                postId: 3006,
+                users: data})
         }
       }
 

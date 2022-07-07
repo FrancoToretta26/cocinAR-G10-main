@@ -72,23 +72,28 @@ export const login= async function(login)
         console.log('data',data)
         let rdo = response.status;
         console.log(rdo)
-
-        const setAlias = await AsyncStorage.setItem('alias', data.alias)
-        const idUsuario = String(data.id)
-        const setIdUsuario = await AsyncStorage.setItem('idUsuario', idUsuario)
-        console.log(idUsuario)
-        console.log(rdo)
         switch(rdo)
         {
             case 200:   
             { 
+                const setAlias = await AsyncStorage.setItem('alias', data.alias)
+                const idUsuario = String(data.id)
+                const setIdUsuario = await AsyncStorage.setItem('idUsuario', idUsuario)
                 console.log('entre al case')
-                return ({rdo:0,mensaje:"Ok"});//correcto
+                return ({rdo:0});//correcto
             }
             case 201:   
             { 
-                return ({rdo:0,mensaje:"Ok"});//correcto
+                const setAlias = await AsyncStorage.setItem('alias', data.alias)
+                const idUsuario = String(data.id)
+                const setIdUsuario = await AsyncStorage.setItem('idUsuario', idUsuario)
+                return ({rdo:0});//correcto
             }
+            case 409:
+                {
+                    return ({rdo:1});//correcto
+                }
+
 
     }
 }

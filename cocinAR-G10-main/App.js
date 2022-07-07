@@ -27,6 +27,7 @@ import { LogBox } from 'react-native';
 import CambiarPassword from './Screens/CambiarPassword';
 import EditarReceta from './Screens/EditarReceta';
 import ReemplazarReceta from './Screens/ReemplazarReceta';
+import ValidarConexion from './Screens/ValidarConexion';
 
 
 
@@ -284,6 +285,14 @@ export default function App() {
       component={EditarReceta}
       options={{
         title: 'Editar una receta',
+      }}
+        />
+
+<Stack.Screen
+      name="ValidarConexion"
+      component={ValidarConexion}
+      options={{
+        title: '',
       }}
         />
 

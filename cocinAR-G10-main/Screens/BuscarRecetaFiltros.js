@@ -270,7 +270,10 @@ selectionHandler=(ind)=>{
             </View>
         </ScrollView>
 
+        <View style={styles.buttonFiltrar}>
+
         <Button onPress={this.onPress} label="Filtrar" />
+        </View>
 
 
     </View>
@@ -324,6 +327,9 @@ const styles = StyleSheet.create({
         borderColor: '#F7456A',
         borderWidth: 1
      },
+     buttonFiltrar:{
+        marginTop: 10,
+     }
   });
 
 export default BuscarRecetaFiltros;

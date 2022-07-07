@@ -27,6 +27,11 @@ import { submitRecipe } from '../controller/recipe.controller';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+export const isExpensive = () =>{
+    return NetInfo.fetch().then(state => {
+    return state.details.isConnectionExpensive;
+    });
+  }
 
 
 export default class RegistroReceta extends Component {
