@@ -9,30 +9,6 @@ import {deleteRecipeForLater} from '../controller/recipe.controller';
 class RecetasGuardadas extends Component{
 
     state={
-        data: [
-            {
-                id: 1,
-                name: 'Guacamole Mexicano',
-                user: 'Camila93',
-                experience: '19',
-                image: 'https://www.recetas.net/Imagen_web/Aguacate-o-Guacamole-Mexicano.aspx?idx=3&nId=4609&hash=d2066219a436924ebb184a25cfa1f2cd',  
-            },
-            {
-                id: 2,
-                name: 'Carne al horno',
-                user: 'Leonardo55',
-                experience: '19',
-                image: 'https://www.hola.com/imagenes/cocina/tecnicas-de-cocina/20200824173909/consejos-asar-carne-horno/0-857-699/portada-adobe-m.jpg',  
-            },
-            {
-                id: 3,
-                name: 'Fideos Carbonara',
-                user: 'Gabriel77',
-                experience: '19',
-                image: 'https://s1.eestatic.com/2015/04/03/cocinillas/cocinillas_23007746_116140242_1024x576.jpg',  
-            },
-
-        ]
     }
 
     onDelte = (id) =>{
