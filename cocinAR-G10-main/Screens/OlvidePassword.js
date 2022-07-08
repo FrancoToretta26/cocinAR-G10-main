@@ -25,9 +25,7 @@ export default function OlvidePassword({ navigation, route }) {
   };
 
   const onSubmit = async function (data){
-    console.log(data.email);
     let recibirToken = await recuperarPass(data.email)
-    console.log(recibirToken.rdo, 'rdo')
     if(recibirToken.rdo==0){
       navigation.navigate('ValidarCodigoPass')
       alert('Se ha enviado el codigo a tu correo electronico.')

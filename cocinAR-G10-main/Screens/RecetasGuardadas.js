@@ -36,13 +36,11 @@ class RecetasGuardadas extends Component{
     }
 
     onDelte = (id) =>{
-        console.log(users,'delete')
         let filterArray = users.filter((val, i)=>{
             if(val.idUsuario !== id){
                 return val.idUsuario
             }
         })
-        console.log('filter array', filterArray)
         this.setState({users: filterArray})
     }
 
@@ -87,7 +85,6 @@ class RecetasGuardadas extends Component{
     render(){
         const {data} = this.state
         const { postId, users } = this.props.route.params;
-        console.log(users,'entre a RecipeSave')
         return(
         <View style={styles.container}>
             <FlatList data={users} renderItem={this.renderItems} keyExtractor={(item)=> item.id}></FlatList>

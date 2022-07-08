@@ -100,7 +100,6 @@ export default class EditarReceta extends Component {
             ingredienteConCantidad : this.state.ingredientes,
             pasos : this.state.pasos,
         }
-        console.log(data)
         let recetaEdita = await editRecipe(data, idReceta)
         if(recetaEdita){
             alert('Receta editada')
@@ -284,12 +283,9 @@ export default class EditarReceta extends Component {
                                                     {(() => {
                                     if(this.state.pasos[index].multimedia!=null){
                                     var lastFive =this.state.pasos[index].multimedia.substr(this.state.pasos[index].multimedia.length - 3); // => "Tabs1"
-                                    console.log(lastFive, 'lastfive')
                                     if (lastFive=="mp4" || lastFive=="avi" || lastFive=='mov' ){
-                                        console.log('entre al if');
                                         return(<Video  style = {{ width: 200, height: 120, borderRadius: 10, alignSelf:"center"}} source={{uri: this.state.pasos[index].multimedia}} useNativeControls isLooping/>)}
                                     else{
-                                        console.log('entro al else')
                                         return(<Image source={{ uri: item.multimedia}}  style = {{ width: 200, height: 120, borderRadius: 10, alignSelf:"center"}} defaultImage={{uri: 'https://reactnative-examples.com/wp-content/uploads/2022/02/default-loading-image.png' }}/>)
                                     }
                                     }

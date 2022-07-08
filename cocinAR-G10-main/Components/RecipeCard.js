@@ -6,7 +6,6 @@ import IconLabel from './IconLabel';
 const iconColor = '#F7456A';
 const RecipeCard = ({ info }) => {
   const { receta, calificacion, creatorNickname} = info;
-  console.log(calificacion, 'receta card')
 
 
 

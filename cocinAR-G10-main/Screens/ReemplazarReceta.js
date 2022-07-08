@@ -121,7 +121,6 @@ export default class RegistroReceta extends Component {
             pasos : this.state.pasos,
         }
 
-        console.log(data)
         let recetaEdita = await editRecipe(data, idReceta)
         if(recetaEdita){
             alert('Receta editada')
@@ -319,7 +318,7 @@ export default class RegistroReceta extends Component {
                                                                             }
                                                                           );
                                                                           this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, thumbnail: uri ,multimedia: result.uri} : c)  });
-                                                                          console.log( this.state.pasos[index].thumbnail,this.state.pasos[index].multimedia );
+                                                                          
                                                                         } catch (e) {
                                                                           console.warn(e);
                                                                         }
@@ -327,7 +326,7 @@ export default class RegistroReceta extends Component {
                                                                 }
                                                                 else{
                                                                     this.setState({ pasos: pasos.map((c, innerIndex) => innerIndex === index ? { ...c, thumbnail: result.uri ,multimedia: result.uri } : c)  });
-                                                                    console.log("3", this.state.pasos[index].thumbnail,this.state.pasos[index].multimedia );
+                                                    
                                                                 }
                                                         }
                                                         }}/></View>

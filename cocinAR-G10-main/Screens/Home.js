@@ -29,7 +29,6 @@ export default function Home({navigation, route}) {
   useEffect(() => {
     async function loadData() {
       const response = await getBestRecipes('');
-      console.log(response);
       setfilterdData(response); // change this based on the response, you may or may not need to call json() on it
     }
     loadData();
@@ -58,7 +57,6 @@ export default function Home({navigation, route}) {
 
     const onSubmit = async function(data){
        let ingredientes = await getIngredients();
-       console.log(ingredientes, 'ingredientes pa')
        if(ingredientes){
         navigation.navigate('BuscarRecetasFiltros', {
           postId: 3006,
@@ -76,7 +74,6 @@ export default function Home({navigation, route}) {
     <Header label="Mejores Recetas" />
     {/* <Card /> */}
     <StatusBar barStyle="dark-content" />
-    {console.log(filterdData, 'mostrame la filterdata pa')}
     <FlatList
       data={filterdData}
       renderItem={( {item} ) => (

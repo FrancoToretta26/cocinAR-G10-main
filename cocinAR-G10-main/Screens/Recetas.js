@@ -18,7 +18,6 @@ const onPress = async function() {
   const { postId, params} = route.params;
   const recetass = params.recetass;
   const dato = recetass.idReceta;
-  console.log(dato)
   let guardarReceta = await saveRecipes(dato)
   alert('Receta Guardada')
 }
@@ -44,18 +43,10 @@ class Recetas extends Component{
           };
     }
 
-    // componentDidMount() {
-    //   const { idd3, ingredientes} = this.props.route.params;
-    //   ingredientes.map((item, index) => {
-    //   this.setState({cantidad:item.cantidad});
-    //   console.log('entre')
-    //   })
-    // }
+
 
     onPress = async () => {
       const { postId, params} = this.props.route.params;
-      console.log('entre')
-      console.log(params.recetass.idReceta)
       let guardarReceta = await saveRecipes(params.recetass.idReceta)
       if(guardarReceta.rdo==0){
         alert('Receta Guardada')
@@ -72,10 +63,8 @@ class Recetas extends Component{
     }
 
     ratingCompleted = async (rate) => {
-      console.log("Rating is: " + rate)
       let count = this.state.rating
       this.setState(this.state.rating = rate)
-      console.log(this.state.rating,'thisstaterating')
     
     }
 
@@ -91,7 +80,6 @@ class Recetas extends Component{
         creatorNickname: usuario,
         calificacion: this.state.rating
       }
-      console.log(calificacion)
       let calificarMetodo = await calificar(calificacion)
       if(calificarMetodo){
         alert('Receta Calificada con Exito')
@@ -107,7 +95,6 @@ class Recetas extends Component{
       ingredientes.map((item, index) => {
         let newValue = (counterPorciones*item.cantidad)/recetass.porciones // sin redondear
         let newnewValue = Math.floor(newValue) // redondeado
-        console.log(newnewValue, 'newvalue')
         lista.push(newnewValue)
         this.setState({cantidad:lista}, () =>
         console.log('setstate'));
@@ -196,9 +183,7 @@ class Recetas extends Component{
                             {(() => {
               if(item.multimedia!=null){
               var lastFive = item.multimedia.substr(item.multimedia.length - 3); // => "Tabs1"
-              console.log(lastFive, 'lastfive')
               if (lastFive=="mp4" || lastFive=="avi" || lastFive=='mov' ){
-                console.log('entre al if');
                 return(<Video style={styles.imgStylePaso} source={{uri: item.multimedia}} useNativeControls isLooping/>)}
               else{
                 return(<Image source={{ uri: item.multimedia }} style={styles.imgStylePaso} defaultImage={{uri: 'https://reactnative-examples.com/wp-content/uploads/2022/02/default-loading-image.png' }}/>)

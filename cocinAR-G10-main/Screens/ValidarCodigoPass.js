@@ -35,9 +35,7 @@ const VerificationScreen = ({navigation,
   const { handleSubmit, control, formState: { errors } } = useForm();
 
   const onSubmit = async function (data) {
-    console.log(primerDigito, 'primerdigi')
     const otpToken = primerDigito+segundoDigito+tercerDigito+cuartoDigito+quintoDigito+sextoDigito
-    console.log(otpToken, 'token')
     let nuevoToken = await confirmToken(otpToken)
     if(nuevoToken.rdo==0){
       alert('Token ingresado con exito')

@@ -48,7 +48,6 @@ export default function Registro({ navigation, route }) {
       }
       await AsyncStorage.setItem('alias', data.alias)
       let nuevoRegistro = await registro(datos)
-      console.log(nuevoRegistro.rdo,'nuevoRegistro')
       if(nuevoRegistro.rdo==0){
         alert('Usuario registrado con exito')
         navigation.navigate('ValidarCodigo')

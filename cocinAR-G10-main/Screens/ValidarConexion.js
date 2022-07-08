@@ -22,10 +22,8 @@ export default function ValidarConexion({ navigation, route }) {
     useEffect( async () => {
         if (await isExpensive()==false){
             const { postId, users } = route.params;
-            console.log(users, 'users')
             let enviarReceta = await submitRecipe(users)
             if(enviarReceta.rdo==0){
-                console.log('entre al if')
                 alert('La receta se ha subido con exito')
                 navigation.navigate('Inicio')
             }
@@ -48,7 +46,6 @@ export default function ValidarConexion({ navigation, route }) {
         const { postId, users } = route.params;
         let enviarReceta = await submitRecipe(users)
         if(enviarReceta.rdo==0){
-            console.log('entre al if')
             alert('La receta se ha subido con exito')
             navigation.navigate('Inicio')
       };

@@ -28,7 +28,6 @@ const SearchScreen2 = ({navigation, route}) => {
 
     const fetchPosts = () =>{
         const { itemId, ingredientes } = route.params;
-        console.log(ingredientes, 'ingredientes ingresando al coso')
         setfilterdData(ingredientes);
         setmasterData(ingredientes);
         }
@@ -57,13 +56,11 @@ const SearchScreen2 = ({navigation, route}) => {
                         setColour(item.backgroundColor = 'white')
                         var ubicacion = notingredientList.indexOf(item)
                         notingredientList.splice(ubicacion,1)
-                        console.log('hice un splice notingredient')
                     }
                     else if(ind == item.idIngrediente && item.backgroundColor=='white'){
                         item.backgroundColor = 'green'
                         setColour(item.backgroundColor = 'green')
                         ingredientList.push(item)
-                        console.log(ingredientList);
                     }
         
                     else if(ind == item.idIngrediente && item.backgroundColor=='green'){
@@ -73,7 +70,6 @@ const SearchScreen2 = ({navigation, route}) => {
                         var ubicacion = ingredientList.indexOf(item)
                         ingredientList.splice(ubicacion,1)
                     }
-                    console.log(notingredientList);
                     
                 }
                 setIngredientList(ingredientList)
@@ -84,8 +80,6 @@ const SearchScreen2 = ({navigation, route}) => {
           }
 
        const onPress = async () => {
-            console.log(ingredientList,'ingredient list dentro del onpress')
-            console.log(notingredientList,'notingredient list dentro del onpress')
         
             var data = {
                 ingredientes : ingredientList,

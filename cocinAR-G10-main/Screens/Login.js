@@ -32,7 +32,6 @@ export default function Login({ navigation, route }) {
         mail: data.mail,
         password: data.password,
       }
-      console.log(datos)
       let nuevoLogin = await login(datos)
       if(nuevoLogin.rdo==0){
         alert('Usuario logueado con exito')

@@ -30,7 +30,6 @@ export default function Home({navigation}) {
     const onSubmit = async function(props){
       let recetasForLater = await getRecipesForLater();
       if(recetasForLater){
-        console.log('hola')
         navigation.navigate('RecetasGuardadas', {
           postId: 3100,
           users: recetasForLater})

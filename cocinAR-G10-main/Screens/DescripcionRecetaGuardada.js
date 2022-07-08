@@ -14,7 +14,6 @@ const onPress = async function() {
   const { postId, params} = route.params;
   const recetass = params.recetass;
   const dato = recetass.idReceta;
-  console.log(dato)
   let guardarReceta = await saveRecipes(dato)
   alert('Receta Guardada')
 }

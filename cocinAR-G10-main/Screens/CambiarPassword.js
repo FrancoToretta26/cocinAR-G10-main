@@ -26,7 +26,6 @@ export default function CambiarPassword({ navigation, route }) {
 
   const onSubmit = async function (data){
     if(data.npassword==data.password){
-      console.log('entre al if')
     let cambiarPass = await resetPassword(data.password)
     if(cambiarPass.rdo==0){
       navigation.navigate('ValidarCodigoPass')

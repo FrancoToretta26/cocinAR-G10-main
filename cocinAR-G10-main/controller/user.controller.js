@@ -7,7 +7,7 @@ export const registro= async function(registro)
     //armo json con datos
     try
     {
-        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/register',{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/register',{ // Poner la IPV4 de cada uno.
             method: 'POST', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -56,7 +56,7 @@ export const login= async function(login)
     //armo json con datos
     try
     {
-        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/login',{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/login',{ // Poner la IPV4 de cada uno.
             method: 'POST', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -69,9 +69,7 @@ export const login= async function(login)
         });
 
         let data = await response.json();
-        console.log('data',data)
         let rdo = response.status;
-        console.log(rdo)
         switch(rdo)
         {
             case 200:   
@@ -79,7 +77,6 @@ export const login= async function(login)
                 const setAlias = await AsyncStorage.setItem('alias', data.alias)
                 const idUsuario = String(data.id)
                 const setIdUsuario = await AsyncStorage.setItem('idUsuario', idUsuario)
-                console.log('entre al case')
                 return ({rdo:0});//correcto
             }
             case 201:   
@@ -110,7 +107,7 @@ export const finalizarRegistro = async function(data)
     const alias = await AsyncStorage.getItem('alias')
     try
     {
-        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/register/endRegister',{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/register/endRegister',{ // Poner la IPV4 de cada uno.
             method: 'POST', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -148,13 +145,12 @@ export const finalizarRegistro = async function(data)
 export const getToken = async function(tokenUser)
 {
 
-    console.log('entre al controller')
     //url webservices
     //armo json con datos
     var token = tokenUser;
     try
     {
-        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/registrationConfirm?token='+token,{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/registrationConfirm?token='+token,{ // Poner la IPV4 de cada uno.
             method: 'GET', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -164,7 +160,6 @@ export const getToken = async function(tokenUser)
         
         
         let rdo = response.status;
-        console.log(rdo)
         switch(rdo)
         {
             case 200:   
@@ -196,7 +191,7 @@ export const recuperarPass = async function(email)
     console.log()
     try
     {
-        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/validationToken?mail='+mail,{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/validationToken?mail='+mail,{ // Poner la IPV4 de cada uno.
             method: 'GET', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -206,7 +201,6 @@ export const recuperarPass = async function(email)
         
         
         let rdo = response.status;
-        console.log(rdo, 'recuperarPass')
         switch(rdo)
         {
             case 200:   
@@ -234,7 +228,7 @@ export const confirmToken = async function(token)
     var tokenUser = token;
     try
     {
-        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/confirmToken?token='+tokenUser,{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/confirmToken?token='+tokenUser,{ // Poner la IPV4 de cada uno.
             method: 'GET', // or 'PUT'
             headers: {
                 Accept: 'application/json',
@@ -244,7 +238,6 @@ export const confirmToken = async function(token)
         
         
         let rdo = response.status;
-        console.log(rdo, 'recuperarPass')
         switch(rdo)
         {
             case 200:   
@@ -273,11 +266,9 @@ export const resetPassword = async function(data)
     //armo json con datos
     const mail = await AsyncStorage.getItem('mailNP')
     const newPassword = data
-    console.log('mail', mail)
-    console.log('newPassword', newPassword)
     try
     {
-        let response = await fetch('https://recetas-godio.herokuapp.com/recetasApi/resetPassword?mail='+mail+'&newPassword='+newPassword,{ // Poner la IPV4 de cada uno.
+        let response = await fetch('http://192.168.0.17:8080/recetasApi/resetPassword?mail='+mail+'&newPassword='+newPassword,{ // Poner la IPV4 de cada uno.
             method: 'PUT', 
             headers: {
                 Accept: 'application/json',
