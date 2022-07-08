@@ -14,8 +14,8 @@ const RecipeCard = ({ info }) => {
       <View style={styles.cardContainer}>
         <Image style={styles.imageStyle} source={''} />
         <View style={styles.infoStyle}>
-          <Text style={styles.titleStyle}>{'hola'}</Text>
-          <Text style={styles.categoryStyle}>{'buenas'}</Text>
+          <Text style={styles.titleStyle}>{''}</Text>
+          <Text style={styles.categoryStyle}>{''}</Text>
 
           <View style={styles.iconLabelStyle}>
             <IconLabel name="md-heart" color={iconColor}></IconLabel> 
