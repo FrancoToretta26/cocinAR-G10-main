@@ -20,12 +20,6 @@ class RecetasGuardadas extends Component{
         this.setState({users: filterArray})
     }
 
-    onPress = async (item) => {
-        alert('Hola')
-       // let guardarReceta = await saveRecipes(params.recetass.idReceta)
-       // if(guardarReceta){
-       // }
-      }
   
 
     renderItems = ({ item }) => {
