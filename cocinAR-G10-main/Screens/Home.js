@@ -29,7 +29,7 @@ export default function Home({navigation, route}) {
   useEffect(() => {
     async function loadData() {
       const response = await getBestRecipes('');
-      setfilterdData(response); // change this based on the response, you may or may not need to call json() on it
+      setfilterdData(response);
     }
     loadData();
 }, []);

@@ -45,9 +45,6 @@ export default function CargarReceta({ navigation, route }) {
 
   const onSubmit = async function(data){
     console.log(await isExpensive(), 'isexpensive');
-    // if (await isExpensive()){
-    //   setModalVisibleNetwork(!isModalVisibleNetwork);
-    // }
 
     await AsyncStorage.setItem('nombreReceta', data.nombreReceta)
     let verificarReceta = await validateRecipe('')
